@@ -2,6 +2,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// 인게임 메니저
@@ -19,9 +20,13 @@ public class CombatManager : MonoBehaviour
     [Header("Entities")]
     [SerializeField] public SerializableDictionaryBase<EnemyType, EnemyBehavior> enemyMap;
     [SerializeField] public SerializableDictionaryBase<UnitType, UnitBehavior> unitMap;
+    [SerializeField] public Transform enemySpawnRoot;
 
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
+    private Coroutine enemySpawnLoop;
 
+
+#region UnityLifeCycle
     private void Awake(){
         instance = this;
     }
@@ -30,7 +35,9 @@ public class CombatManager : MonoBehaviour
         SetupGame();
         StartGame();
     }
+#endregion
 
+#region Game Management
     /// <summary>
     /// 게임을 종료하고 자원을 반환합니다.
     /// </summary>
@@ -45,6 +52,8 @@ public class CombatManager : MonoBehaviour
             Destroy(enemy.gameObject);
         }
         enemiesList.Clear();
+        StopCoroutine(enemySpawnLoop);
+        enemySpawnLoop = null;
     }
 
     /// <summary>
@@ -59,7 +68,7 @@ public class CombatManager : MonoBehaviour
             if(unitType == UnitType.None){
                 continue;
             }
-            
+
             UnitBehavior unit = Instantiate(unitMap[unitType], slot.transform);
             slot.unit = unit;
         }
@@ -74,6 +83,22 @@ public class CombatManager : MonoBehaviour
                 slot.unit.OnSummon();
             }
         }
+        enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
+    }
+#endregion
+
+    private IEnumerator SimpleEnemySpawnLoop(){
+        while(true){
+            yield return new WaitForSeconds(1f);
+            SummonEnemy(EnemyType.EIRNormal, Random.Range(0, girdSize.y));
+        }
+    }
+
+    public void SummonEnemy(EnemyType enemyType, int column){
+        EnemyBehavior enemy = Instantiate(enemyMap[enemyType], enemySpawnRoot);
+        enemy.transform.position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), 0, RelavtiveLineHandler.instance.TopRowZ);
+        enemiesList.Add(enemy);
+        enemy.OnSummon();
     }
 
     public Slot GetSlot(int row, int column){

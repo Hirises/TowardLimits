@@ -20,6 +20,8 @@ public class RelavtiveLineHandler : MonoBehaviour
     [SerializeField] private Transform BottomRow;
     public float BottomRowZ => BottomRow.position.z;
 
+    public float ColumnX(int column) => Columns[column].position.x;
+
     private void Awake(){
         instance = this;
     }

@@ -1101,6 +1101,7 @@ MonoBehaviour:
     _keys: 02000000
     _values:
     - {fileID: 1027954349226559969, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
+  enemySpawnRoot: {fileID: 0}
 --- !u!1 &597779783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1779,7 @@ Transform:
   m_GameObject: {fileID: 1550013906}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 190}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
