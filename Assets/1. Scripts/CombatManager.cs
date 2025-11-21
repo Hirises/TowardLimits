@@ -4,14 +4,21 @@ using NaughtyAttributes;
 /// <summary>
 /// 인게임 메니저
 /// </summary>
-public class PlayerManager : MonoBehaviour
+public class CombatManager : MonoBehaviour
 {
-    public static PlayerManager instance;
+    public static CombatManager instance;
 
-    [Label("그리드 크기 Column, Row")]
+    [Header("Grid")]
+    [Label("그리드 크기 Row, Column")]
     [SerializeField] public Vector2Int girdSize;
     [Label("슬롯 (좌상단에서 시작. hor->ver)")]
     [SerializeField] public Slot[] slots;
+
+    [Header("Enemies")]
+    [SerializeField] public EnemyBehavior[] enemies;
+
+    [Header("Units")]
+    [SerializeField] public UnitBehavior[] units;
 
     private void Awake(){
         instance = this;
@@ -34,7 +41,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public Slot GetSlot(int column, int row){
-        return slots[column * girdSize.y + row];
+    public Slot GetSlot(int row, int column){
+        return slots[row * girdSize.y + column];
     }
 }

@@ -22,7 +22,7 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
-             other.gameObject.GetComponent<EnemyBehavior>().TakeDamage(damage);
+            other.gameObject.GetComponentInParent<EnemyBehavior>().TakeDamage(damage);
             Destroy(gameObject);
         }
     }
