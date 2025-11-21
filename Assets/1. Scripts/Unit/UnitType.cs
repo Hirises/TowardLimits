@@ -2,6 +2,8 @@ using UnityEngine;
 
 public enum UnitType
 {
+    None,
+
     UnitC,
     UnitX,
     UnitX2,
