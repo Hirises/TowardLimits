@@ -10,11 +10,15 @@ public class GameManager : MonoBehaviour
     //싱글톤
     public static GameManager instance;
 
+    [Header("Stage")]
+    [SerializeField] public StageData[] stageDatas;
+
     [Header("Debug")]
     [SerializeField] private Vector2Int gridSize;
     [SerializeField] private UnitType[] unitMap;
 
     public PlayerData playerData;
+    public StageData currentStage;
 
     private void Awake(){
         if(instance != null){

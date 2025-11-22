@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
+  slotBase: {fileID: 2778980387232103274}
   unit: {fileID: 0}
 --- !u!1 &2778980387232103274
 GameObject:

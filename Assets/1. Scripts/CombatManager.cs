@@ -24,11 +24,14 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Transform enemySpawnRoot;
     [SerializeField] public WaveChart[] waveCharts;
 
+    [ReadOnly] private StageData currentStage;
+    [ReadOnly] private int currentWave = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private Coroutine enemySpawnLoop;
     private UnitBehavior draggingUnit;
 
     [ReadOnly] public Phase phase;
+    private bool isSummonEnded = false;
 
     public enum Phase {
         None,       //초기 상태
@@ -55,8 +58,8 @@ public class CombatManager : MonoBehaviour
                 StartCombatPhase();
             }
         }else if(phase == Phase.Combat){
-            if(Input.GetKeyDown(KeyCode.Space)){
-                StartPlacementPhase();
+            if(isSummonEnded && enemiesList.Count == 0){
+                NextWave();
             }
         }
 
@@ -71,6 +74,9 @@ public class CombatManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Q)){
             Slot slot = RaycastSlot(Input.mousePosition);
             Debug.Log($"TestRaycast: {slot}");
+        }
+        if(phase == Phase.Combat && Input.GetKeyDown(KeyCode.Space)){
+            NextWave();
         }
     }
 #endregion
@@ -115,6 +121,8 @@ public class CombatManager : MonoBehaviour
             unitInstance.OnPlacement(slot);
         }
         
+        currentStage = GameManager.instance.currentStage;
+        currentWave = 0;
     }
 
     /// <summary>
@@ -123,19 +131,31 @@ public class CombatManager : MonoBehaviour
     public void StartGame(){
         StartPlacementPhase();
     }
+
+    public void NextWave(){
+        isSummonEnded = false;
+        currentWave++;
+        if(currentWave >= currentStage.waveCount){
+            EndGame();
+            return;
+        }
+        StartPlacementPhase();
+    }
 #endregion
 
 #region Placement Phase
     public void StartPlacementPhase(){
+        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
+        enemySpawnLoop = null;
+        isSummonEnded = false;
         EndDrag();
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatEnd();
             }
+            slot.ShowBase(true);
         }
         phase = Phase.Placement;
-        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
-        enemySpawnLoop = null;
     }
 
     public Slot RaycastSlot(Vector3 screenPosition){
@@ -179,12 +199,15 @@ public class CombatManager : MonoBehaviour
 
 #region Combat Phase
     public void StartCombatPhase(){
+        EndDrag();
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatStart();
             }
+            slot.ShowBase(false);
         }
         phase = Phase.Combat;
+        isSummonEnded = false;
         WaveChart waveChart = ChooseRandomWaveChart(1, Polar.Both);
         if(waveChart == null){
             enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
@@ -213,13 +236,15 @@ public class CombatManager : MonoBehaviour
             time = summon.startTime;
             SummonEnemy(summon.enemyType, summon.lane);
         }
+        isSummonEnded = true;
     }
 
     private IEnumerator SimpleEnemySpawnLoop(){
-        while(true){
+        for(int i = 0; i < 1000; i++){
             yield return new WaitForSeconds(0.1f);
             SummonEnemy(EnemyType.EIRNormal, Random.Range(0, girdSize.y));
         }
+        isSummonEnded = true;
     }
 
     public void SummonEnemy(EnemyType enemyType, int column){
@@ -227,6 +252,10 @@ public class CombatManager : MonoBehaviour
         enemy.transform.position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), 0, RelavtiveLineHandler.instance.TopRowZ);
         enemiesList.Add(enemy);
         enemy.OnSummon();
+    }
+
+    public void RemoveEnemy(EnemyBehavior enemy){
+        enemiesList.Remove(enemy);
     }
 #endregion
 

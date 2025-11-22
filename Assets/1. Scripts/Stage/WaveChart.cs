@@ -9,7 +9,7 @@ public class WaveChart : ScriptableObject
     public Vector2Int difficulty;   //난이도 계수
 
     public string filePath;   //적 생성용 파일경로
-    public WaveChartList waveChartList;
+    [HideInInspector] public WaveChartList waveChartList;
     [System.NonSerialized] public List<(float startTime, int lane, EnemyType enemyType)> summonList;
 
     public void Load(){

@@ -1106,6 +1106,7 @@ MonoBehaviour:
   enemySpawnRoot: {fileID: 1889532237}
   waveCharts:
   - {fileID: 11400000, guid: 95b9b5e059656074fb09c46a1d6302f2, type: 2}
+  - {fileID: 11400000, guid: 03694109434f097469994de14bbc91de, type: 2}
   phase: 0
 --- !u!1001 &554391790
 PrefabInstance:
@@ -1583,8 +1584,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23425db7ed3670843a4ee17f5e10187a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageDatas:
+  - {fileID: 11400000, guid: 848079bf6db95b049898e55ea1b58c41, type: 2}
+  - {fileID: 11400000, guid: af478290c7bc7b34d8ad9e878c37aba3, type: 2}
+  - {fileID: 11400000, guid: a75f5585e08911747aac1d01dd3fcbdb, type: 2}
   gridSize: {x: 3, y: 5}
   unitMap: 020000000200000002000000020000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  currentStage: {fileID: 11400000, guid: 848079bf6db95b049898e55ea1b58c41, type: 2}
 --- !u!4 &1002875510
 Transform:
   m_ObjectHideFlags: 0

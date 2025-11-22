@@ -14,7 +14,13 @@ public abstract class EnemyBehavior : MonoBehaviour
 
     protected abstract void OnSummon_Internal();
 
-    public abstract void OnDeath();
+    public void OnDeath(){
+        OnDeath_Internal();
+        CombatManager.instance.RemoveEnemy(this);
+        Destroy(gameObject);
+    }
+
+    protected abstract void OnDeath_Internal();
 
     public void TakeDamage(int damage){
         Debug.Log($"{enemyType} TakeDamage: {damage}");

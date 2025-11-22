@@ -13,8 +13,7 @@ public class EIRNormal : EnemyBehavior
     protected override void OnSummon_Internal(){
     }
 
-    public override void OnDeath(){
-        Destroy(gameObject);
+    protected override void OnDeath_Internal(){
     }
 
     private void Update(){

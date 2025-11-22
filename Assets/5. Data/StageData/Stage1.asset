@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d244d7caa8bb2a447b20a37c9ae781ae, type: 3}
-  m_Name: N_St1_Wv1
+  m_Script: {fileID: 11500000, guid: f0a6a598920d97a48883996036461f75, type: 3}
+  m_Name: Stage1
   m_EditorClassIdentifier: 
-  polar: 0
-  difficulty: {x: 0, y: 99}
-  filePath: Wave1
-  enemyList: []
+  difficulty: 1
+  waveCount: 3
