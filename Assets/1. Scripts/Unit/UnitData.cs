@@ -9,16 +9,21 @@ public class UnitData : ScriptableObject
     public UnitType unitType;
     public string unitName;
     [TextArea] public string unitDescription;
-    public Color unitColor;
+    public Color unitColor = Color.white;
 
     [Header("Stats")]
-    public int maxHealth;
-    public int attack;
-    public float attackSpeed;
-    public int attackRange;
-    public float bulletSpeed;
+    public int maxHealth = 100;
+    public int attack = 10;
+    public float attackSpeed = 1;
+    public int attackRange = 100;
+    public float bulletSpeed = 15;
 
     [Header("Images")]
     public Sprite fullFront;
     public Sprite chibiIcon;
+
+    [Header("Calculus")]
+    public UnitType derivativeTo;
+    public int derivativeAmount = 1;
+    public UnitType integralTo;
 }

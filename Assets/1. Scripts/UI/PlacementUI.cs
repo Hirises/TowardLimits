@@ -39,7 +39,7 @@ public class PlacementUI : MonoBehaviour
     }
 
     public void OnStartDrag_Purchase(UnitIcon icon, UnitStatus status){
-        //CombatManager.instance.StartDrag(icon, status);
+        CombatManager.instance.StartDrag_Purchase(icon, status);
     }
 
     public bool IsInInventoryArea(Vector3 mousePosition){

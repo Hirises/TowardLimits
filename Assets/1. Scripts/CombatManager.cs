@@ -65,8 +65,6 @@ public class CombatManager : MonoBehaviour
     }
 
     private void Update(){
-        TestKey();
-
         if(phase == Phase.Placement){
             if(Input.GetKeyDown(KeyCode.Space)){
                 SkipPlacementPhase();
@@ -91,6 +89,8 @@ public class CombatManager : MonoBehaviour
                 EndDrag();
             }
         }
+
+        TestKey();
     }
 
     private void TestKey(){
@@ -159,7 +159,7 @@ public class CombatManager : MonoBehaviour
         isSummonEnded = false;
         currentWave++;
         if(currentWave >= currentStage.waveCount){
-            EndPurchasePhase();
+            EndCombatPhase();
             StartPurchasePhase();
             return;
         }
@@ -314,6 +314,11 @@ public class CombatManager : MonoBehaviour
         if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
         enemySpawnLoop = null;
         isSummonEnded = false;
+        List<EnemyBehavior> copy = new List<EnemyBehavior>(enemiesList);
+        foreach(EnemyBehavior enemy in copy){
+            enemy.OnDeath();
+        }
+        enemiesList.Clear();
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatEnd();
@@ -367,8 +372,8 @@ public class CombatManager : MonoBehaviour
         GameManager.instance.playerData.Persuaded += value;
         persuadeTextUI.text = persuadeText.Replace("{0}", GameManager.instance.playerData.Persuaded.ToString());
         persuadeTextUI.gameObject.SetActive(true);
-        CancelInvoke("HidePersuadeText");
-        Invoke("HidePersuadeText", 1f);
+        CancelInvoke(nameof(HidePersuadeText));
+        Invoke(nameof(HidePersuadeText), 1f);
         if(GameManager.instance.playerData.Persuaded >= 100){
             ClearPhase();
             EndGame();
@@ -415,8 +420,19 @@ public class CombatManager : MonoBehaviour
         endDrag = (slot) => {
             icon.SetAlpha(1f);
             if(IsInPurchaseArea(Input.mousePosition)){
+                if(GameManager.instance.playerData.direction == Polar.North && !IsIntegrable(status)){
+                    return;
+                }
+                if(GameManager.instance.playerData.direction == Polar.South && !IsDerivative(status)){
+                    return;
+                }
+
                 if(GameManager.instance.playerData.DT > 0){
-                    
+                    if(GameManager.instance.playerData.direction == Polar.North){
+                        Integrate(status);
+                    }else{
+                        Derivative(status);
+                    }
                     GameManager.instance.playerData.DT--;
                     placementUIRoot.UpdateDT();
                     placementUIRoot.UpdateUnit();
@@ -429,16 +445,46 @@ public class CombatManager : MonoBehaviour
         isDragging = true;
     }
 
+    public bool IsIntegrable(UnitStatus status){
+        UnitData data = status.unitType.GetUnitData();
+        return data.integralTo != UnitType.None;
+    }
+
+    public bool IsDerivative(UnitStatus status){
+        UnitData data = status.unitType.GetUnitData();
+        return data.derivativeTo != UnitType.None;
+    }
+
     public void Integrate(UnitStatus status){
-        return;
+        UnitData data = status.unitType.GetUnitData();
+        if(!IsIntegrable(status)){
+            return;
+        }
+        int index = GameManager.instance.playerData.units.IndexOf(status);
+        if(index == -1){
+            return;
+        }
+        GameManager.instance.playerData.units.Remove(status);
+        GameManager.instance.playerData.units.Insert(index, UnitStatus.FromType(data.integralTo));
     }
 
     public void Derivative(UnitStatus status){
-        return;
+        UnitData data = status.unitType.GetUnitData();
+        if(!IsDerivative(status)){
+            return;
+        }
+        int index = GameManager.instance.playerData.units.IndexOf(status);
+        if(index == -1){
+            return;
+        }
+        GameManager.instance.playerData.units.Remove(status);
+        for(int i = 0; i < data.derivativeAmount; i++){
+            GameManager.instance.playerData.units.Insert(index, UnitStatus.FromType(data.derivativeTo));
+        }
     }
 
     public bool IsInPurchaseArea(Vector3 screenPosition){
-        return RectTransformUtility.RectangleContainsScreenPoint(purchaseRoot, screenPosition, Camera.main);
+        return RectTransformUtility.RectangleContainsScreenPoint(purchaseRoot, screenPosition);
     }
 #endregion
 

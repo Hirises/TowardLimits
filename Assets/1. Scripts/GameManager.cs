@@ -15,8 +15,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public StageData[] stageDatas;
     [SerializeField] public UnitData[] unitDatas;
     [SerializeField] public EnemyData[] enemyDatas;
+
     [Header("Debug")]
     [SerializeField] private UnitType[] unitlist;
+    [SerializeField] private Polar direction;
 
     public PlayerData playerData;
     public StageData currentStage;
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
             }
             playerData.units.Add(UnitStatus.FromType(unitType));
         }
+        playerData.direction = direction;
     }
 
     public UnitData GetUnitData(UnitType unitType){
