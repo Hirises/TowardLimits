@@ -6,6 +6,7 @@ using System.Collections;
 using System.Linq;
 using System;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 인게임 메니저
@@ -90,7 +91,9 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        TestKey();
+        if(GameManager.instance.DEBUG_MODE){
+            TestKey();
+        }
     }
 
     private void TestKey(){
@@ -115,6 +118,7 @@ public class CombatManager : MonoBehaviour
             EndPurchasePhase();
         }
     }
+
     /// <summary>
     /// 게임을 종료하고 자원을 반환합니다. phase가 none일때 호출해야합니다.
     /// </summary>
@@ -123,8 +127,12 @@ public class CombatManager : MonoBehaviour
         enemySpawnLoop = null;
         foreach(Slot slot in slots){
             if(slot.unit != null){
-                Destroy(slot.unit.gameObject);
+                UnitBehavior unit = slot.unit;
+                GameManager.instance.playerData.units.Add(unit.status);
+                unit.OnDisplacement();
+                unit.Remove();
             }
+            slot.ShowBase(false);
             slot.unit = null;
         }
         foreach(EnemyBehavior enemy in enemiesList){
@@ -177,6 +185,7 @@ public class CombatManager : MonoBehaviour
         }else if(phase == Phase.Purchase){
             ClearPhase();
             EndGame();
+            GoToBaseCamp();
         }
     }
 #endregion
@@ -283,6 +292,10 @@ public class CombatManager : MonoBehaviour
         Debug.Log($"EndDrag {slot}");
     }
 
+    public void GoToBaseCamp(){
+        LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY);
+    }
+
     public void InsufficientDT(){
         Debug.Log("Insufficient DT");
     }
@@ -328,7 +341,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar){
-        WaveChart[] waveChart = waveCharts.Where(w => w.difficulty.x <= difficulty && difficulty <= w.difficulty.y  
+        WaveChart[] waveChart = waveCharts.Where(w => w.difficulty.x <= difficulty && (w.difficulty.y < 0 || difficulty <= w.difficulty.y)  
             && (w.polar == polar || w.polar == Polar.Both)).ToArray();
         if(waveChart.Length == 0){
             return null;
@@ -377,6 +390,7 @@ public class CombatManager : MonoBehaviour
         if(GameManager.instance.playerData.Persuaded >= 100){
             ClearPhase();
             EndGame();
+            GoToBaseCamp();
         }
     }
 

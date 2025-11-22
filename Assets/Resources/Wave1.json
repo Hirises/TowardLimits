@@ -6,14 +6,14 @@
 		"emitOnce": false,
 		"startTime": 0.0,
 		"count": 20,
-		"interval": 0.3
+		"interval": 0.4
 	},
 	{
 		"lane": 1,
 		"emitOnce": false,
 		"startTime": 0.0,
 		"count": 20,
-		"interval": 0.3,
+		"interval": 0.4,
 		"enemyType": "EIR_Normal"
 	},
 	{
@@ -21,7 +21,7 @@
 		"emitOnce": false,
 		"startTime": 0.0,
 		"count": 20,
-		"interval": 0.3,
+		"interval": 0.4,
 		"enemyType": "EIR_Normal"
 	},
 	{
@@ -29,7 +29,7 @@
 		"emitOnce": false,
 		"startTime": 0.0,
 		"count": 20,
-		"interval": 0.3,
+		"interval": 0.4,
 		"enemyType": "EIR_Normal"
 	},
 	{
@@ -37,7 +37,7 @@
 		"emitOnce": false,
 		"startTime": 0.0,
 		"count": 20,
-		"interval": 0.3,
+		"interval": 0.4,
 		"enemyType": "EIR_Normal"
 	}
 	]

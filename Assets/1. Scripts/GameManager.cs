@@ -15,8 +15,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] public StageData[] stageDatas;
     [SerializeField] public UnitData[] unitDatas;
     [SerializeField] public EnemyData[] enemyDatas;
+    [SerializeField] public List<UnitType> initalUnitlist;
 
     [Header("Debug")]
+    [SerializeField] public bool DEBUG_MODE = false;
+    [SerializeField] public float MIN_LOADING_DELAY = 3f;
     [SerializeField] private UnitType[] unitlist;
     [SerializeField] private Polar direction;
 
@@ -31,15 +34,17 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        playerData = new PlayerData();
-        playerData.units = new List<UnitStatus>();
-        foreach(UnitType unitType in unitlist){
-            if(unitType == UnitType.None){
-                continue;
+        if(DEBUG_MODE){
+            playerData = new PlayerData();
+            playerData.units = new List<UnitStatus>();
+            foreach(UnitType unitType in unitlist){
+                if(unitType == UnitType.None){
+                    continue;
+                }
+                playerData.units.Add(UnitStatus.FromType(unitType));
             }
-            playerData.units.Add(UnitStatus.FromType(unitType));
+            playerData.direction = direction;
         }
-        playerData.direction = direction;
     }
 
     public UnitData GetUnitData(UnitType unitType){

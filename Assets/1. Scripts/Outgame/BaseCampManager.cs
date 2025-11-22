@@ -1,0 +1,39 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class BaseCampManager : MonoBehaviour
+{
+    public static BaseCampManager instance;
+
+    [SerializeField] private Inventory inventoryUI;
+    [SerializeField] private TMP_Text stageText;
+
+    private void Awake(){
+        instance = this;
+    }
+
+    private void Start(){
+        Setup();
+    }
+
+    public void Setup(){
+        stageText.text = $"Stage {GameManager.instance.playerData.stage}";
+        inventoryUI.Setup(GameManager.instance.playerData.units, (icon, status) => {
+            //no drag action -> pass
+        });
+    }
+
+    public void TowardNorth(){
+        StartGame(Polar.North);
+    }
+
+    public void TowardSouth(){
+        StartGame(Polar.South);
+    }
+
+    public void StartGame(Polar direction){
+        GameManager.instance.playerData.direction = direction;
+        LoadingScene.instance.ShowAndLoad("Game", GameManager.instance.MIN_LOADING_DELAY);
+    }
+}
