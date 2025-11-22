@@ -89,7 +89,7 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator SimpleEnemySpawnLoop(){
         while(true){
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
             SummonEnemy(EnemyType.EIRNormal, Random.Range(0, girdSize.y));
         }
     }

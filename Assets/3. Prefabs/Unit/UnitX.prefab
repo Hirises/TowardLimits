@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1606201963879265272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0, y: 1, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -232,8 +232,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5140757901485935017}
   - {fileID: 8847379782657271242}
@@ -254,8 +254,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  attackSpeed: 1
-  bulletSpeed: 10
+  attackSpeed: 4
+  bulletSpeed: 15
   attackRange: 50
   attackDamage: 10
   bulletPrefab: {fileID: 6605641123546364392, guid: b013ec73c830eac4cb4f4c7b32f79ebc, type: 3}
