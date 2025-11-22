@@ -3,6 +3,6 @@ using UnityEngine;
 public enum Polar
 {
     Both,
-    North,
-    South,
+    North,  //적분
+    South,  //미분
 }

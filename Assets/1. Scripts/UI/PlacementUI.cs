@@ -9,9 +9,15 @@ public class PlacementUI : MonoBehaviour
     [SerializeField] private GameObject[] WarningMarkRoot;
     [SerializeField] private RectTransform InventoryArea;
 
-    public void Show(){
+    public void Show_Placement(){
         gameObject.SetActive(true);
-        inventory.Setup(GameManager.instance.playerData.units, OnStartDrag);
+        inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Placement);
+        UpdateDT();
+    }
+
+    public void Show_Purchase(){
+        gameObject.SetActive(true);
+        inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Purchase);
         UpdateDT();
     }
 
@@ -28,8 +34,12 @@ public class PlacementUI : MonoBehaviour
         DT_Text.text = GameManager.instance.playerData.DT.ToString();
     }
 
-    public void OnStartDrag(UnitIcon icon, UnitStatus status){
+    public void OnStartDrag_Placement(UnitIcon icon, UnitStatus status){
         CombatManager.instance.StartDrag(icon, status);
+    }
+
+    public void OnStartDrag_Purchase(UnitIcon icon, UnitStatus status){
+        //CombatManager.instance.StartDrag(icon, status);
     }
 
     public bool IsInInventoryArea(Vector3 mousePosition){

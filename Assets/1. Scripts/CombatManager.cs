@@ -31,6 +31,8 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public TravelMap travelMap;
     [SerializeField] [TextArea] public string persuadeText;
     [SerializeField] public TMP_Text persuadeTextUI;
+    [SerializeField] public RectTransform purchaseRoot;
+    [SerializeField] public TMP_Text purchaseTextUI;
 
     [ReadOnly] private StageData currentStage;
     [ReadOnly] private WaveChart currentWaveChart;
@@ -48,6 +50,7 @@ public class CombatManager : MonoBehaviour
         None,       //초기 상태
         Placement,  //배치 단계
         Combat,     //전투 단계
+        Purchase,   //구매 단계
     }
 
 
@@ -66,7 +69,7 @@ public class CombatManager : MonoBehaviour
 
         if(phase == Phase.Placement){
             if(Input.GetKeyDown(KeyCode.Space)){
-                StartCombatPhase();
+                SkipPlacementPhase();
             }
             travelMap.UpdatePlayerPosition(currentWave, 0);
         }else if(phase == Phase.Combat){
@@ -76,6 +79,11 @@ public class CombatManager : MonoBehaviour
             float ratio = (Time.time - waveStartTime) / currentWaveChart.duration;
             ratio = Mathf.Clamp01(ratio);
             travelMap.UpdatePlayerPosition(currentWave, ratio);
+        }else if(phase == Phase.Purchase){
+            if(Input.GetKeyDown(KeyCode.Space)){
+                SkipPlacementPhase();
+            }
+            travelMap.UpdatePlayerPosition(currentWave, 0);
         }
 
         if(isDragging){
@@ -103,6 +111,8 @@ public class CombatManager : MonoBehaviour
             EndPlacementPhase();
         }else if(phase == Phase.Combat){
             EndCombatPhase();
+        }else if(phase == Phase.Purchase){
+            EndPurchasePhase();
         }
     }
     /// <summary>
@@ -149,8 +159,8 @@ public class CombatManager : MonoBehaviour
         isSummonEnded = false;
         currentWave++;
         if(currentWave >= currentStage.waveCount){
-            ClearPhase();
-            EndGame();
+            EndPurchasePhase();
+            StartPurchasePhase();
             return;
         }
         if(currentWave == 0){
@@ -160,13 +170,22 @@ public class CombatManager : MonoBehaviour
         }
         StartPlacementPhase();
     }
+
+    public void SkipPlacementPhase(){
+        if(phase == Phase.Placement){
+            StartCombatPhase();
+        }else if(phase == Phase.Purchase){
+            ClearPhase();
+            EndGame();
+        }
+    }
 #endregion
 
 #region Placement Phase
     public void StartPlacementPhase(){
         EndCombatPhase();
         phase = Phase.Placement;
-        placementUIRoot.Show();
+        placementUIRoot.Show_Placement();
     }
 
     public void EndPlacementPhase(){
@@ -358,6 +377,68 @@ public class CombatManager : MonoBehaviour
 
     private void HidePersuadeText(){
         persuadeTextUI.gameObject.SetActive(false);
+    }
+#endregion
+
+#region Purchase Phase
+    public void StartPurchasePhase(){
+        phase = Phase.Purchase;
+        foreach(Slot slot in slots){
+            if(slot.unit != null){
+                slot.unit.OnDisplacement();
+                GameManager.instance.playerData.units.Add(slot.unit.status);
+                slot.unit.Remove();
+            }
+            slot.ShowBase(false);
+        }
+        placementUIRoot.UpdateUnit();
+        placementUIRoot.Show_Purchase();
+        if(GameManager.instance.playerData.direction == Polar.North){
+            purchaseTextUI.text = "Drag Here to Integrate";
+        }else{
+            purchaseTextUI.text = "Drag Here to Derivative";
+        }
+        purchaseRoot.gameObject.SetActive(true);
+    }
+
+    public void EndPurchasePhase(){
+        phase = Phase.None;
+        placementUIRoot.Hide();
+        purchaseRoot.gameObject.SetActive(false);
+    }
+
+    public void StartDrag_Purchase(UnitIcon icon, UnitStatus status){
+        if(phase != Phase.Purchase){
+            return;
+        }
+        icon.SetAlpha(0.5f);
+        endDrag = (slot) => {
+            icon.SetAlpha(1f);
+            if(IsInPurchaseArea(Input.mousePosition)){
+                if(GameManager.instance.playerData.DT > 0){
+                    
+                    GameManager.instance.playerData.DT--;
+                    placementUIRoot.UpdateDT();
+                    placementUIRoot.UpdateUnit();
+                }else{
+                    InsufficientDT();
+                }
+            }
+        };
+        Debug.Log($"StartDrag: {status.unitType}");
+        isDragging = true;
+    }
+
+    public void Integrate(UnitStatus status){
+        return;
+    }
+
+    public void Derivative(UnitStatus status){
+        return;
+    }
+
+    public bool IsInPurchaseArea(Vector3 screenPosition){
+        return RectTransformUtility.RectangleContainsScreenPoint(purchaseRoot, screenPosition, Camera.main);
     }
 #endregion
 
