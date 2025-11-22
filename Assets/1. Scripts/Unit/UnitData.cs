@@ -8,4 +8,7 @@ public class UnitData
     public int maxHealth;
     public int currentHealth;
     
+    public void ResetStatus(){
+        currentHealth = maxHealth;
+    }
 }
