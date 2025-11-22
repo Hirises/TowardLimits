@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 3976481201885323458}
   iconBorder: {fileID: 993935358126528031}
+  canvasGroup: {fileID: 7781612049639406536}
   index: 0
 --- !u!225 &7781612049639406536
 CanvasGroup:

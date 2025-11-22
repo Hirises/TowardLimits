@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +11,10 @@ public class Inventory : MonoBehaviour
     private UnitIcon[] icons;
     private List<UnitStatus> statuses;
     private int page;
+    private Action<UnitIcon, UnitStatus> onStartDrag;
 
-    public void Setup(List<UnitStatus> units){
+    public void Setup(List<UnitStatus> units, Action<UnitIcon, UnitStatus> onStartDrag){
+        this.onStartDrag = onStartDrag;
         page = 0;
         UpdateUnit(units);
     }
@@ -32,7 +35,6 @@ public class Inventory : MonoBehaviour
             icons[i] = icon;
             icon.Setup(statuses[i].unitType.GetUnitData(), i);
             icon.ReigsterEvents(OnIconHoverUp, OnIconHoverDown, OnIconDrag);
-            i++;
         }
     }
 
@@ -59,8 +61,8 @@ public class Inventory : MonoBehaviour
     }
 
     public void OnIconHoverUp(int index){
-        UnitInfoPopup.instance.Show(statuses[iconCount * page + index],
-          icons[iconCount * page + index].transform.position.y - 40);
+        UnitInfoPopup.instance.Show(statuses[index],
+          icons[index].transform.position.y - 40);
     }
 
     public void OnIconHoverDown(int index){
@@ -70,5 +72,8 @@ public class Inventory : MonoBehaviour
     public void OnIconDrag(int index, bool beginDrag){
         //pass
         Debug.Log("OnIconDrag: " + index + " " + beginDrag);
+        if(beginDrag){
+            onStartDrag?.Invoke(icons[index], statuses[index]);
+        }
     }
 }

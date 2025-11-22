@@ -10,13 +10,21 @@ public abstract class UnitBehavior : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer;
     [ReadOnly] public Slot slot;
 
+    /// <summary>
+    /// 유닛 생성시 (항상 전투가 종료된 상태라고 가정)
+    /// </summary>
+    /// <param name="data"></param>
     public void Initialize(UnitStatus data){
         this.status = data;
         meshRenderer.material.color = Color.white;
     }
 
-    public void Clear(){
+    /// <summary>
+    /// 유닛 제거시 (항상 전투가 종료된 상태라고 가정)
+    /// </summary>
+    public void Remove(){
         status = null;
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -64,6 +72,7 @@ public abstract class UnitBehavior : MonoBehaviour
     public void OnDeath(){
         OnCombatEnd();
         OnDisplacement();
+        Remove();
     }
 
     public void TakeDamage(int damage){

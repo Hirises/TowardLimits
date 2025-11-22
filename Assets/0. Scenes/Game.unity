@@ -4723,6 +4723,7 @@ MonoBehaviour:
   - {fileID: 47865172}
   - {fileID: 1556402031}
   - {fileID: 1502528012}
+  InventoryArea: {fileID: 1111264505}
 --- !u!4 &1583552190 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 340088368270059705, guid: 1fe75158237d9f64a99f3e7b36cb6a70, type: 3}

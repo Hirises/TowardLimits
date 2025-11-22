@@ -4,6 +4,7 @@ using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System;
 
 /// <summary>
 /// 인게임 메니저
@@ -31,7 +32,8 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private int currentWave = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private Coroutine enemySpawnLoop;
-    private UnitBehavior draggingUnit;
+    private bool isDragging = false;
+    private Action<Slot> endDrag;
 
     [ReadOnly] public Phase phase;
     private bool isSummonEnded = false;
@@ -66,7 +68,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        if(draggingUnit != null){
+        if(isDragging){
             if(Input.GetMouseButtonUp(0)){
                 EndDrag();
             }
@@ -164,26 +166,59 @@ public class CombatManager : MonoBehaviour
         return slot;
     }
 
+    public UnitBehavior SummonUnit(UnitStatus status){
+        UnitBehavior unit = Instantiate(unitMap[status.unitType], transform);
+        unit.Initialize(status);
+        return unit;
+    }
+
+    public void StartDrag(UnitIcon icon, UnitStatus status){
+        if(phase != Phase.Placement){
+            return;
+        }
+        icon.SetAlpha(0.5f);
+        endDrag = (slot) => {
+            icon.SetAlpha(1f);
+            if(slot != null && slot.unit == null){
+                GameManager.instance.playerData.units.Remove(status);
+                placementUIRoot.UpdateUnit();
+                UnitBehavior unit = SummonUnit(status);
+                unit.OnPlacement(slot);
+            }
+        };
+        Debug.Log($"StartDrag: {status.unitType}");
+        isDragging = true;
+    }
+
     public void StartDrag(UnitBehavior unit){
         if(phase != Phase.Placement){
             return;
         }
-        draggingUnit = unit;
+        endDrag = (slot) => {
+            unit.EndDrag();
+            if(slot != null && slot.unit == null){
+                unit.OnDisplacement();
+                unit.OnPlacement(slot);
+            }else if(placementUIRoot.IsInInventoryArea(Input.mousePosition)){
+                    unit.OnDisplacement();
+                    GameManager.instance.playerData.units.Add(unit.status);
+                    unit.Remove();
+                    placementUIRoot.UpdateUnit();
+            }
+        };
         unit.StartDrag();
         Debug.Log($"StartDrag: {unit.unitType}");
+        isDragging = true;
     }
 
     public void EndDrag(){
-        if(draggingUnit == null){
+        if(!isDragging){
             return;
         }
-        draggingUnit.EndDrag();
         Slot slot = RaycastSlot(Input.mousePosition);
-        if(slot != null && slot.unit == null){
-            draggingUnit.OnDisplacement();
-            draggingUnit.OnPlacement(slot);
-        }
-        draggingUnit = null;
+            endDrag?.Invoke(slot);
+        isDragging = false;
+        endDrag = null;
         Debug.Log($"EndDrag {slot}");
     }
 #endregion
@@ -216,7 +251,7 @@ public class CombatManager : MonoBehaviour
         if(waveChart.Length == 0){
             return null;
         }
-        return waveChart[Random.Range(0, waveChart.Length)];
+        return waveChart[UnityEngine.Random.Range(0, waveChart.Length)];
     }
     
     private IEnumerator WaveChartSpawnLoop(WaveChart waveChart){
@@ -234,7 +269,7 @@ public class CombatManager : MonoBehaviour
     private IEnumerator SimpleEnemySpawnLoop(){
         for(int i = 0; i < 1000; i++){
             yield return new WaitForSeconds(0.1f);
-            SummonEnemy(EnemyType.EIRNormal, Random.Range(0, girdSize.y));
+            SummonEnemy(EnemyType.EIRNormal, UnityEngine.Random.Range(0, girdSize.y));
         }
         isSummonEnded = true;
     }
