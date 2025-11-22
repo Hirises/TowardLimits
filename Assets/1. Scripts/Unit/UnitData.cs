@@ -1,14 +1,15 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using NaughtyAttributes;
 
-public class UnitData
+[CreateAssetMenu(fileName = "UnitData.asset", menuName = "Unit Data")]
+public class UnitData : ScriptableObject
 {
     public UnitType unitType;
-    public int level;
-    
+    public string unitName;
+    [TextArea] public string unitDescription;
     public int maxHealth;
-    public int currentHealth;
-    
-    public void ResetStatus(){
-        currentHealth = maxHealth;
-    }
+    public Color unitColor;
+    public Sprite fullFront;
+    public Sprite chibiIcon;
 }

@@ -24,6 +24,9 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Transform enemySpawnRoot;
     [SerializeField] public WaveChart[] waveCharts;
 
+    [Header("UI")]
+    [SerializeField] public PlacementUI placementUIRoot;
+
     [ReadOnly] private StageData currentStage;
     [ReadOnly] private int currentWave = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
@@ -106,23 +109,10 @@ public class CombatManager : MonoBehaviour
     /// 게임을 초기화하고 준비합니다 (이미 모든 자원은 반환되어있는 빈 상태라고 가정)
     /// </summary>
     public void SetupGame(){
-        PlayerData playerData = GameManager.instance.playerData;
-
-        //배치자료대로 유닛 생성
-        foreach(Slot slot in slots){
-            UnitData unit = playerData.units[slot.position.x][slot.position.y];
-            if(unit.unitType == UnitType.None){
-                continue;
-            }
-
-            UnitBehavior unitInstance = Instantiate(unitMap[unit.unitType], slot.transform);
-            slot.unit = unitInstance;
-            unitInstance.Initialize(unit);
-            unitInstance.OnPlacement(slot);
-        }
-        
+        placementUIRoot.Hide();
         currentStage = GameManager.instance.currentStage;
         currentWave = 0;
+        GameManager.instance.playerData.DT = currentStage.DT;
     }
 
     /// <summary>
@@ -156,6 +146,7 @@ public class CombatManager : MonoBehaviour
             slot.ShowBase(true);
         }
         phase = Phase.Placement;
+        placementUIRoot.Show();
     }
 
     public Slot RaycastSlot(Vector3 screenPosition){
@@ -216,6 +207,7 @@ public class CombatManager : MonoBehaviour
         Debug.Log($"ChooseWaveChart: {waveChart.filePath}");
         waveChart.Load();
         enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(waveChart));
+        placementUIRoot.Hide();
     }
 
     public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar){

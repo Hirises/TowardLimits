@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NaughtyAttributes;
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
@@ -10,12 +11,12 @@ public class GameManager : MonoBehaviour
     //싱글톤
     public static GameManager instance;
 
-    [Header("Stage")]
+    [Header("Objects")]
     [SerializeField] public StageData[] stageDatas;
+    [SerializeField] public UnitData[] unitDatas;
 
     [Header("Debug")]
-    [SerializeField] private Vector2Int gridSize;
-    [SerializeField] private UnitType[] unitMap;
+    [SerializeField] private UnitType[] unitlist;
 
     public PlayerData playerData;
     public StageData currentStage;
@@ -29,19 +30,21 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         playerData = new PlayerData();
-        playerData.units = new UnitData[gridSize.x][];
-        for(int k = 0; k < gridSize.x; k++){
-            playerData.units[k] = new UnitData[gridSize.y];
+        playerData.units = new List<UnitStatus>();
+        foreach(UnitType unitType in unitlist){
+            if(unitType == UnitType.None){
+                continue;
+            }
+            playerData.units.Add(new UnitStatus().FromType(unitType));
         }
-        int i = 0;
-        int j = 0;
-        foreach(UnitType unitType in unitMap){
-            playerData.units[i][j] = new UnitData{ unitType = unitType, level = 1 };
-            j++;
-            if(j >= gridSize.y){
-                i++;
-                j = 0;
+    }
+
+    public UnitData GetUnitData(UnitType unitType){
+        foreach(UnitData data in unitDatas){
+            if(data.unitType == unitType){
+                return data;
             }
         }
+        return null;
     }
 }

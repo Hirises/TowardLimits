@@ -6,17 +6,17 @@ using Unity.VisualScripting;
 public abstract class UnitBehavior : MonoBehaviour
 {
     public abstract UnitType unitType { get; }
-    [ReadOnly] public UnitData data;
+    [ReadOnly] public UnitStatus status;
     [SerializeField] private MeshRenderer meshRenderer;
     [ReadOnly] public Slot slot;
 
-    public void Initialize(UnitData data){
-        this.data = data;
+    public void Initialize(UnitStatus data){
+        this.status = data;
         meshRenderer.material.color = Color.white;
     }
 
     public void Clear(){
-        data = null;
+        status = null;
     }
 
     /// <summary>
@@ -67,8 +67,8 @@ public abstract class UnitBehavior : MonoBehaviour
     }
 
     public void TakeDamage(int damage){
-        data.currentHealth -= damage;
-        if(data.currentHealth <= 0){
+        status.currentHealth -= damage;
+        if(status.currentHealth <= 0){
             OnDeath();
         }
     }

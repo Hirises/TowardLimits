@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   difficulty: 1
   waveCount: 3
+  DT: 8

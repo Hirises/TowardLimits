@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerData
 {
-    public UnitData[][] units;  //유닛 배치 (row, column)
+    public List<UnitStatus> units;  //보유한 유닛
+    public int DT;
 }

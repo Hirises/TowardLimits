@@ -5,4 +5,5 @@ public class StageData : ScriptableObject
 {
     public int difficulty;
     public int waveCount;
+    public int DT;
 }
