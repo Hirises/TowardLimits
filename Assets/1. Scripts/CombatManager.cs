@@ -3,6 +3,7 @@ using NaughtyAttributes;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// 인게임 메니저
@@ -21,6 +22,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public SerializableDictionaryBase<EnemyType, EnemyBehavior> enemyMap;
     [SerializeField] public SerializableDictionaryBase<UnitType, UnitBehavior> unitMap;
     [SerializeField] public Transform enemySpawnRoot;
+    [SerializeField] public WaveChart[] waveCharts;
 
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private Coroutine enemySpawnLoop;
@@ -121,7 +123,9 @@ public class CombatManager : MonoBehaviour
     public void StartGame(){
         StartPlacementPhase();
     }
+#endregion
 
+#region Placement Phase
     public void StartPlacementPhase(){
         EndDrag();
         foreach(Slot slot in slots){
@@ -133,17 +137,6 @@ public class CombatManager : MonoBehaviour
         if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
         enemySpawnLoop = null;
     }
-
-    public void StartCombatPhase(){
-        foreach(Slot slot in slots){
-            if(slot.unit != null){
-                slot.unit.OnCombatStart();
-            }
-        }
-        phase = Phase.Combat;
-        enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
-    }
-#endregion
 
     public Slot RaycastSlot(Vector3 screenPosition){
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
@@ -182,6 +175,45 @@ public class CombatManager : MonoBehaviour
         draggingUnit = null;
         Debug.Log($"EndDrag {slot}");
     }
+#endregion
+
+#region Combat Phase
+    public void StartCombatPhase(){
+        foreach(Slot slot in slots){
+            if(slot.unit != null){
+                slot.unit.OnCombatStart();
+            }
+        }
+        phase = Phase.Combat;
+        WaveChart waveChart = ChooseRandomWaveChart(1, Polar.Both);
+        if(waveChart == null){
+            enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
+            return;
+        }
+        Debug.Log($"ChooseWaveChart: {waveChart.filePath}");
+        waveChart.Load();
+        enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(waveChart));
+    }
+
+    public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar){
+        WaveChart[] waveChart = waveCharts.Where(w => w.difficulty.x <= difficulty && difficulty <= w.difficulty.y  
+            && (w.polar == polar || w.polar == Polar.Both)).ToArray();
+        if(waveChart.Length == 0){
+            return null;
+        }
+        return waveChart[Random.Range(0, waveChart.Length)];
+    }
+    
+    private IEnumerator WaveChartSpawnLoop(WaveChart waveChart){
+        float time = 0;
+        foreach(var summon in waveChart.summonList){
+            if(summon.startTime - time > 0.01f){
+                yield return new WaitForSeconds(summon.startTime - time);
+            }
+            time = summon.startTime;
+            SummonEnemy(summon.enemyType, summon.lane);
+        }
+    }
 
     private IEnumerator SimpleEnemySpawnLoop(){
         while(true){
@@ -196,6 +228,7 @@ public class CombatManager : MonoBehaviour
         enemiesList.Add(enemy);
         enemy.OnSummon();
     }
+#endregion
 
     public Slot GetSlot(int row, int column){
         return slots[row * girdSize.y + column];
