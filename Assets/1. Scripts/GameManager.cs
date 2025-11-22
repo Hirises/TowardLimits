@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
             if(unitType == UnitType.None){
                 continue;
             }
-            playerData.units.Add(new UnitStatus().FromType(unitType));
+            playerData.units.Add(UnitStatus.FromType(unitType));
         }
     }
 

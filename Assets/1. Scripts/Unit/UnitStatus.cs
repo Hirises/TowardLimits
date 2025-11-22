@@ -7,13 +7,23 @@ public class UnitStatus
     
     public int maxHealth;
     public int currentHealth;
+
+    public UnitData data;
+
+    public UnitStatus(UnitData data){
+        this.data = data;
+        unitType = data.unitType;
+        level = 1;
+        maxHealth = data.maxHealth;
+        currentHealth = data.maxHealth;
+    }
     
     public void ResetStatus(){
         currentHealth = maxHealth;
     }
 
-    public UnitStatus FromType(UnitType unitType){
+    public static UnitStatus FromType(UnitType unitType){
         UnitData data = GameManager.instance.GetUnitData(unitType);
-        return new UnitStatus{ unitType = unitType, level = 1, maxHealth = data.maxHealth, currentHealth = data.maxHealth };
+        return new UnitStatus(data);
     }
 }

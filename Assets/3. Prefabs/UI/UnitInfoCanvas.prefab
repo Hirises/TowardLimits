@@ -1316,7 +1316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7468797117770767357
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1346,7 +1346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.8, y: 169.79999}
+  m_AnchoredPosition: {x: 0, y: 170}
   m_SizeDelta: {x: 770, y: 450}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4794947770014820718
@@ -1616,7 +1616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8076483525043383877
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1686,6 +1686,7 @@ GameObject:
   - component: {fileID: 7434259656969379412}
   - component: {fileID: 7828987420149561741}
   - component: {fileID: 596913366828058920}
+  - component: {fileID: 1563437684954570553}
   m_Layer: 5
   m_Name: UnitInfoCanvas
   m_TagString: Untagged
@@ -1776,3 +1777,29 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1563437684954570553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9176185241273644297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f189aa71552014f8d40331e76e9959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  root: {fileID: 4194841187312443215}
+  nameText: {fileID: 907721982748648974}
+  descriptionText: {fileID: 522723324200542247}
+  fullImage: {fileID: 3676738759786283334}
+  ATK_Text: {fileID: 6021103988126262558}
+  HP_Text: {fileID: 2023959262800506087}
+  ATS_Text: {fileID: 5104834311915440404}
+  Level_Text: {fileID: 7425368215996203612}
+  Colored_Text:
+  - {fileID: 907721982748648974}
+  - {fileID: 6165631046532078255}
+  - {fileID: 5089223706673211842}
+  - {fileID: 2960692658986037598}
+  - {fileID: 6681061895587168665}

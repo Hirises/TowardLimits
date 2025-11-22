@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private UnitIcon iconPrefab;
     [SerializeField] private int iconCount;
 
+    private UnitIcon[] icons;
     private List<UnitStatus> statuses;
     private int page;
 
@@ -22,12 +23,15 @@ public class Inventory : MonoBehaviour
 
     public void UpdatePage(){
         Clear();
+        icons = new UnitIcon[iconCount];
         for(int i = iconCount * page; i < iconCount * (page + 1); i++){
             if(i >= statuses.Count){
                 break;
             }
             UnitIcon icon = Instantiate(iconPrefab, iconRoot.transform);
+            icons[i] = icon;
             icon.Setup(statuses[i].unitType.GetUnitData(), i);
+            icon.ReigsterEvents(OnIconHoverUp, OnIconHoverDown, OnIconDrag);
             i++;
         }
     }
@@ -52,5 +56,19 @@ public class Inventory : MonoBehaviour
         foreach(Transform child in iconRoot.transform){
             Destroy(child.gameObject);
         }
+    }
+
+    public void OnIconHoverUp(int index){
+        UnitInfoPopup.instance.Show(statuses[iconCount * page + index],
+          icons[iconCount * page + index].transform.position.y - 40);
+    }
+
+    public void OnIconHoverDown(int index){
+        UnitInfoPopup.instance.Hide();
+    }
+
+    public void OnIconDrag(int index, bool beginDrag){
+        //pass
+        Debug.Log("OnIconDrag: " + index + " " + beginDrag);
     }
 }

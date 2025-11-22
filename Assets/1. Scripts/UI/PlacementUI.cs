@@ -11,7 +11,7 @@ public class PlacementUI : MonoBehaviour
     public void Show(){
         gameObject.SetActive(true);
         inventory.Setup(GameManager.instance.playerData.units);
-        SetDT(GameManager.instance.playerData.DT);
+        UpdateDT();
     }
 
     public void Hide(){
@@ -19,11 +19,11 @@ public class PlacementUI : MonoBehaviour
         inventory.Clear();
     }
 
-    public void SetUnits(List<UnitStatus> units){
-        inventory.UpdateUnit(units);
+    public void UpdateUnit(){
+        inventory.UpdateUnit(GameManager.instance.playerData.units);
     }
 
-    public void SetDT(int dt){
-        DT_Text.text = dt.ToString();
+    public void UpdateDT(){
+        DT_Text.text = GameManager.instance.playerData.DT.ToString();
     }
 }
