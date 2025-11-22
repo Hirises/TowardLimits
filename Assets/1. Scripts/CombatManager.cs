@@ -24,6 +24,7 @@ public class CombatManager : MonoBehaviour
 
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private Coroutine enemySpawnLoop;
+    private UnitBehavior draggingUnit;
 
     [ReadOnly] public Phase phase;
 
@@ -45,6 +46,8 @@ public class CombatManager : MonoBehaviour
     }
 
     private void Update(){
+        TestKey();
+
         if(phase == Phase.Placement){
             if(Input.GetKeyDown(KeyCode.Space)){
                 StartCombatPhase();
@@ -53,6 +56,19 @@ public class CombatManager : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space)){
                 StartPlacementPhase();
             }
+        }
+
+        if(draggingUnit != null){
+            if(Input.GetMouseButtonUp(0)){
+                EndDrag();
+            }
+        }
+    }
+
+    private void TestKey(){
+        if(Input.GetKeyDown(KeyCode.Q)){
+            Slot slot = RaycastSlot(Input.mousePosition);
+            Debug.Log($"TestRaycast: {slot}");
         }
     }
 #endregion
@@ -75,6 +91,7 @@ public class CombatManager : MonoBehaviour
         phase = Phase.None;
         StopCoroutine(enemySpawnLoop);
         enemySpawnLoop = null;
+        EndDrag();
     }
 
     /// <summary>
@@ -93,7 +110,7 @@ public class CombatManager : MonoBehaviour
             UnitBehavior unitInstance = Instantiate(unitMap[unit.unitType], slot.transform);
             slot.unit = unitInstance;
             unitInstance.Initialize(unit);
-            unitInstance.OnPlacement();
+            unitInstance.OnPlacement(slot);
         }
         
     }
@@ -106,6 +123,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartPlacementPhase(){
+        EndDrag();
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatEnd();
@@ -126,6 +144,44 @@ public class CombatManager : MonoBehaviour
         enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
     }
 #endregion
+
+    public Slot RaycastSlot(Vector3 screenPosition){
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+        RaycastHit hit;
+        Slot slot = null;
+        if(Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Slot", "Unit"))){
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Slot")){
+                slot = hit.collider.gameObject.GetComponentInParent<Slot>();
+            }else if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Unit")){
+                UnitBehavior unit = hit.collider.gameObject.GetComponentInParent<UnitBehavior>();
+                slot = unit.slot;
+            }
+        }
+        return slot;
+    }
+
+    public void StartDrag(UnitBehavior unit){
+        if(phase != Phase.Placement){
+            return;
+        }
+        draggingUnit = unit;
+        unit.StartDrag();
+        Debug.Log($"StartDrag: {unit.unitType}");
+    }
+
+    public void EndDrag(){
+        if(draggingUnit == null){
+            return;
+        }
+        draggingUnit.EndDrag();
+        Slot slot = RaycastSlot(Input.mousePosition);
+        if(slot != null && slot.unit == null){
+            draggingUnit.OnDisplacement();
+            draggingUnit.OnPlacement(slot);
+        }
+        draggingUnit = null;
+        Debug.Log($"EndDrag {slot}");
+    }
 
     private IEnumerator SimpleEnemySpawnLoop(){
         while(true){

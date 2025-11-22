@@ -38,11 +38,11 @@ public class UnitX : UnitBehavior
         mainLoop = null;
     }
 
-    public override void OnPlacement(){
+    protected override void OnPlacement_Internal(){
         Debug.Log($"{unitType} OnPlacement");
     }
 
-    public override void OnDisplacement(){
+    protected override void OnDisplacement_Internal(){
         Debug.Log($"{unitType} OnDisplacement");
     }
 }

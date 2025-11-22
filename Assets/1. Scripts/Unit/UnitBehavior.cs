@@ -7,9 +7,12 @@ public abstract class UnitBehavior : MonoBehaviour
 {
     public abstract UnitType unitType { get; }
     [ReadOnly] public UnitData data;
+    [SerializeField] private MeshRenderer meshRenderer;
+    [ReadOnly] public Slot slot;
 
     public void Initialize(UnitData data){
         this.data = data;
+        meshRenderer.material.color = Color.white;
     }
 
     public void Clear(){
@@ -19,12 +22,27 @@ public abstract class UnitBehavior : MonoBehaviour
     /// <summary>
     /// 유닛 설치시 (항상 전투가 종료된 상태라고 가정)
     /// </summary>
-    public abstract void OnPlacement();
+    public void OnPlacement(Slot newSlot){
+        slot = newSlot;
+        slot.unit = this;
+        transform.SetParent(newSlot.transform);
+        transform.localPosition = Vector3.zero;
+        OnPlacement_Internal();
+    }
+
+    protected abstract void OnPlacement_Internal();
 
     /// <summary>
     /// 유닛 회수시 (항상 전투가 종료된 상태라고 가정)
     /// </summary>
-    public abstract void OnDisplacement();
+    public void OnDisplacement(){
+        slot.unit = null;
+        slot = null;
+        transform.SetParent(null);
+        OnDisplacement_Internal();
+    }
+
+    protected abstract void OnDisplacement_Internal();
 
     /// <summary>
     /// 전투 시작시
@@ -55,7 +73,15 @@ public abstract class UnitBehavior : MonoBehaviour
         }
     }
 
-    public void OnMouseDrag(){
-        Debug.Log($"{unitType} OnMouseDrag");
+    public void OnMouseDown(){
+        CombatManager.instance.StartDrag(this);
+    }
+
+    public void StartDrag(){
+        meshRenderer.material.color = new Color(1, 0, 0, 0.5f);
+    }
+
+    public void EndDrag(){
+        meshRenderer.material.color = Color.white;
     }
 }

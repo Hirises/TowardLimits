@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 340088368270059705}
   - component: {fileID: 7320007497643390350}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 9172775974638661582}
   - component: {fileID: 3446571678899884789}
   - component: {fileID: 8904852774590925192}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

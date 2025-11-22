@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919edc30bf6704f4bba9b2b01cb7675e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 2889813217402456870}
   attackSpeed: 4
   bulletSpeed: 15
   attackRange: 50
