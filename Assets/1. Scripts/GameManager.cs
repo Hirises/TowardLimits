@@ -25,14 +25,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         playerData = new PlayerData();
-        playerData.units = new UnitType[gridSize.x][];
+        playerData.units = new UnitData[gridSize.x][];
         for(int k = 0; k < gridSize.x; k++){
-            playerData.units[k] = new UnitType[gridSize.y];
+            playerData.units[k] = new UnitData[gridSize.y];
         }
         int i = 0;
         int j = 0;
         foreach(UnitType unitType in unitMap){
-            playerData.units[i][j] = unitType;
+            playerData.units[i][j] = new UnitData{ unitType = unitType, level = 1 };
             j++;
             if(j >= gridSize.y){
                 i++;

@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 272041045}
   - component: {fileID: 272041044}
   - component: {fileID: 272041043}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1104,6 +1104,7 @@ MonoBehaviour:
     _values:
     - {fileID: 1027954349226559969, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
   enemySpawnRoot: {fileID: 0}
+  phase: 0
 --- !u!1001 &554391790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1581,7 +1582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: {x: 3, y: 5}
-  unitMap: 000000000000000002000000000000000000000000000000000000000200000000000000000000000000000000000000020000000000000000000000
+  unitMap: 020000000200000002000000020000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!4 &1002875510
 Transform:
   m_ObjectHideFlags: 0

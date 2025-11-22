@@ -17,7 +17,7 @@ public class UnitX : UnitBehavior
 
     private Coroutine mainLoop;
     
-    protected override void OnSummon_Internal(){
+    protected override void OnCombatStart_Internal(){
         mainLoop = StartCoroutine(MainLoop());
     }
 
@@ -33,9 +33,16 @@ public class UnitX : UnitBehavior
         bullet.Shoot(attackRange, bulletSpeed, attackDamage);
     }
 
-    public override void OnDeath(){
-        StopCoroutine(mainLoop);
+    public override void OnCombatEnd(){
+        if(mainLoop != null) StopCoroutine(mainLoop);
         mainLoop = null;
     }
-    
+
+    public override void OnPlacement(){
+        Debug.Log($"{unitType} OnPlacement");
+    }
+
+    public override void OnDisplacement(){
+        Debug.Log($"{unitType} OnDisplacement");
+    }
 }

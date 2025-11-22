@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class PlayerData
 {
-    public UnitType[][] units;  //유닛 배치 (row, column)
+    public UnitData[][] units;  //유닛 배치 (row, column)
 }

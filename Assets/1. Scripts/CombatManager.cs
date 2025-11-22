@@ -25,6 +25,14 @@ public class CombatManager : MonoBehaviour
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private Coroutine enemySpawnLoop;
 
+    [ReadOnly] public Phase phase;
+
+    public enum Phase {
+        None,       //초기 상태
+        Placement,  //배치 단계
+        Combat,     //전투 단계
+    }
+
 
 #region UnityLifeCycle
     private void Awake(){
@@ -34,6 +42,18 @@ public class CombatManager : MonoBehaviour
     private void Start(){
         SetupGame();
         StartGame();
+    }
+
+    private void Update(){
+        if(phase == Phase.Placement){
+            if(Input.GetKeyDown(KeyCode.Space)){
+                StartCombatPhase();
+            }
+        }else if(phase == Phase.Combat){
+            if(Input.GetKeyDown(KeyCode.Space)){
+                StartPlacementPhase();
+            }
+        }
     }
 #endregion
 
@@ -52,6 +72,7 @@ public class CombatManager : MonoBehaviour
             Destroy(enemy.gameObject);
         }
         enemiesList.Clear();
+        phase = Phase.None;
         StopCoroutine(enemySpawnLoop);
         enemySpawnLoop = null;
     }
@@ -64,25 +85,44 @@ public class CombatManager : MonoBehaviour
 
         //배치자료대로 유닛 생성
         foreach(Slot slot in slots){
-            UnitType unitType = playerData.units[slot.position.x][slot.position.y];
-            if(unitType == UnitType.None){
+            UnitData unit = playerData.units[slot.position.x][slot.position.y];
+            if(unit.unitType == UnitType.None){
                 continue;
             }
 
-            UnitBehavior unit = Instantiate(unitMap[unitType], slot.transform);
-            slot.unit = unit;
+            UnitBehavior unitInstance = Instantiate(unitMap[unit.unitType], slot.transform);
+            slot.unit = unitInstance;
+            unitInstance.Initialize(unit);
+            unitInstance.OnPlacement();
         }
+        
     }
 
     /// <summary>
     /// 게임을 시작합니다
     /// </summary>
     public void StartGame(){
+        StartPlacementPhase();
+    }
+
+    public void StartPlacementPhase(){
         foreach(Slot slot in slots){
             if(slot.unit != null){
-                slot.unit.OnSummon();
+                slot.unit.OnCombatEnd();
             }
         }
+        phase = Phase.Placement;
+        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
+        enemySpawnLoop = null;
+    }
+
+    public void StartCombatPhase(){
+        foreach(Slot slot in slots){
+            if(slot.unit != null){
+                slot.unit.OnCombatStart();
+            }
+        }
+        phase = Phase.Combat;
         enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
     }
 #endregion
