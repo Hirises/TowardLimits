@@ -27,9 +27,12 @@ public class CombatManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] public PlacementUI placementUIRoot;
+    [SerializeField] public TravelMap travelMap;
 
     [ReadOnly] private StageData currentStage;
+    [ReadOnly] private WaveChart currentWaveChart;
     [ReadOnly] private int currentWave = 0;
+    private float waveStartTime = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private Coroutine enemySpawnLoop;
     private bool isDragging = false;
@@ -62,10 +65,14 @@ public class CombatManager : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space)){
                 StartCombatPhase();
             }
+            travelMap.UpdatePlayerPosition(currentWave, 0);
         }else if(phase == Phase.Combat){
             if(isSummonEnded && enemiesList.Count == 0){
                 NextWave();
             }
+            float ratio = (Time.time - waveStartTime) / currentWaveChart.duration;
+            ratio = Mathf.Clamp01(ratio);
+            travelMap.UpdatePlayerPosition(currentWave, ratio);
         }
 
         if(isDragging){
@@ -105,6 +112,7 @@ public class CombatManager : MonoBehaviour
         StopCoroutine(enemySpawnLoop);
         enemySpawnLoop = null;
         EndDrag();
+        travelMap.Clear();
     }
 
     /// <summary>
@@ -115,6 +123,7 @@ public class CombatManager : MonoBehaviour
         currentStage = GameManager.instance.currentStage;
         currentWave = -1;
         GameManager.instance.playerData.DT = 999;
+        travelMap.Initialize(currentStage.waveCount);
     }
 
     /// <summary>
@@ -261,14 +270,14 @@ public class CombatManager : MonoBehaviour
         }
         phase = Phase.Combat;
         isSummonEnded = false;
-        WaveChart waveChart = ChooseRandomWaveChart(1, Polar.Both);
-        if(waveChart == null){
+        currentWaveChart = ChooseRandomWaveChart(1, Polar.Both);
+        if(currentWaveChart == null){
             enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
             return;
         }
-        Debug.Log($"ChooseWaveChart: {waveChart.filePath}");
-        waveChart.Load();
-        enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(waveChart));
+        Debug.Log($"ChooseWaveChart: {currentWaveChart.filePath}");
+        currentWaveChart.Load();
+        enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(currentWaveChart));
         placementUIRoot.Hide();
     }
 
@@ -283,6 +292,7 @@ public class CombatManager : MonoBehaviour
     
     private IEnumerator WaveChartSpawnLoop(WaveChart waveChart){
         float time = 0;
+        waveStartTime = Time.time;
         foreach(var summon in waveChart.summonList){
             if(summon.startTime - time > 0.01f){
                 yield return new WaitForSeconds(summon.startTime - time);

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 585851747703692880}
   - component: {fileID: 8110465632789846784}
   - component: {fileID: 2285616961377087549}
+  - component: {fileID: 6164848289975459127}
   m_Layer: 5
-  m_Name: Marker
+  m_Name: TravelMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,3 +76,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6164848289975459127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458773498202369144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b17b37b8413dd41b6977572dc6c417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rectTransform: {fileID: 585851747703692880}
+  image: {fileID: 2285616961377087549}

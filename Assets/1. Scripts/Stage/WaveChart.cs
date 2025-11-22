@@ -11,6 +11,7 @@ public class WaveChart : ScriptableObject
     public string filePath;   //적 생성용 파일경로
     [HideInInspector] public WaveChartList waveChartList;
     [System.NonSerialized] public List<(float startTime, int lane, EnemyType enemyType)> summonList;
+    [HideInInspector] public float duration;
 
     public void Load(){
         TextAsset textAsset = Resources.Load<TextAsset>(filePath);
@@ -21,16 +22,20 @@ public class WaveChart : ScriptableObject
         string json = textAsset.text;
         waveChartList = JsonUtility.FromJson<WaveChartList>(json);
         summonList = new List<(float startTime, int lane, EnemyType enemyType)>();
+        float maxStartTime = 0;
         foreach(WaveChartData data in waveChartList.enemyList){
             if(data.emitOnce){
                 summonList.Add((data.startTime, data.lane, data.enemyType));
+                maxStartTime = Mathf.Max(maxStartTime, data.startTime);
             }else{
                 for(int i = 0; i < data.count; i++){
                     summonList.Add((data.startTime + i * data.interval, data.lane, data.enemyType));
                 }
+                maxStartTime = Mathf.Max(maxStartTime, data.startTime + data.count * data.interval);
             }
         }
         summonList.Sort((a, b) => a.startTime.CompareTo(b.startTime));
+        duration = maxStartTime + 15;
     }
 
     [System.Serializable]

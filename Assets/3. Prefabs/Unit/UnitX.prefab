@@ -137,8 +137,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.28, y: 0.2, z: 9.04}
-  m_Center: {x: 0, y: -0.000000059604645, z: 0.45}
+  m_Size: {x: 7.28, y: 0.2, z: 7.12}
+  m_Center: {x: 0, y: -0.000000059604645, z: 1.62}
 --- !u!1 &5635041205089415412
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,10 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 2889813217402456870}
-  attackSpeed: 4
-  bulletSpeed: 15
-  attackRange: 50
-  attackDamage: 10
+  slot: {fileID: 0}
   bulletPrefab: {fileID: 6605641123546364392, guid: b013ec73c830eac4cb4f4c7b32f79ebc, type: 3}
   bulletSpawnPoint: {fileID: 8847379782657271242}
 --- !u!54 &4701083591460592120
