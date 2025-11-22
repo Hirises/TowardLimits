@@ -5,4 +5,5 @@ public class PlayerData
 {
     public List<UnitStatus> units;  //보유한 유닛
     public int DT;
+    public int Persuaded;   //설득됨!
 }

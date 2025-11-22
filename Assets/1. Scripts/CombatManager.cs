@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System;
+using TMPro;
 
 /// <summary>
 /// 인게임 메니저
@@ -28,6 +29,8 @@ public class CombatManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] public PlacementUI placementUIRoot;
     [SerializeField] public TravelMap travelMap;
+    [SerializeField] [TextArea] public string persuadeText;
+    [SerializeField] public TMP_Text persuadeTextUI;
 
     [ReadOnly] private StageData currentStage;
     [ReadOnly] private WaveChart currentWaveChart;
@@ -94,10 +97,20 @@ public class CombatManager : MonoBehaviour
 #endregion
 
 #region Game Management
+
+    public void ClearPhase(){
+        if(phase == Phase.Placement){
+            EndPlacementPhase();
+        }else if(phase == Phase.Combat){
+            EndCombatPhase();
+        }
+    }
     /// <summary>
-    /// 게임을 종료하고 자원을 반환합니다.
+    /// 게임을 종료하고 자원을 반환합니다. phase가 none일때 호출해야합니다.
     /// </summary>
     public void EndGame(){
+        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
+        enemySpawnLoop = null;
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 Destroy(slot.unit.gameObject);
@@ -109,8 +122,6 @@ public class CombatManager : MonoBehaviour
         }
         enemiesList.Clear();
         phase = Phase.None;
-        StopCoroutine(enemySpawnLoop);
-        enemySpawnLoop = null;
         EndDrag();
         travelMap.Clear();
     }
@@ -124,6 +135,7 @@ public class CombatManager : MonoBehaviour
         currentWave = -1;
         GameManager.instance.playerData.DT = 999;
         travelMap.Initialize(currentStage.waveCount);
+        GameManager.instance.playerData.Persuaded = 0;
     }
 
     /// <summary>
@@ -137,6 +149,7 @@ public class CombatManager : MonoBehaviour
         isSummonEnded = false;
         currentWave++;
         if(currentWave >= currentStage.waveCount){
+            ClearPhase();
             EndGame();
             return;
         }
@@ -151,18 +164,15 @@ public class CombatManager : MonoBehaviour
 
 #region Placement Phase
     public void StartPlacementPhase(){
-        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
-        enemySpawnLoop = null;
-        isSummonEnded = false;
-        EndDrag();
-        foreach(Slot slot in slots){
-            if(slot.unit != null){
-                slot.unit.OnCombatEnd();
-            }
-            slot.ShowBase(true);
-        }
+        EndCombatPhase();
         phase = Phase.Placement;
         placementUIRoot.Show();
+    }
+
+    public void EndPlacementPhase(){
+        phase = Phase.None;
+        EndDrag();
+        placementUIRoot.Hide();
     }
 
     public Slot RaycastSlot(Vector3 screenPosition){
@@ -261,7 +271,7 @@ public class CombatManager : MonoBehaviour
 
 #region Combat Phase
     public void StartCombatPhase(){
-        EndDrag();
+        EndPlacementPhase();
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatStart();
@@ -278,7 +288,19 @@ public class CombatManager : MonoBehaviour
         Debug.Log($"ChooseWaveChart: {currentWaveChart.filePath}");
         currentWaveChart.Load();
         enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(currentWaveChart));
-        placementUIRoot.Hide();
+    }
+
+    public void EndCombatPhase(){
+        phase = Phase.None;
+        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
+        enemySpawnLoop = null;
+        isSummonEnded = false;
+        foreach(Slot slot in slots){
+            if(slot.unit != null){
+                slot.unit.OnCombatEnd();
+            }
+            slot.ShowBase(true);
+        }
     }
 
     public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar){
@@ -320,6 +342,22 @@ public class CombatManager : MonoBehaviour
 
     public void RemoveEnemy(EnemyBehavior enemy){
         enemiesList.Remove(enemy);
+    }
+
+    public void Persuade(int value){
+        GameManager.instance.playerData.Persuaded += value;
+        persuadeTextUI.text = persuadeText.Replace("{0}", GameManager.instance.playerData.Persuaded.ToString());
+        persuadeTextUI.gameObject.SetActive(true);
+        CancelInvoke("HidePersuadeText");
+        Invoke("HidePersuadeText", 1f);
+        if(GameManager.instance.playerData.Persuaded >= 100){
+            ClearPhase();
+            EndGame();
+        }
+    }
+
+    private void HidePersuadeText(){
+        persuadeTextUI.gameObject.SetActive(false);
     }
 #endregion
 

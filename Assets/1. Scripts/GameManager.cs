@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [Header("Objects")]
     [SerializeField] public StageData[] stageDatas;
     [SerializeField] public UnitData[] unitDatas;
-
+    [SerializeField] public EnemyData[] enemyDatas;
     [Header("Debug")]
     [SerializeField] private UnitType[] unitlist;
 
@@ -42,6 +42,15 @@ public class GameManager : MonoBehaviour
     public UnitData GetUnitData(UnitType unitType){
         foreach(UnitData data in unitDatas){
             if(data.unitType == unitType){
+                return data;
+            }
+        }
+        return null;
+    }
+
+    public EnemyData GetEnemyData(EnemyType enemyType){
+        foreach(EnemyData data in enemyDatas){
+            if(data.enemyType == enemyType){
                 return data;
             }
         }

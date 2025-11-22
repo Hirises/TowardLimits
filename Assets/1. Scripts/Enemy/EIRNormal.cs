@@ -4,8 +4,6 @@ public class EIRNormal : EnemyBehavior
 {
     public override EnemyType enemyType => EnemyType.EIRNormal;
 
-    [SerializeField] private float moveSpeed;
-
     private void Start(){
         OnSummon();
     }
@@ -17,8 +15,9 @@ public class EIRNormal : EnemyBehavior
     }
 
     private void Update(){
-        transform.position -= Vector3.forward * moveSpeed * Time.deltaTime;
+        transform.position -= Vector3.forward * data.speed * Time.deltaTime;
         if(transform.position.z <= -10){
+            CombatManager.instance.Persuade(data.persuade);
             OnDeath();
         }
     }
