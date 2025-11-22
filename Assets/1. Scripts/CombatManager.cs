@@ -113,15 +113,15 @@ public class CombatManager : MonoBehaviour
     public void SetupGame(){
         placementUIRoot.Hide();
         currentStage = GameManager.instance.currentStage;
-        currentWave = 0;
-        GameManager.instance.playerData.DT = currentStage.DT;
+        currentWave = -1;
+        GameManager.instance.playerData.DT = 999;
     }
 
     /// <summary>
     /// 게임을 시작합니다
     /// </summary>
     public void StartGame(){
-        StartPlacementPhase();
+        NextWave();
     }
 
     public void NextWave(){
@@ -130,6 +130,11 @@ public class CombatManager : MonoBehaviour
         if(currentWave >= currentStage.waveCount){
             EndGame();
             return;
+        }
+        if(currentWave == 0){
+            GameManager.instance.playerData.DT = 999;
+        }else if(currentWave == 1){
+            GameManager.instance.playerData.DT = currentStage.DT;
         }
         StartPlacementPhase();
     }
@@ -180,10 +185,16 @@ public class CombatManager : MonoBehaviour
         endDrag = (slot) => {
             icon.SetAlpha(1f);
             if(slot != null && slot.unit == null){
-                GameManager.instance.playerData.units.Remove(status);
-                placementUIRoot.UpdateUnit();
-                UnitBehavior unit = SummonUnit(status);
-                unit.OnPlacement(slot);
+                if(GameManager.instance.playerData.DT > 0){
+                    GameManager.instance.playerData.units.Remove(status);
+                    placementUIRoot.UpdateUnit();
+                    UnitBehavior unit = SummonUnit(status);
+                    unit.OnPlacement(slot);
+                    GameManager.instance.playerData.DT--;
+                    placementUIRoot.UpdateDT();
+                }else{
+                    InsufficientDT();
+                }
             }
         };
         Debug.Log($"StartDrag: {status.unitType}");
@@ -197,13 +208,25 @@ public class CombatManager : MonoBehaviour
         endDrag = (slot) => {
             unit.EndDrag();
             if(slot != null && slot.unit == null){
-                unit.OnDisplacement();
-                unit.OnPlacement(slot);
+                if(GameManager.instance.playerData.DT > 0){
+                    unit.OnDisplacement();
+                    unit.OnPlacement(slot);
+                    GameManager.instance.playerData.DT--;
+                    placementUIRoot.UpdateDT();
+                }else{
+                    InsufficientDT();
+                }
             }else if(placementUIRoot.IsInInventoryArea(Input.mousePosition)){
+                if(GameManager.instance.playerData.DT > 0){
                     unit.OnDisplacement();
                     GameManager.instance.playerData.units.Add(unit.status);
                     unit.Remove();
                     placementUIRoot.UpdateUnit();
+                    GameManager.instance.playerData.DT--;
+                    placementUIRoot.UpdateDT();
+                } else{
+                    InsufficientDT();
+                }
             }
         };
         unit.StartDrag();
@@ -220,6 +243,10 @@ public class CombatManager : MonoBehaviour
         isDragging = false;
         endDrag = null;
         Debug.Log($"EndDrag {slot}");
+    }
+
+    public void InsufficientDT(){
+        Debug.Log("Insufficient DT");
     }
 #endregion
 
