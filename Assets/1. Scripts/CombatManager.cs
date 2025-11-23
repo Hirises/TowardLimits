@@ -306,6 +306,10 @@ public class CombatManager : MonoBehaviour
         LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY);
     }
 
+    public void GameOver(){
+        LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY);
+    }
+
     public void InsufficientDT(){
         Debug.Log("Insufficient DT");
     }
@@ -396,7 +400,7 @@ public class CombatManager : MonoBehaviour
         if(GameManager.instance.playerData.Persuaded >= 100){
             ClearPhase();
             EndGame();
-            GoToBaseCamp();
+            GameOver();
         }
     }
 
