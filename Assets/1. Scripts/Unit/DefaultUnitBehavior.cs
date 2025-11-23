@@ -14,14 +14,14 @@ public abstract class DefaultUnitBehavior : UnitBehavior
 
     private IEnumerator MainLoop(){
         while(true){
-            yield return new WaitForSeconds(1f / status.data.attackSpeed);
+            yield return new WaitForSeconds(1f / (status.data.attackSpeed + slot.ATKSPD_buff));
             OnShoot();
         }
     }
 
     public void OnShoot(){
         BulletBehavior bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-        bullet.Shoot(status.data.attackRange, status.data.bulletSpeed, status.data.attack);
+        bullet.Shoot(status.data.attackRange + slot.DMG_buff, status.data.bulletSpeed + slot.BULLETSPD_buff, status.data.attack + slot.DMG_buff);
     }
 
     public override void OnCombatEnd(){

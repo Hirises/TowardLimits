@@ -18,12 +18,13 @@ MonoBehaviour:
     \uB113\uC740 \uB808\uC778\uC5D0 \uACF5\uACA9\uC744 \uAC00\uD55C\uB2E4."
   unitColor: {r: 0.2113914, g: 0.7137255, b: 0.18039215, a: 1}
   maxHealth: 100
-  attack: 10
+  attack: 20
   attackSpeed: 2.5
   attackRange: 100
   bulletSpeed: 15
-  fullFront: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
-  chibiIcon: {fileID: 21300000, guid: fad788cb90a5caf409ef33ea94c88656, type: 3}
+  fullFront: {fileID: 21300000, guid: 41afb8c2ec160514fbef1f1e9631948e, type: 3}
+  chibiIcon: {fileID: 21300000, guid: d882e018a551a844a9522a7f2d9a34aa, type: 3}
+  unitBehavior: {fileID: 2769628337596689658, guid: 4ee0c82475a6d4a40ac6accbcf1f1a85, type: 3}
   derivativeTo: 2
   derivativeAmount: 2
   integralTo: 4

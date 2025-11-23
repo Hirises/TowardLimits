@@ -4,10 +4,6 @@ public class EIRNormal : EnemyBehavior
 {
     public override EnemyType enemyType => EnemyType.EIRNormal;
 
-    private void Start(){
-        OnSummon();
-    }
-
     protected override void OnSummon_Internal(){
     }
 

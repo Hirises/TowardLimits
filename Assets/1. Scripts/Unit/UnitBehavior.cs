@@ -44,10 +44,10 @@ public abstract class UnitBehavior : MonoBehaviour
     /// 유닛 회수시 (항상 전투가 종료된 상태라고 가정)
     /// </summary>
     public void OnDisplacement(){
+        OnDisplacement_Internal();
         slot.unit = null;
         slot = null;
         transform.SetParent(null);
-        OnDisplacement_Internal();
     }
 
     protected abstract void OnDisplacement_Internal();

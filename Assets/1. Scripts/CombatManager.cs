@@ -22,8 +22,6 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Slot[] slots;
 
     [Header("Entities")]
-    [SerializeField] public SerializableDictionaryBase<EnemyType, EnemyBehavior> enemyMap;
-    [SerializeField] public SerializableDictionaryBase<UnitType, UnitBehavior> unitMap;
     [SerializeField] public Transform enemySpawnRoot;
     [SerializeField] public WaveChart[] waveCharts;
 
@@ -133,6 +131,7 @@ public class CombatManager : MonoBehaviour
                 unit.Remove();
             }
             slot.ShowBase(false);
+            slot.ResetBuff();
             slot.unit = null;
         }
         foreach(EnemyBehavior enemy in enemiesList){
@@ -140,6 +139,8 @@ public class CombatManager : MonoBehaviour
         }
         enemiesList.Clear();
         phase = Phase.None;
+        currentWaveChart = null;
+        currentWave = 0;
         EndDrag();
         travelMap.Clear();
     }
@@ -165,6 +166,9 @@ public class CombatManager : MonoBehaviour
 
     public void NextWave(){
         isSummonEnded = false;
+        if(currentWaveChart != null){
+            currentWaveChart.Unload();
+        }
         currentWave++;
         if(currentWave >= currentStage.waveCount){
             EndCombatPhase();
@@ -219,7 +223,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public UnitBehavior SummonUnit(UnitStatus status){
-        UnitBehavior unit = Instantiate(unitMap[status.unitType], transform);
+        UnitBehavior unit = Instantiate(status.unitType.GetUnitData().unitBehavior, transform);
         unit.Initialize(status);
         return unit;
     }
@@ -312,7 +316,7 @@ public class CombatManager : MonoBehaviour
         }
         phase = Phase.Combat;
         isSummonEnded = false;
-        currentWaveChart = ChooseRandomWaveChart(1, Polar.Both);
+        currentWaveChart = ChooseRandomWaveChart(1, Polar.Both, currentWave == currentStage.waveCount - 1);
         if(currentWaveChart == null){
             enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
             return;
@@ -340,9 +344,9 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar){
+    public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
         WaveChart[] waveChart = waveCharts.Where(w => w.difficulty.x <= difficulty && (w.difficulty.y < 0 || difficulty <= w.difficulty.y)  
-            && (w.polar == polar || w.polar == Polar.Both)).ToArray();
+            && (w.polar == polar || w.polar == Polar.Both) && w.forFinalBoss == forFinalBoss).ToArray();
         if(waveChart.Length == 0){
             return null;
         }
@@ -371,7 +375,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void SummonEnemy(EnemyType enemyType, int column){
-        EnemyBehavior enemy = Instantiate(enemyMap[enemyType], enemySpawnRoot);
+        EnemyBehavior enemy = Instantiate(enemyType.GetEnemyData().enemyBehavior, enemySpawnRoot);
         enemy.transform.position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), 0, RelavtiveLineHandler.instance.TopRowZ);
         enemiesList.Add(enemy);
         enemy.OnSummon();
@@ -404,9 +408,10 @@ public class CombatManager : MonoBehaviour
         phase = Phase.Purchase;
         foreach(Slot slot in slots){
             if(slot.unit != null){
-                slot.unit.OnDisplacement();
-                GameManager.instance.playerData.units.Add(slot.unit.status);
-                slot.unit.Remove();
+                UnitBehavior unit = slot.unit;
+                GameManager.instance.playerData.units.Add(unit.status);
+                unit.OnDisplacement();
+                unit.Remove();
             }
             slot.ShowBase(false);
         }
@@ -503,6 +508,9 @@ public class CombatManager : MonoBehaviour
 #endregion
 
     public Slot GetSlot(int row, int column){
+        if(row < 0 || row >= girdSize.x || column < 0 || column >= girdSize.y){
+            return null;
+        }
         return slots[row * girdSize.y + column];
     }
 }

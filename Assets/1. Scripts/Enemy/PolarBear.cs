@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class PolarBear : MonoBehaviour
+public class PolarBear : EnemyBehavior
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override EnemyType enemyType => EnemyType.PolarBear;
+
+    protected override void OnSummon_Internal()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnDeath_Internal()
     {
-        
+
+    }
+
+    private void Update(){
+        transform.position -= Vector3.forward * data.speed * Time.deltaTime;
+        if(transform.position.z <= -10){
+            CombatManager.instance.Persuade(data.persuade);
+            OnDeath();
+        }
     }
 }

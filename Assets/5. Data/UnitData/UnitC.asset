@@ -22,7 +22,11 @@ MonoBehaviour:
   attackSpeed: 3
   attackRange: 100
   bulletSpeed: 15
-  fullFront: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
-  chibiIcon: {fileID: 21300000, guid: fad788cb90a5caf409ef33ea94c88656, type: 3}
+  fullFront: {fileID: 21300000, guid: 3810b06ff2590df4da569a02148382f4, type: 3}
+  chibiIcon: {fileID: 21300000, guid: b5e4dc07e63f1d949a971cd11acb703b, type: 3}
+  unitBehavior: {fileID: 1234898056655892269, guid: 58f31f5eaabff5d4b9a6a0a3722ed4c4, type: 3}
   derivativeTo: 0
+  derivativeAmount: 1
   integralTo: 2
+  ATKSPD_buff: 1
+  DMG_buff: 5

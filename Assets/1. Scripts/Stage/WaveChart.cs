@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -7,12 +8,14 @@ public class WaveChart : ScriptableObject
 {
     public Polar polar = Polar.Both; //북쪽방향인가?
     public Vector2Int difficulty;   //난이도 계수
+    public bool forFinalBoss = false;   //마지막 보스 전용 차트인가?
 
     public string filePath;   //적 생성용 파일경로
     [HideInInspector] public WaveChartList waveChartList;
     [System.NonSerialized] public List<(float startTime, int lane, EnemyType enemyType)> summonList;
     [HideInInspector] public float duration;
 
+    [Button]
     public void Load(){
         TextAsset textAsset = Resources.Load<TextAsset>(filePath);
         if(textAsset == null){
@@ -21,21 +24,36 @@ public class WaveChart : ScriptableObject
         }
         string json = textAsset.text;
         waveChartList = JsonUtility.FromJson<WaveChartList>(json);
+        foreach(WaveChartData data in waveChartList.enemyList){
+            Debug.Log($"WaveChartData: {GetEnemyType(data.enemyType)} at {data.lane} at {data.startTime}");
+        }
         summonList = new List<(float startTime, int lane, EnemyType enemyType)>();
         float maxStartTime = 0;
         foreach(WaveChartData data in waveChartList.enemyList){
             if(data.emitOnce){
-                summonList.Add((data.startTime, data.lane, data.enemyType));
+                summonList.Add((data.startTime, data.lane, GetEnemyType(data.enemyType)));
                 maxStartTime = Mathf.Max(maxStartTime, data.startTime);
             }else{
                 for(int i = 0; i < data.count; i++){
-                    summonList.Add((data.startTime + i * data.interval, data.lane, data.enemyType));
+                    summonList.Add((data.startTime + i * data.interval, data.lane, GetEnemyType(data.enemyType)));
                 }
                 maxStartTime = Mathf.Max(maxStartTime, data.startTime + data.count * data.interval);
             }
         }
         summonList.Sort((a, b) => a.startTime.CompareTo(b.startTime));
         duration = maxStartTime + 15;
+    }
+
+    [Button]
+    public void Unload(){
+        summonList = null;
+        duration = 0;
+        waveChartList = null;
+        Debug.Log($"WaveChart: {name} unloaded");
+    }
+
+    private EnemyType GetEnemyType(string enemyType){
+        return Enum.Parse<EnemyType>(enemyType);
     }
 
     [System.Serializable]
@@ -50,6 +68,6 @@ public class WaveChart : ScriptableObject
         public float startTime;
         public int count;
         public float interval;
-        public EnemyType enemyType;
+        public string enemyType;
     }
 }

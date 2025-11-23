@@ -1719,66 +1719,11 @@ MonoBehaviour:
   - {fileID: 119949421}
   - {fileID: 283061771}
   - {fileID: 1464214582}
-  enemyMap:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 1
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-        m_TextWithWhitespace: "Keys\u200B"
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 1
-    _keyValues: 00000000
-    _keys: 00000000
-    _values:
-    - {fileID: 3127465028169803157, guid: 380bd271c458bd34098d21cefaa824d9, type: 3}
-  unitMap:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 1
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-        m_TextWithWhitespace: "Keys\u200B"
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 1
-    _keyValues: 02000000
-    _keys: 02000000
-    _values:
-    - {fileID: 1027954349226559969, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
   enemySpawnRoot: {fileID: 1889532237}
   waveCharts:
   - {fileID: 11400000, guid: 95b9b5e059656074fb09c46a1d6302f2, type: 2}
   - {fileID: 11400000, guid: 03694109434f097469994de14bbc91de, type: 2}
+  - {fileID: 11400000, guid: df0b7cc2042973a44a9cc6b6bb2765d8, type: 2}
   placementUIRoot: {fileID: 1579879754}
   travelMap: {fileID: 424439614}
   persuadeText: 'WARNING!

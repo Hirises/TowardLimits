@@ -16,14 +16,15 @@ MonoBehaviour:
   unitName: "\uC77C\uCC28\uD568\uC218"
   unitDescription: "\uADC0\uC5EC\uC6B4 \uC77C\uCC28\uD568\uC218\uC9F1\uC774\uB2E4.\n\uC77C\uC790\uB85C
     \uACF5\uACA9\uC744 \uB0A0\uB9B0\uB2E4"
-  unitColor: {r: 0.7323234, g: 0.83396226, b: 0.3257173, a: 1}
+  unitColor: {r: 0.56078744, g: 0.645283, b: 0.22280523, a: 1}
   maxHealth: 100
   attack: 10
-  attackSpeed: 3
+  attackSpeed: 4
   attackRange: 100
   bulletSpeed: 15
   fullFront: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
   chibiIcon: {fileID: 21300000, guid: fad788cb90a5caf409ef33ea94c88656, type: 3}
+  unitBehavior: {fileID: 1027954349226559969, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
   derivativeTo: 1
   derivativeAmount: 1
   integralTo: 3

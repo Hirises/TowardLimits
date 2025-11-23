@@ -21,9 +21,14 @@ public class UnitData : ScriptableObject
     [Header("Images")]
     public Sprite fullFront;
     public Sprite chibiIcon;
+    public UnitBehavior unitBehavior;
 
     [Header("Calculus")]
     public UnitType derivativeTo;
     public int derivativeAmount = 1;
     public UnitType integralTo;
+
+    [Header("UnitC")]
+    public float ATKSPD_buff = 0;
+    public int DMG_buff = 0;
 }
