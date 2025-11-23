@@ -15,5 +15,5 @@ MonoBehaviour:
   stageNumber: {x: 0, y: 0}
   direction: 0
   waveCount: 2
-  DT: 1
+  DT: 3
   prove: 10

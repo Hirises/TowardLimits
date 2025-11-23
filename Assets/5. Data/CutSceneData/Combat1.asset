@@ -14,26 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutSceneName: Combat1
   cutSceneActions:
+  - name: "\uC77C\uCC28\uD568\uC218"
+    text: "\uC73C\uC557, \uC800\uAE30\uBD10!\n\uC774\uC0C1\uD55C \uC0AC\uB78C\uB4E4\uC774
+      \uC55E\uAE38\uC744 \uB9C9\uACE0 \uC788\uC5B4"
+    clearSprite: 0
+    isLeft: 1
+    sprite: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
+    callFunction: 0
+    clazz: 
+    method: 
   - name: "EIR\uB2E8"
-    text: "\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294
-      \uB465\uAE00\uB2E4!"
+    text: "\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!"
     clearSprite: 0
     isLeft: 0
     sprite: {fileID: 21300000, guid: 9df700197233f5d4dafd1e3e47b0042f, type: 3}
     callFunction: 0
     clazz: 
     method: 
-  - name: ' '
-    text: "\uD3C9\uD654\uB85C\uC6B4 \uC5B4\uB290\uB0A0 "
-    clearSprite: 1
-    isLeft: 0
-    sprite: {fileID: 0}
-    callFunction: 0
-    clazz: 
-    method: 
   - name: "\uC77C\uCC28\uD568\uC218"
-    text: "...\uC0AC\uC2E4 \uC9C0\uAD6C\uB294 \uB465\uAE00\uC5C8\uB358 \uAC74\uAC00?
-      \uB0B4\uAC00 \uC798\uBABB \uB418\uC5C8\uB358 \uAC70\uC57C?"
+    text: "EIR\uB2E8... \uC138\uC0C1\uC758 \uC9C4\uC2E4\uC744 \uC228\uAE30\uB824\uB294
+      \uADF9\uC545\uBB34\uB3C4\uD55C \uB2E8\uCCB4\uC57C"
     clearSprite: 0
     isLeft: 1
     sprite: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
@@ -41,39 +41,21 @@ MonoBehaviour:
     clazz: 
     method: 
   - name: "\uC77C\uCC28\uD568\uC218"
-    text: "\uADF8\uB798... \uB0B4\uAC00 \uC798\uBABB \uC0DD\uAC01\uD588\uB358 \uAC83
-      \uAC19\uC544. \uC9C0\uAD6C\uB294 \uB465\uADFC\uAC8C \uB2F9\uC5F0\uD55C\uB370
-      \uC65C \uD3C9\uD3C9\uD558\uB2E4\uACE0 \uC0DD\uAC01\uD588\uC744\uAE4C?"
+    text: "\uBAA8\uB450 '\uC124\uB4DD'\uD558\uBA74\uC11C \uAC00\uB294 \uC218 \uBC16\uC5D0
+      \uC5C6\uACA0\uB294\uAC78?"
     clearSprite: 0
     isLeft: 1
     sprite: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
     callFunction: 0
     clazz: 
     method: 
-  - name: "\uADF9\uACF0"
-    text: "\uADF8\uC6CC\uC5B4?"
+  - name: "\uC77C\uCC28\uD568\uC218"
+    text: "\uC6B0\uB9AC\uB97C \uB4DC\uB808\uADF8 \uB4DC\uB86D\uD574\uC11C \uBC30\uCE58\uD574\uC918!\n\uC544,
+      \uC5B4\uB514\uC11C EIR\uB2E8\uC774 \uB098\uC624\uB294\uC9C0\uB3C4 \uD45C\uC2DC\uD574\uB450\uC5C8\uC73C\uB2C8
+      \uCC38\uACE0\uD574!"
     clearSprite: 0
-    isLeft: 0
-    sprite: {fileID: 21300000, guid: e5afe308f6542b144902696477eb52f6, type: 3}
-    callFunction: 0
-    clazz: 
-    method: 
-  - name: ' '
-    text: "\uADF8\uB807\uAC8C \uC9C0\uAD6C\uAC00 \uD3C9\uD3C9\uD558\uB2E4\uB294 \uC0AC\uC2E4\uC740
-      \uB610\uB2E4\uC2DC \uC5ED\uC0AC\uC758 \uC548\uAC1C\uC18D\uC73C\uB85C \uC228\uACA8\uC9C0\uACE0\uC57C
-      \uB9D0\uC558\uB2E4."
-    clearSprite: 1
-    isLeft: 0
-    sprite: {fileID: 0}
-    callFunction: 0
-    clazz: 
-    method: 
-  - name: ' '
-    text: "...\uB610\uB2E4\uB978 \uB204\uAD70\uAC00\uAC00 \uADF9\uC810\uC73C\uB85C\uC758
-      \uC5EC\uC815\uC744 \uC2DC\uC791\uD558\uAE30 \uC804\uAE4C\uC9C4"
-    clearSprite: 1
-    isLeft: 0
-    sprite: {fileID: 0}
+    isLeft: 1
+    sprite: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
     callFunction: 0
     clazz: 
     method: 

@@ -8,6 +8,7 @@ using UnityEngine;
 public class WaveChart : ScriptableObject
 {
     public Polar polar = Polar.Both; //북쪽방향인가?
+    public Vector2Int stageRange;   //스테이지
     public Vector2Int difficulty;   //난이도 계수
     public bool forFinalBoss = false;   //마지막 보스 전용 차트인가?
 

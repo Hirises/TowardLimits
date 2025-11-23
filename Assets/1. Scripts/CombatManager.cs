@@ -7,6 +7,8 @@ using System.Linq;
 using System;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
 /// 인게임 메니저
@@ -32,7 +34,9 @@ public class CombatManager : MonoBehaviour
     [SerializeField] [TextArea] public string persuadeText;
     [SerializeField] public TMP_Text persuadeTextUI;
     [SerializeField] public RectTransform purchaseRoot;
+    [SerializeField] public RectTransform purchaseArea;
     [SerializeField] public TMP_Text purchaseTextUI;
+    [SerializeField] public Image Whiteout;
 
     [ReadOnly] private StageData currentStage;
     [ReadOnly] public WaveChart currentWaveChart;
@@ -145,6 +149,8 @@ public class CombatManager : MonoBehaviour
         phase = Phase.None;
         currentWaveChart = null;
         currentWave = 0;
+        Whiteout.color = new Color(1, 1, 1, 0);
+        RelavtiveLineHandler.instance.RowBase.transform.position = Vector3.zero;
         EndDrag();
         travelMap.Clear();
     }
@@ -175,10 +181,7 @@ public class CombatManager : MonoBehaviour
         currentWave++;
         if(currentWave >= currentStage.waveCount){
             EndCombatPhase();
-            StartPurchasePhase();
-            if(GameManager.instance.playerData.stage == 0){
-                CutsceneManager.instance.PlayCutScene("Combat3");
-            }
+            StartCoroutine(PurchasePhaseAnimation());
             return;
         }
         if(currentWave == 0){
@@ -194,6 +197,24 @@ public class CombatManager : MonoBehaviour
             }else if(currentWave == 1){
                 CutsceneManager.instance.PlayCutScene("Combat2");
             }
+        }
+    }
+
+    public IEnumerator PurchasePhaseAnimation(){
+        foreach(Slot slot in slots){
+            slot.ShowBase(false);
+        }
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(RelavtiveLineHandler.instance.RowBase.transform.DOMoveZ(RelavtiveLineHandler.instance.TopRowZ, 3f).SetEase(Ease.InOutSine));
+        sequence.Insert(2, DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 1), 1f).SetEase(Ease.InOutSine));
+        yield return sequence.WaitForCompletion();
+        StartPurchasePhase();
+        RelavtiveLineHandler.instance.RowBase.transform.position = Vector3.zero;
+        yield return DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 0), 0.5f).SetEase(Ease.InOutSine).WaitForCompletion();
+        if(GameManager.instance.playerData.stage == 0){
+            CutsceneManager.instance.PlayCutScene("Combat3");
+            GameManager.instance.playerData.DT = 5;
+            placementUIRoot.UpdateDT();
         }
     }
 
@@ -368,8 +389,10 @@ public class CombatManager : MonoBehaviour
     }
 
     public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
+        int stage = GameManager.instance.playerData.stage;
         WaveChart[] waveChart = waveCharts.Where(w => w.difficulty.x <= difficulty && (w.difficulty.y < 0 || difficulty <= w.difficulty.y)  
-            && (w.polar == polar || w.polar == Polar.Both) && w.forFinalBoss == forFinalBoss).ToArray();
+            && (w.polar == polar || w.polar == Polar.Both) && w.forFinalBoss == forFinalBoss
+            && w.stageRange.x <= stage && (w.stageRange.y < 0 || stage <= w.stageRange.y)).ToArray();
         if(waveChart.Length == 0){
             return null;
         }
@@ -526,7 +549,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public bool IsInPurchaseArea(Vector3 screenPosition){
-        return RectTransformUtility.RectangleContainsScreenPoint(purchaseRoot, screenPosition);
+        return RectTransformUtility.RectangleContainsScreenPoint(purchaseArea, screenPosition);
     }
 #endregion
 

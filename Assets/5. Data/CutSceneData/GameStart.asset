@@ -22,9 +22,53 @@ MonoBehaviour:
     callFunction: 1
     clazz: TitleSceneManager
     method: ShowSpace
+  - name: ' '
+    text: "\uD3C9\uD654\uB86D\uACE0 \uC544\uB984\uB2E4\uC6B4 \uC6B0\uB9AC \uD589\uC131..."
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uC6B0\uB9AC \uD589\uC131\uC5D0\uB294 \uC544\uB984\uB2E4\uC6B4 \uBBF8\uC18C\uB140\uB4E4\uC774
+      \uC0B4\uACE0 \uC788\uC2B5\uB2C8\uB2E4"
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uC544\uB984\uB2F5\uB2E4\uB294 \uB73B\uC758 \uB3D9\uC5B4 \uBC18\uBCF5\uC774
+      \uC544\uB2C8\uB77C \uC544\uC8FC \uC791\uC740 \uBBF8\uC18C-\uB140 \uB4E4\uC774\uC5D0\uC694"
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uADF8\uB9AC\uACE0 \uC774 \uC138\uACC4\uC758 \uD589\uC131\uC740 \uD3C9\uD3C9\uD558\uACE0
+      \uAE38\uCB49\uD55C \uBAA8\uC591\uC774\uB78D\uB2C8\uB2E4"
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uC138\uC0C1\uC758 \uC591 \uB05D, \uADF9\uC810\uC5D0\uB294 \uAD81\uADF9\uC801\uC774\uACE0
+      \uC2E0\uBE44\uB85C\uC6B4 \uD798\uC774 \uB118\uCCD0\uB098\uB294 \uBE5B\uC774
+      \uC19F\uC544\uB09C\uB370\uC694"
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
   - name: "EIR\uB2E8"
-    text: "\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294
-      \uB465\uAE00\uB2E4!"
+    text: "\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!"
     clearSprite: 0
     isLeft: 0
     sprite: {fileID: 21300000, guid: 9df700197233f5d4dafd1e3e47b0042f, type: 3}
@@ -32,7 +76,36 @@ MonoBehaviour:
     clazz: 
     method: 
   - name: ' '
-    text: "\uD3C9\uD654\uB85C\uC6B4 \uC5B4\uB290\uB0A0 "
+    text: "\uC774\uB7F0! \uC0AC\uD68C\uC5D0 \uC554\uC57D\uD558\uACE0 \uC788\uB294
+      \uC74C\uBAA8\uB860 \uB2E8\uCCB4 EIR(Earth is Round)\uB2E8\uC774\uC5D0\uC694"
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uC0AC\uB78C\uB4E4\uC774 \uC9C4\uC2E4\uC5D0 \uB3C4\uB2EC\uD558\uC9C0 \uBABB\uD558\uB3C4\uB85D
+      \uADF9\uC810\uC73C\uB85C \uAC00\uB294 \uAE38\uC744 \uB9C9\uACE0 \uC788\uB300\uC694"
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uC6B0\uB9AC \uD589\uC131\uC758 \uC790\uB791 \uBBF8\uC18C-\uB140\uB4E4\uACFC
+      \uD568\uAED8 \uC138\uC0C1\uC774 \uB05D\uC5D0 \uB3C4\uB2EC\uD574\uBCFC\uAE4C\uC694?"
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uC5B4\uCA4C\uBA74 \uC6B0\uB9AC \uBBF8\uC18C\uB140\uB4E4\uC774 \uC138\uACC4\uAC00
+      \uB465\uAE00\uC9C0 \uC54A\uB2E4\uB294 \uAC78 \uBC1D\uD600\uC904\uC9C0\uB3C4
+      \uBAB0\uB77C\uC694"
     clearSprite: 1
     isLeft: 0
     sprite: {fileID: 0}

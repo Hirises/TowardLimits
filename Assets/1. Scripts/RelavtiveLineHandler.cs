@@ -15,6 +15,7 @@ public class RelavtiveLineHandler : MonoBehaviour
     [Header("Line Ref")]
     [SerializeField] private Transform[] Columns;
     [SerializeField] private Transform[] Rows;
+    [SerializeField] public Transform RowBase;
     [SerializeField] private Transform TopRow;
     public float TopRowZ => TopRow.position.z;
     [SerializeField] private Transform BottomRow;

@@ -183,7 +183,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Toward
 
-    Limit'
+    Limits'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36dde8430f164ad45858da9821300fea, type: 2}
   m_sharedMaterial: {fileID: -6184982241818138219, guid: 36dde8430f164ad45858da9821300fea, type: 2}

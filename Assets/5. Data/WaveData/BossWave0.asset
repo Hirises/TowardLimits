@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: BossWave0
   m_EditorClassIdentifier: 
   polar: 0
-  difficulty: {x: 0, y: 0}
+  stageRange: {x: 0, y: 0}
+  difficulty: {x: 0, y: 99}
   forFinalBoss: 1
   filePath: BossWave0
   waveChartList:
