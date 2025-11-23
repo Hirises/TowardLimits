@@ -64,7 +64,15 @@ MonoBehaviour:
   - name: ' '
     text: "\uADF8\uB807\uAC8C \uC9C0\uAD6C\uAC00 \uD3C9\uD3C9\uD558\uB2E4\uB294 \uC0AC\uC2E4\uC740
       \uB610\uB2E4\uC2DC \uC5ED\uC0AC\uC758 \uC548\uAC1C\uC18D\uC73C\uB85C \uC228\uACA8\uC9C0\uACE0\uC57C
-      \uB9D0\uC558\uB2E4.\n...\uB610\uB2E4\uB978 \uB204\uAD70\uAC00\uAC00 \uADF9\uC810\uC73C\uB85C\uC758
+      \uB9D0\uC558\uB2E4."
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "...\uB610\uB2E4\uB978 \uB204\uAD70\uAC00\uAC00 \uADF9\uC810\uC73C\uB85C\uC758
       \uC5EC\uC815\uC744 \uC2DC\uC791\uD558\uAE30 \uC804\uAE4C\uC9C4"
     clearSprite: 1
     isLeft: 0

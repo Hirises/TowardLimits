@@ -8,7 +8,9 @@ public class BaseCampManager : MonoBehaviour
 
     [SerializeField] private Inventory inventoryUI;
     [SerializeField] private TMP_Text stageText;
-
+    [SerializeField] private string stageTextFormat = "Stage {0}";
+    [SerializeField] private TMP_Text persuadedText;
+    [SerializeField] private TMP_Text proveText;
     private void Awake(){
         instance = this;
     }
@@ -18,7 +20,9 @@ public class BaseCampManager : MonoBehaviour
     }
 
     public void Setup(){
-        stageText.text = $"Stage {GameManager.instance.playerData.stage}";
+        stageText.text = string.Format(stageTextFormat, GameManager.instance.playerData.stage);
+        persuadedText.text = $"{GameManager.instance.playerData.Persuaded}%";
+        proveText.text = $"{GameManager.instance.playerData.Prove}%";
         inventoryUI.Setup(GameManager.instance.playerData.units, (icon, status) => {
             //no drag action -> pass
         });
