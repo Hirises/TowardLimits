@@ -35,7 +35,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public TMP_Text purchaseTextUI;
 
     [ReadOnly] private StageData currentStage;
-    [ReadOnly] private WaveChart currentWaveChart;
+    [ReadOnly] public WaveChart currentWaveChart;
     [ReadOnly] private int currentWave = 0;
     private float waveStartTime = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
@@ -158,7 +158,6 @@ public class CombatManager : MonoBehaviour
         currentWave = -1;
         GameManager.instance.playerData.DT = 999;
         travelMap.Initialize(currentStage.waveCount);
-        GameManager.instance.playerData.Persuaded = 0;
     }
 
     /// <summary>
@@ -202,7 +201,10 @@ public class CombatManager : MonoBehaviour
     public void StartPlacementPhase(){
         EndCombatPhase();
         phase = Phase.Placement;
+        currentWaveChart = ChooseRandomWaveChart(1, Polar.Both, currentWave == currentStage.waveCount - 1);
+        currentWaveChart?.Load();
         placementUIRoot.Show_Placement();
+        
     }
 
     public void EndPlacementPhase(){
@@ -320,13 +322,6 @@ public class CombatManager : MonoBehaviour
         }
         phase = Phase.Combat;
         isSummonEnded = false;
-        currentWaveChart = ChooseRandomWaveChart(1, Polar.Both, currentWave == currentStage.waveCount - 1);
-        if(currentWaveChart == null){
-            enemySpawnLoop = StartCoroutine(SimpleEnemySpawnLoop());
-            return;
-        }
-        Debug.Log($"ChooseWaveChart: {currentWaveChart.filePath}");
-        currentWaveChart.Load();
         enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(currentWaveChart));
     }
 

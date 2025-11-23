@@ -18,3 +18,4 @@ MonoBehaviour:
   damage: 100
   persuade: 30
   speed: 6
+  color: {r: 1, g: 0, b: 0, a: 1}

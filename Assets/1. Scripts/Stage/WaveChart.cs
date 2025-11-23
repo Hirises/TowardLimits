@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class WaveChart : ScriptableObject
     [HideInInspector] public WaveChartList waveChartList;
     [System.NonSerialized] public List<(float startTime, int lane, EnemyType enemyType)> summonList;
     [HideInInspector] public float duration;
+    public EnemyType[][] commonEnemyTypes; //경고해야할 적 종류. column, priority
 
     [Button]
     public void Load(){
@@ -42,6 +44,11 @@ public class WaveChart : ScriptableObject
         }
         summonList.Sort((a, b) => a.startTime.CompareTo(b.startTime));
         duration = maxStartTime + 15;
+        commonEnemyTypes = new EnemyType[CombatManager.instance.girdSize.y][];
+        for(int i = 0; i < CombatManager.instance.girdSize.y; i++){
+            //find first 3 frequent enemy types
+            commonEnemyTypes[i] = summonList.Where(x => x.lane == i).GroupBy(x => x.enemyType).OrderByDescending(x => x.Count()).Take(3).Select(x => x.Key).ToArray();
+        }
     }
 
     [Button]

@@ -10,4 +10,5 @@ public class EnemyData : ScriptableObject
     public int damage;
     public int persuade;
     public float speed;
+    public Color color;
 }
