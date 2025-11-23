@@ -84,11 +84,11 @@ public class CutsceneManager : MonoBehaviour
             rightImage.gameObject.SetActive(false);
         }
         if(action.callFunction){
-            Type type = Type.GetType(action.clazz);
             GameObject gameObject = GameObject.Find(action.clazz);
             if(gameObject != null){
                 gameObject.SendMessage(action.method);
             }
+            NextAction();
         }
     }
 }

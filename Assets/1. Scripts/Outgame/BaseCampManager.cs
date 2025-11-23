@@ -18,6 +18,12 @@ public class BaseCampManager : MonoBehaviour
 
     private void Start(){
         Setup();
+
+        if(GameManager.instance.playerData.stage == 0){
+            CutsceneManager.instance.PlayCutScene("BaseCamp1");
+        }else if(GameManager.instance.playerData.stage == 1){
+            CutsceneManager.instance.PlayCutScene("BaseCamp2");
+        }
     }
 
     public void Setup(){

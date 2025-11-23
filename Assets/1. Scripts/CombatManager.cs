@@ -176,6 +176,9 @@ public class CombatManager : MonoBehaviour
         if(currentWave >= currentStage.waveCount){
             EndCombatPhase();
             StartPurchasePhase();
+            if(GameManager.instance.playerData.stage == 0){
+                CutsceneManager.instance.PlayCutScene("Combat3");
+            }
             return;
         }
         if(currentWave == 0){
@@ -184,6 +187,14 @@ public class CombatManager : MonoBehaviour
             GameManager.instance.playerData.DT = currentStage.DT;
         }
         StartPlacementPhase();
+
+        if(GameManager.instance.playerData.stage == 0){
+            if(currentWave == 0){
+                CutsceneManager.instance.PlayCutScene("Combat1");
+            }else if(currentWave == 1){
+                CutsceneManager.instance.PlayCutScene("Combat2");
+            }
+        }
     }
 
     public void SkipPlacementPhase(){

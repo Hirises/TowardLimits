@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Wave1
   m_EditorClassIdentifier: 
   polar: 0
-  difficulty: {x: 0, y: 99}
+  difficulty: {x: 1, y: 99}
+  forFinalBoss: 0
   filePath: Wave1
-  enemyList: []
+  waveChartList:
+    enemyList: []
+  duration: 0

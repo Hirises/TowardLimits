@@ -1,0 +1,44 @@
+{
+	"enemyList": [
+	{
+		"lane": 0,
+		"enemyType": "EIRNormal",
+		"emitOnce": false,
+		"startTime": 0.0,
+		"count": 13,
+		"interval": 0.4
+	},
+	{
+		"lane": 1,
+		"emitOnce": false,
+		"startTime": 0.0,
+		"count": 13,
+		"interval": 0.4,
+		"enemyType": "EIRNormal"
+	},
+	{
+		"lane": 2,
+		"emitOnce": false,
+		"startTime": 0.0,
+		"count": 13,
+		"interval": 0.4,
+		"enemyType": "EIRNormal"
+	},
+	{
+		"lane": 3,
+		"emitOnce": false,
+		"startTime": 0.0,
+		"count": 13,
+		"interval": 0.4,
+		"enemyType": "EIRNormal"
+	},
+	{
+		"lane": 4,
+		"emitOnce": false,
+		"startTime": 0.0,
+		"count": 13,
+		"interval": 0.4,
+		"enemyType": "EIRNormal"
+	}
+	]
+}

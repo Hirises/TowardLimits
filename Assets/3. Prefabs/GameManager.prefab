@@ -56,6 +56,9 @@ MonoBehaviour:
   enemyDatas:
   - {fileID: 11400000, guid: 0a142697c4936284a8e656f42504cfe5, type: 2}
   - {fileID: 11400000, guid: e69a651a7ce6ace4da50ffd53fffd9a4, type: 2}
+  - {fileID: 11400000, guid: 3b18c69e278bb694fa1c62efd9b7fdc0, type: 2}
+  - {fileID: 11400000, guid: 04acb89e4c313e14c9cb01cd1f31ad7f, type: 2}
+  - {fileID: 11400000, guid: 7c039f1718b987e489833f998fe69d20, type: 2}
   initalUnitlist: 0200000002000000020000000200000002000000
   DEBUG_MODE: 1
   MIN_LOADING_DELAY: 3

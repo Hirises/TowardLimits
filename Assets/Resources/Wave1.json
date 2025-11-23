@@ -25,6 +25,14 @@
 		"enemyType": "EIRNormal"
 	},
 	{
+		"lane": 2,
+		"emitOnce": false,
+		"startTime": 0.3,
+		"count": 2,
+		"interval": 4,
+		"enemyType": "EIRYellow"
+	},
+	{
 		"lane": 3,
 		"emitOnce": false,
 		"startTime": 0.0,

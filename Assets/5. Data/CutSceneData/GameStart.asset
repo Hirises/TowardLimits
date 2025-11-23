@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45da80eaf9e00da4d8788890906d294a, type: 3}
+  m_Name: GameStart
+  m_EditorClassIdentifier: 
+  cutSceneName: GameStart
+  cutSceneActions:
+  - name: 
+    text: 
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 1
+    clazz: TitleSceneManager
+    method: ShowSpace
+  - name: "EIR\uB2E8"
+    text: "\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294 \uB465\uAE00\uB2E4!\n\uC9C0\uAD6C\uB294
+      \uB465\uAE00\uB2E4!"
+    clearSprite: 0
+    isLeft: 0
+    sprite: {fileID: 21300000, guid: 9df700197233f5d4dafd1e3e47b0042f, type: 3}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uD3C9\uD654\uB85C\uC6B4 \uC5B4\uB290\uB0A0 "
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: 
+    text: 
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 1
+    clazz: TitleSceneManager
+    method: HideSpace
+  - name: 
+    text: 
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 1
+    clazz: TitleSceneManager
+    method: StartNewGame

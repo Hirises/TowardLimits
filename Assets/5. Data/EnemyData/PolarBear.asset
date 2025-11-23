@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828703e3c95224f4b927e2665c564fbf, type: 3}
   m_Name: PolarBear
   m_EditorClassIdentifier: 
-  enemyType: 1
+  enemyType: 4
   enemyBehavior: {fileID: 2892143703089652887, guid: a1c5cf39ad0771040b599d41f5050510, type: 3}
   health: 2400
   damage: 100

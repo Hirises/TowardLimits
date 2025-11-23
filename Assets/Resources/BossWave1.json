@@ -17,6 +17,22 @@
 		"enemyType": "EIRNormal"
 	},
 	{
+		"lane": 1,
+		"emitOnce": false,
+		"startTime": 0.3,
+		"count": 3,
+		"interval": 3,
+		"enemyType": "EIRBlue"
+	},
+	{
+		"lane": 3,
+		"emitOnce": false,
+		"startTime": 0.3,
+		"count": 3,
+		"interval": 3,
+		"enemyType": "EIRBlue"
+	},
+	{
 		"lane": 2,
 		"emitOnce": false,
 		"startTime": 0.0,

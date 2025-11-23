@@ -210,6 +210,12 @@ MonoBehaviour:
   cutSceneDatas:
   - {fileID: 11400000, guid: 94b77d013ba83fd428bf6b2ec0a20d74, type: 2}
   - {fileID: 11400000, guid: 93f8c319da2d1e745b8dc3a6e241e72b, type: 2}
+  - {fileID: 11400000, guid: 5824c18d49d668649bff1e845055a7dc, type: 2}
+  - {fileID: 11400000, guid: 290587ee638af9f40bd586dc3aadf2d0, type: 2}
+  - {fileID: 11400000, guid: 7cad41c447c9d394583d95810e0aa458, type: 2}
+  - {fileID: 11400000, guid: aa370f9a78cee284da969a6fe64d8b7e, type: 2}
+  - {fileID: 11400000, guid: 976140bb34727b749bde367ce8247c88, type: 2}
+  - {fileID: 11400000, guid: a0bdb2cb88afe6b4c93266c4c0774bb1, type: 2}
   isPlaying: 0
 --- !u!223 &7207745379335570862
 Canvas:
