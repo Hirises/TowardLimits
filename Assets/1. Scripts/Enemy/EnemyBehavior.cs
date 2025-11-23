@@ -9,7 +9,7 @@ public abstract class EnemyBehavior : MonoBehaviour
 
     public void OnSummon(){
         data = enemyType.GetEnemyData();
-        health = data.health;
+        health = data.GetHealth();
         OnSummon_Internal();
     }
 

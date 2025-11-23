@@ -19,3 +19,6 @@ MonoBehaviour:
   persuade: 5
   speed: 15
   color: {r: 0.85660374, g: 0.85660374, b: 0.85660374, a: 1}
+  health_add: 5
+  damage_add: 2
+  speed_add: 0.75

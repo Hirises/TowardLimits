@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a6a598920d97a48883996036461f75, type: 3}
   m_Name: Stage0
   m_EditorClassIdentifier: 
-  difficulty: 0
-  waveCount: 3
-  DT: 10
+  stageNumber: {x: 0, y: 0}
+  direction: 0
+  waveCount: 2
+  DT: 1
+  prove: 10
