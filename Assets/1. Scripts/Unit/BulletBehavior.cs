@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
-    private float distance_target;
-    private float speed;
-    private int damage;
+    protected float distance_target;
+    protected float speed;
+    protected int damage;
 
-    public void Shoot(float distance, float speed, int damage){
+    public virtual void Shoot(float distance, float speed, int damage){
         this.distance_target = transform.position.z + distance;
         this.speed = speed;
         this.damage = damage;
@@ -22,8 +22,12 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
-            other.gameObject.GetComponentInParent<EnemyBehavior>().TakeDamage(damage);
-            Destroy(gameObject);
+            OnHitEnemy(other.gameObject.GetComponentInParent<EnemyBehavior>());
         }
+    }
+
+    public virtual void OnHitEnemy(EnemyBehavior enemy){
+        enemy.TakeDamage(damage);
+        Destroy(gameObject);
     }
 }

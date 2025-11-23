@@ -220,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 2889813217402456870}
   slot: {fileID: 0}
-  bulletPrefab: {fileID: 6605641123546364392, guid: 7c128a2e043c310448c2d84a11d58d2c, type: 3}
+  bulletPrefab: {fileID: 4467036178839267235, guid: 7c128a2e043c310448c2d84a11d58d2c, type: 3}
   bulletSpawnPoint: {fileID: 8847379782657271242}
 --- !u!54 &4701083591460592120
 Rigidbody:

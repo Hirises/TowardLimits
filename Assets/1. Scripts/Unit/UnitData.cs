@@ -31,4 +31,10 @@ public class UnitData : ScriptableObject
     [Header("UnitC")]
     public float ATKSPD_buff = 0;
     public int DMG_buff = 0;
+
+    [Header("UnitX2")]
+    public float damageRatio = 0.5f;
+
+    [Header("UnitX3")]
+    public int attackCount = 3;
 }

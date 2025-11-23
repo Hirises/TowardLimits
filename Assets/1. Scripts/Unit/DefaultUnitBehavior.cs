@@ -19,9 +19,19 @@ public abstract class DefaultUnitBehavior : UnitBehavior
         }
     }
 
-    public void OnShoot(){
-        BulletBehavior bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-        bullet.Shoot(status.data.attackRange + slot.DMG_buff, status.data.bulletSpeed + slot.BULLETSPD_buff, status.data.attack + slot.DMG_buff);
+    public virtual void OnShoot(){
+        ShootBullet(slot.position.y);
+    }
+
+    public void ShootBullet(int column){
+        ShootBullet(column, 1f);
+    }
+
+    public void ShootBullet(int column, float damageRatio){
+        int damage = Mathf.RoundToInt((status.data.attackRange + slot.DMG_buff) * damageRatio);
+        Vector3 position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), bulletSpawnPoint.position.y, bulletSpawnPoint.position.z);
+        BulletBehavior bullet = Instantiate(bulletPrefab, position, Quaternion.identity, CombatManager.instance.bulletRoot);
+        bullet.Shoot(damage, status.data.bulletSpeed + slot.BULLETSPD_buff, status.data.attack + slot.DMG_buff);
     }
 
     public override void OnCombatEnd(){

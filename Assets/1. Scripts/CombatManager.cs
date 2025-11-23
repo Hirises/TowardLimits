@@ -24,6 +24,7 @@ public class CombatManager : MonoBehaviour
     [Header("Entities")]
     [SerializeField] public Transform enemySpawnRoot;
     [SerializeField] public WaveChart[] waveCharts;
+    [SerializeField] public Transform bulletRoot;
 
     [Header("UI")]
     [SerializeField] public PlacementUI placementUIRoot;
@@ -133,6 +134,9 @@ public class CombatManager : MonoBehaviour
             slot.ShowBase(false);
             slot.ResetBuff();
             slot.unit = null;
+        }
+        foreach(Transform child in bulletRoot){
+            Destroy(child.gameObject);
         }
         foreach(EnemyBehavior enemy in enemiesList){
             Destroy(enemy.gameObject);
@@ -336,6 +340,9 @@ public class CombatManager : MonoBehaviour
             enemy.OnDeath();
         }
         enemiesList.Clear();
+        foreach(Transform child in bulletRoot){
+            Destroy(child.gameObject);
+        }
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatEnd();
