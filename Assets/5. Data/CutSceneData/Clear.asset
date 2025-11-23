@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45da80eaf9e00da4d8788890906d294a, type: 3}
+  m_Name: Clear
+  m_EditorClassIdentifier: 
+  cutSceneName: Clear
+  cutSceneActions:
+  - name: "EIR\uB2E8 \uB2E8\uC7A5"
+    text: "\uC73C\uC73D... \uC815\uB9D0\uB85C \uC9C0\uAD6C\uB294 \uD3C9\uD3C9\uD588\uB2E8
+      \uB9D0\uC778\uAC00...!"
+    clearSprite: 0
+    isLeft: 0
+    sprite: {fileID: 21300000, guid: 9df700197233f5d4dafd1e3e47b0042f, type: 3}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: "\uC77C\uCC28\uD568\uC218"
+    text: "\uADF8\uB798! \uADF8\uB7EC\uB2C8\uAE4C \uADF8\uB7F0 \uC774\uC0C1\uD55C
+      \uB2E8\uCCB4\uB294 \uADF8\uB9CC \uD574\uCCB4\uD558\uC2DC\uC9C0"
+    clearSprite: 0
+    isLeft: 1
+    sprite: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: "EIR\uB2E8 \uB2E8\uC7A5"
+    text: "\uC774\uB7F4\uC218\uAC00..."
+    clearSprite: 0
+    isLeft: 0
+    sprite: {fileID: 21300000, guid: 9df700197233f5d4dafd1e3e47b0042f, type: 3}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: "\uADF9\uACF0"
+    text: "\uADF8\uC6CC\uC5B4"
+    clearSprite: 0
+    isLeft: 0
+    sprite: {fileID: 21300000, guid: e5afe308f6542b144902696477eb52f6, type: 3}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uADF8\uB807\uAC8C EIR\uB2E8\uC740 \uD574\uCCB4\uB418\uC5C8\uACE0, \uC0AC\uB78C\uB4E4\uC740
+      \uC9C0\uAD6C\uAC00 \uD3C9\uD3C9\uD588\uB2E4\uB294 \uC0AC\uC2E4\uC744 \uAE68\uB2EB\uACE0
+      \uCDA9\uACA9\uC5D0 \uBE60\uC84C\uB2E4."
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: ' '
+    text: "\uADF8\uB7EC\uB098 \uBBF8\uC18C-\uB140 \uC9F1\uB4E4\uC758 \uB178\uB825\uC5D0
+      \uC758\uD574 \uC11C\uC11C\uD788 \uC9C0\uAD6C\uD3C9\uD3C9\uB860\uC740 \uC815\uC124\uB85C
+      \uBC1B\uC544\uB4E4\uC5EC\uC84C\uACE0, \uBA87\uB144\uD6C4\uC5D4 \uC9C0\uAD6C\uAC00
+      \uD3C9\uD3C9\uD558\uB2E4\uB294 \uAC83\uC740 \uAD50\uACFC\uC11C\uC5D0\uB3C4
+      \uC2E4\uB9AC\uB294 \uC0AC\uC2E4\uC774 \uB418\uC5C8\uB2E4."
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 

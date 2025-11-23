@@ -192,7 +192,7 @@ public class CombatManager : MonoBehaviour
         }else if(phase == Phase.Purchase){
             ClearPhase();
             EndGame();
-            GoToBaseCamp();
+            StageClear();
         }
     }
 #endregion
@@ -302,8 +302,14 @@ public class CombatManager : MonoBehaviour
         Debug.Log($"EndDrag {slot}");
     }
 
-    public void GoToBaseCamp(){
-        LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY);
+    public void StageClear(){
+        GameManager.instance.playerData.stage++;
+        GameManager.instance.playerData.Prove += 25;
+        if(GameManager.instance.playerData.Prove >= 100){
+            LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY);
+        }else{
+            LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY);
+        }
     }
 
     public void GameOver(){

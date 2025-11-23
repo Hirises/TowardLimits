@@ -34,8 +34,10 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        if(DEBUG_MODE){
+        if(playerData == null){
             playerData = new PlayerData();
+        }
+        if(DEBUG_MODE){
             playerData.units = new List<UnitStatus>();
             foreach(UnitType unitType in unitlist){
                 if(unitType == UnitType.None){
