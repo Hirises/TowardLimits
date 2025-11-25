@@ -836,7 +836,7 @@ PlayerSettings:
     QNX: DOTWEEN
     Standalone: RH_SerializedDictionary;DOTWEEN
     VisionOS: DOTWEEN
-    WebGL: DOTWEEN
+    WebGL: DOTWEEN;RH_SerializedDictionary
     Windows Store Apps: DOTWEEN
     XboxOne: DOTWEEN
     iPhone: DOTWEEN
