@@ -25,6 +25,14 @@ public class LoadingScene : MonoBehaviour
         root.SetActive(true);
     }
 
+#if UNITY_WEBGL
+    public void ShowAndLoad(string sceneName, float minDelay = 0f){
+        CancelInvoke(nameof(Hide));
+        Show();
+        SceneManager.LoadScene(sceneName);
+        Invoke(nameof(Hide), minDelay);
+    }
+#else
     public async void ShowAndLoad(string sceneName, float minDelay = 0f){
         Show();
         //wait for both mindelay and scene load
@@ -35,6 +43,7 @@ public class LoadingScene : MonoBehaviour
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
         Hide();
     }
+#endif
 
     public void Hide(){
         root.SetActive(false);
