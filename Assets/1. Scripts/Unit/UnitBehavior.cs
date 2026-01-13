@@ -3,7 +3,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 
-public abstract class UnitBehavior : MonoBehaviour
+public abstract class UnitBehavior : LivingEntity
 {
     public abstract UnitType unitType { get; }
     [ReadOnly] public UnitStatus status;
@@ -75,7 +75,7 @@ public abstract class UnitBehavior : MonoBehaviour
         Remove();
     }
 
-    public void TakeDamage(int damage){
+    public override void TakeDamage(int damage){
         status.currentHealth -= damage;
         if(status.currentHealth <= 0){
             OnDeath();

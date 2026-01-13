@@ -1,7 +1,7 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-public abstract class EnemyBehavior : MonoBehaviour
+public abstract class EnemyBehavior : LivingEntity
 {
     public abstract EnemyType enemyType { get; }
     protected EnemyData data;
@@ -24,7 +24,7 @@ public abstract class EnemyBehavior : MonoBehaviour
 
     protected abstract void OnDeath_Internal();
 
-    public void TakeDamage(int damage){
+    public override void TakeDamage(int damage){
         health -= damage;
         if(health <= 0){
             OnDeath();
