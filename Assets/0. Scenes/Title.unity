@@ -805,7 +805,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: DEBUG_MODE
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
+      propertyPath: SKIP_CUTSCENE
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
+      propertyPath: SKIP_INTENTIONAL_DELAY
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

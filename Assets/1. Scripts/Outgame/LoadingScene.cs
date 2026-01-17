@@ -27,19 +27,35 @@ public class LoadingScene : MonoBehaviour
 
 #if UNITY_WEBGL
     public void ShowAndLoad(string sceneName, float minDelay = 0f){
+        if(GameManager.instance.SKIP_INTENTIONAL_DELAY){
+            minDelay = 0f;
+        }
+
         CancelInvoke(nameof(Hide));
         Show();
         SceneManager.LoadScene(sceneName);
-        Invoke(nameof(Hide), minDelay);
+        if(minDelay <= float.Epsilon){
+            Hide();
+        }else{
+            Invoke(nameof(Hide), minDelay);
+        }
     }
 #else
     public async void ShowAndLoad(string sceneName, float minDelay = 0f){
+        if(GameManager.instance.SKIP_INTENTIONAL_DELAY){
+            minDelay = 0f;
+        }
+
         Show();
         //wait for both mindelay and scene load
-        await Task.WhenAll(
-            Task.Delay((int)(minDelay * 1000)),
-            Task.FromResult(SceneManager.LoadSceneAsync(sceneName))
-        );
+        if(minDelay <= float.Epsilon){
+            await SceneManager.LoadSceneAsync(sceneName);
+        }else{
+            await Task.WhenAll(
+                Task.Delay((int)(minDelay * 1000)),
+                Task.FromResult(SceneManager.LoadSceneAsync(sceneName))
+            );
+        }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
         Hide();
     }

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23425db7ed3670843a4ee17f5e10187a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourceHolder: {fileID: 11400000, guid: 10b9e286f76dc61459dcc2045fd36598, type: 2}
   stageDatas:
   - {fileID: 11400000, guid: 848079bf6db95b049898e55ea1b58c41, type: 2}
   - {fileID: 11400000, guid: af478290c7bc7b34d8ad9e878c37aba3, type: 2}

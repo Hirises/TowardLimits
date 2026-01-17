@@ -4,6 +4,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ResourceHolder.asset", menuName = "Unique/Resource Holder")]
 public class ResourceHolder : ScriptableObject
 {
+    private static ResourceHolder instance;
+    public static ResourceHolder Instance
+    {
+        get {
+            if(instance == null){
+                instance = Resources.Load<ResourceHolder>("ResourceHolder");
+            }
+            return instance;
+        }
+    }
+    
     [Header("VFX")]
-    public DamageVFX damageVFX;
+    public DamageVFX damageVFXPrefab;
 }

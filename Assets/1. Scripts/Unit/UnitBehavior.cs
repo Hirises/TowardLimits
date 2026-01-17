@@ -10,6 +10,8 @@ public abstract class UnitBehavior : LivingEntity
     [SerializeField] private MeshRenderer meshRenderer;
     [ReadOnly] public Slot slot;
 
+    private EntityVFX vfx;
+
     /// <summary>
     /// 유닛 생성시 (항상 전투가 종료된 상태라고 가정)
     /// </summary>
@@ -17,6 +19,9 @@ public abstract class UnitBehavior : LivingEntity
     public void Initialize(UnitStatus data){
         this.status = data;
         meshRenderer.material.color = Color.white;
+
+        vfx = new EntityVFX();
+        vfx.Initalize(this);
     }
 
     /// <summary>
@@ -24,6 +29,7 @@ public abstract class UnitBehavior : LivingEntity
     /// </summary>
     public void Remove(){
         status = null;
+        vfx.Dispose();
         Destroy(gameObject);
     }
 
@@ -75,7 +81,7 @@ public abstract class UnitBehavior : LivingEntity
         Remove();
     }
 
-    public override void TakeDamage(int damage){
+    protected override void TakeDamage_Internal(int damage){
         status.currentHealth -= damage;
         if(status.currentHealth <= 0){
             OnDeath();

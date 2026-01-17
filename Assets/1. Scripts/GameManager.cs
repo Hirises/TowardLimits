@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     //싱글톤
     public static GameManager instance;
 
+    [Header("Data")]
+    [SerializeField] public ResourceHolder resourceHolder;
+
     [Header("Objects")]
     [SerializeField] public StageData[] stageDatas;
     [SerializeField] public UnitData[] unitDatas;
@@ -19,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Debug")]
     [SerializeField] public bool DEBUG_MODE = false;
+    [SerializeField] public bool SKIP_INTENTIONAL_DELAY = false;
+    [SerializeField] public bool SKIP_CUTSCENE = false;
     [SerializeField] public float MIN_LOADING_DELAY = 3f;
     [SerializeField] private UnitType[] unitlist;
     [SerializeField] private Polar direction;

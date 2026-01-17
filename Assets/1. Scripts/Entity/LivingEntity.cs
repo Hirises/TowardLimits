@@ -1,6 +1,14 @@
+using System;
 using UnityEngine;
 
 public abstract class LivingEntity : MonoBehaviour, IDamageable
 {
-    public abstract void TakeDamage(int damage);
+    public Action<int> onBeforeTakeDamage;
+    
+    public void TakeDamage(int damage){
+        onBeforeTakeDamage?.Invoke(damage);
+        TakeDamage_Internal(damage);
+    }
+
+    protected abstract void TakeDamage_Internal(int damage);
 }

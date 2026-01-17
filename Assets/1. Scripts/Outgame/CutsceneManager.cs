@@ -42,6 +42,14 @@ public class CutsceneManager : MonoBehaviour
         currentAction = cutSceneData.GetEnumerator();
         cutsceneRoot.SetActive(true);
         isPlaying = true;
+
+        if(GameManager.instance.SKIP_CUTSCENE){
+            while(isPlaying){
+                NextAction();
+            }
+            return;
+        }
+        
         NextAction();
     }
 
