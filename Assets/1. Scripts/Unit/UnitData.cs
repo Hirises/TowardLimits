@@ -23,9 +23,8 @@ public class UnitData : ScriptableObject
     public UnitBehavior unitBehavior;
 
     [Header("Calculus")]
-    public UnitType derivativeTo;
-    public int derivativeAmount = 1;
-    public UnitType integralTo;
+    public CalculusResultElement[] derivativeTo;
+    public CalculusResultElement[] integralTo;
 
     [Header("UnitC")]
     public float ATKSPD_buff = 0;
@@ -36,4 +35,12 @@ public class UnitData : ScriptableObject
 
     [Header("UnitX3")]
     public int attackCount = 3;
+}
+
+[System.Serializable]
+public class CalculusResultElement{
+    public UnitType unitType;
+    [Range(0f, 1f)]
+    public float probability = 1f;
+    public int amount = 1;
 }

@@ -8,4 +8,6 @@ public enum UnitType
     UnitX,
     UnitX2,
     UnitX3,
+
+    UnitABS,
 }

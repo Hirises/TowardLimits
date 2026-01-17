@@ -512,12 +512,12 @@ public class CombatManager : MonoBehaviour
 
     public bool IsIntegrable(UnitStatus status){
         UnitData data = status.unitType.GetUnitData();
-        return data.integralTo != UnitType.None;
+        return data.integralTo.Length > 0;
     }
 
     public bool IsDerivative(UnitStatus status){
         UnitData data = status.unitType.GetUnitData();
-        return data.derivativeTo != UnitType.None;
+        return data.derivativeTo.Length > 0;
     }
 
     public void Integrate(UnitStatus status){
@@ -530,7 +530,14 @@ public class CombatManager : MonoBehaviour
             return;
         }
         GameManager.instance.playerData.units.Remove(status);
-        GameManager.instance.playerData.units.Insert(index, UnitStatus.FromType(data.integralTo));
+        foreach(var element in data.integralTo){
+            if(UnityEngine.Random.value > element.probability){
+                continue;
+            }
+            for(int i = 0; i < element.amount; i++){
+                GameManager.instance.playerData.units.Insert(index, UnitStatus.FromType(element.unitType));
+            }
+        }
     }
 
     public void Derivative(UnitStatus status){
@@ -543,8 +550,13 @@ public class CombatManager : MonoBehaviour
             return;
         }
         GameManager.instance.playerData.units.Remove(status);
-        for(int i = 0; i < data.derivativeAmount; i++){
-            GameManager.instance.playerData.units.Insert(index, UnitStatus.FromType(data.derivativeTo));
+        foreach(var element in data.derivativeTo){
+            if(UnityEngine.Random.value > element.probability){
+                continue;
+            }
+            for(int i = 0; i < element.amount; i++){
+                GameManager.instance.playerData.units.Insert(index, UnitStatus.FromType(element.unitType));
+            }
         }
     }
 

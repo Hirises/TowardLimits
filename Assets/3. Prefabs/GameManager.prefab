@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42877779549800944bae61c096a480d0, type: 2}
   - {fileID: 11400000, guid: 83528374245d6ed418ea7cae151802c9, type: 2}
   - {fileID: 11400000, guid: ca5023aec7b678546a4d1153d7dfae3d, type: 2}
+  - {fileID: 11400000, guid: 626089e3a7fdc154881e1302e1f707d0, type: 2}
   enemyDatas:
   - {fileID: 11400000, guid: 0a142697c4936284a8e656f42504cfe5, type: 2}
   - {fileID: 11400000, guid: e69a651a7ce6ace4da50ffd53fffd9a4, type: 2}
@@ -62,6 +63,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7c039f1718b987e489833f998fe69d20, type: 2}
   initalUnitlist: 0200000002000000020000000200000002000000
   DEBUG_MODE: 1
+  SKIP_INTENTIONAL_DELAY: 0
+  SKIP_CUTSCENE: 0
   MIN_LOADING_DELAY: 3
   unitlist: 020000000300000004000000010000000200000002000000
   direction: 1

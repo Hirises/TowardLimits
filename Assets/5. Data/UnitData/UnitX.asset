@@ -25,6 +25,15 @@ MonoBehaviour:
   fullFront: {fileID: 21300000, guid: 3b9deed8b8c0a854ab7a4417e7f6bdf8, type: 3}
   chibiIcon: {fileID: 21300000, guid: fad788cb90a5caf409ef33ea94c88656, type: 3}
   unitBehavior: {fileID: 1027954349226559969, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
-  derivativeTo: 1
-  derivativeAmount: 1
-  integralTo: 3
+  derivativeTo:
+  - unitType: 1
+    probability: 1
+    amount: 1
+  integralTo:
+  - unitType: 3
+    probability: 1
+    amount: 1
+  ATKSPD_buff: 0
+  DMG_buff: 0
+  damageRatio: 0.5
+  attackCount: 3
