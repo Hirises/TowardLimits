@@ -37,6 +37,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public RectTransform purchaseArea;
     [SerializeField] public TMP_Text purchaseTextUI;
     [SerializeField] public Image Whiteout;
+    [SerializeField] public GameObject SkillIconRoot;
 
     [ReadOnly] private StageData currentStage;
     [ReadOnly] public WaveChart currentWaveChart;
@@ -46,6 +47,7 @@ public class CombatManager : MonoBehaviour
     private Coroutine enemySpawnLoop;
     private bool isDragging = false;
     private Action<Slot> endDrag;
+    private float skillCoolTime = 0;
 
     [ReadOnly] public Phase phase;
     private bool isSummonEnded = false;
@@ -81,6 +83,12 @@ public class CombatManager : MonoBehaviour
             float ratio = (Time.time - waveStartTime) / currentWaveChart.duration;
             ratio = Mathf.Clamp01(ratio);
             travelMap.UpdatePlayerPosition(currentWave, ratio);
+            if(skillCoolTime > 0) {
+                skillCoolTime -= Time.deltaTime;
+            }
+            if(skillCoolTime <= 0){
+                SkillIconRoot.SetActive(true);
+            }
         }else if(phase == Phase.Purchase){
             if(Input.GetKeyDown(KeyCode.Space)){
                 SkipPlacementPhase();
@@ -365,6 +373,8 @@ public class CombatManager : MonoBehaviour
         phase = Phase.Combat;
         isSummonEnded = false;
         enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(currentWaveChart));
+        skillCoolTime = 0;
+        SkillIconRoot.SetActive(true);
     }
 
     public void EndCombatPhase(){
@@ -386,6 +396,8 @@ public class CombatManager : MonoBehaviour
             }
             slot.ShowBase(true);
         }
+        skillCoolTime = ResourceHolder.Instance.skillCoolTime;
+        SkillIconRoot.SetActive(false);
     }
 
     public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
@@ -564,6 +576,24 @@ public class CombatManager : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(purchaseArea, screenPosition);
     }
 #endregion
+
+    public void TryPerformSkill(int line){
+        if(skillCoolTime > 0){
+            return;
+        }
+        skillCoolTime = ResourceHolder.Instance.skillCoolTime;
+        PerformSkill(line);
+        SkillIconRoot.SetActive(false);
+    }
+
+    public void PerformSkill(int line){
+        for(int i = 0; i < girdSize.x; i++){
+            Slot slot = GetSlot(i, line);
+            if(slot.unit != null){
+                slot.unit.PerformSkill();
+            }
+        }
+    }
 
     public Slot GetSlot(int row, int column){
         if(row < 0 || row >= girdSize.x || column < 0 || column >= girdSize.y){

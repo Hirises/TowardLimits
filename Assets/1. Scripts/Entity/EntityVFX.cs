@@ -11,6 +11,9 @@ public class EntityVFX
     }
 
     public void Dispose(){
+        if(entity == null){
+            return;
+        }
         entity.onBeforeTakeDamage -= ShowDamageVFX;
         entity = null;
     }

@@ -7,6 +7,7 @@ public abstract class DefaultUnitBehavior : UnitBehavior
     [SerializeField] private Transform bulletSpawnPoint;
 
     private Coroutine mainLoop;
+    private Coroutine skillLoop;
     
     protected override void OnCombatStart_Internal(){
         mainLoop = StartCoroutine(MainLoop());
@@ -37,6 +38,8 @@ public abstract class DefaultUnitBehavior : UnitBehavior
     public override void OnCombatEnd(){
         if(mainLoop != null) StopCoroutine(mainLoop);
         mainLoop = null;
+        if(skillLoop != null) StopCoroutine(skillLoop);
+        skillLoop = null;
     }
 
     protected override void OnPlacement_Internal(){
@@ -46,4 +49,10 @@ public abstract class DefaultUnitBehavior : UnitBehavior
     protected override void OnDisplacement_Internal(){
         Debug.Log($"{unitType} OnDisplacement");
     }
+
+    protected override void PerformSkill_Internal(){
+        skillLoop = StartCoroutine(SkillLoop());
+    }
+
+    protected abstract IEnumerator SkillLoop();
 }

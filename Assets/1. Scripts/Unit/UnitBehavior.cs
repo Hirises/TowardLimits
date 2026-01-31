@@ -88,6 +88,11 @@ public abstract class UnitBehavior : LivingEntity
         }
     }
 
+    public void PerformSkill(){
+        PerformSkill_Internal();
+    }
+    protected abstract void PerformSkill_Internal();
+
     public void OnMouseDown(){
         CombatManager.instance.StartDrag(this);
     }

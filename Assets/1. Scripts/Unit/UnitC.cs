@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class UnitC : UnitBehavior
 {
     public override UnitType unitType => UnitType.UnitC;
+    private Coroutine skillLoop;
 
     protected override void OnPlacement_Internal()
     {
@@ -33,6 +35,16 @@ public class UnitC : UnitBehavior
         slot.ATKSPD_buff -= status.data.ATKSPD_buff;
     }
 
+    protected override void PerformSkill_Internal(){
+        skillLoop = StartCoroutine(SkillLoop());
+    }
+
+    private IEnumerator SkillLoop(){
+        OnPlacement_Internal();
+        yield return new WaitForSeconds(5f);
+        OnDisplacement_Internal();
+    }
+
     protected override void OnCombatStart_Internal()
     {
 
@@ -42,7 +54,8 @@ public class UnitC : UnitBehavior
 
     public override void OnCombatEnd()
     {
-
+        if(skillLoop != null) StopCoroutine(skillLoop);
+        skillLoop = null;
     }
 
     protected override void OnDisplacement_Internal()

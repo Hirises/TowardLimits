@@ -17,4 +17,7 @@ public class ResourceHolder : ScriptableObject
     
     [Header("VFX")]
     public DamageVFX damageVFXPrefab;
+
+    [Header("Skill")]
+    public float skillCoolTime = 15f;
 }
