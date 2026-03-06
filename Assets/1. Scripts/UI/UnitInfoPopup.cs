@@ -30,8 +30,8 @@ public class UnitInfoPopup : MonoBehaviour
         nameText.text = status.data.unitName;
         descriptionText.text = status.data.unitDescription;
         fullImage.sprite = status.data.fullFront;
-        ATK_Text.text = status.data.attack.ToString();
-        HP_Text.text = status.data.maxHealth.ToString();
+        ATK_Text.text = status.CurrentAttack.ToString();
+        HP_Text.text = status.CurrentMaxHealth.ToString();
         ATS_Text.text = status.data.attackSpeed.ToString();
         Level_Text.text = status.level.ToString();
         for(int i = 0; i < Colored_Text.Length; i++){

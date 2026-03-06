@@ -9,6 +9,7 @@ public class PlacementUI : MonoBehaviour
     [SerializeField] private TMP_Text DT_Text;
     [SerializeField] private GameObject[] WarningMarkRoot;
     [SerializeField] private Image WarningMarkPrefab;
+    [SerializeField] private Image BossWarningMarkPrefab;
     [SerializeField] private RectTransform InventoryArea;
 
     public void Show_Placement(){
@@ -33,8 +34,13 @@ public class PlacementUI : MonoBehaviour
     public void GenerateWarningMark(){
         for(int column = 0; column < CombatManager.instance.girdSize.y; column++){
             foreach(EnemyType enemyType in CombatManager.instance.currentWaveChart.commonEnemyTypes[column]){
-                Image warningMark = Instantiate(WarningMarkPrefab, WarningMarkRoot[column].transform);
-                warningMark.color = enemyType.GetEnemyData().color;
+                if(enemyType == EnemyType.PolarBear){
+                    Image warningMark = Instantiate(BossWarningMarkPrefab, WarningMarkRoot[column].transform);
+                    warningMark.color = enemyType.GetEnemyData().color;
+                }else{
+                    Image warningMark = Instantiate(WarningMarkPrefab, WarningMarkRoot[column].transform);
+                    warningMark.color = enemyType.GetEnemyData().color;
+                }
             }
         }
     }

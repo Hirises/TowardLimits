@@ -9,14 +9,17 @@ public class UnitStatus
     public int maxHealth;
     public int currentHealth;
 
+    public int CurrentAttack => data.attack + (level - 1);
+    public int CurrentMaxHealth => data.maxHealth + 5 * (level - 1);
+
     public UnitData data;
 
     public UnitStatus(UnitData data){
         this.data = data;
         unitType = data.unitType;
         level = 1;
-        maxHealth = data.maxHealth;
-        currentHealth = data.maxHealth;
+        maxHealth = CurrentMaxHealth;
+        currentHealth = CurrentMaxHealth;
     }
     
     public void ResetStatus(){
