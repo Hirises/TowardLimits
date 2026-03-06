@@ -19,7 +19,7 @@ MonoBehaviour:
   unitColor: {r: 0.2113914, g: 0.7137255, b: 0.18039215, a: 1}
   maxHealth: 100
   attack: 20
-  attackSpeed: 2.5
+  attackSpeed: 5
   attackRange: 100
   bulletSpeed: 15
   fullFront: {fileID: 21300000, guid: 41afb8c2ec160514fbef1f1e9631948e, type: 3}

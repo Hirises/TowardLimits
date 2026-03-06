@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 3
   enemyBehavior: {fileID: 99254839271477487, guid: 4bf0bbe24d9c80e46a44108423cfc76e, type: 3}
-  health: 20
+  health: 40
   damage: 10
   persuade: 5
   speed: 25
   color: {r: 0.60757947, g: 0.21819143, b: 0.85660374, a: 1}
-  health_add: 5
+  health_add: 10
   damage_add: 2
   speed_add: 1

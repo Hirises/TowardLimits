@@ -28,10 +28,11 @@ public abstract class DefaultUnitBehavior : UnitBehavior
         ShootBullet(column, 1f);
     }
 
-    public void ShootBullet(int column, float damageRatio){
+    public void ShootBullet(int column, float damageRatio, float scale = 1f){
         int damage = Mathf.RoundToInt((status.data.attackRange + slot.DMG_buff) * damageRatio);
         Vector3 position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), bulletSpawnPoint.position.y, bulletSpawnPoint.position.z);
         BulletBehavior bullet = Instantiate(bulletPrefab, position, Quaternion.identity, CombatManager.instance.bulletRoot);
+        bullet.transform.localScale *= scale;
         bullet.Shoot(damage, status.data.bulletSpeed + slot.BULLETSPD_buff, status.CurrentAttack + slot.DMG_buff);
     }
 

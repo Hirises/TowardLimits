@@ -805,11 +805,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: DEBUG_MODE
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: SKIP_CUTSCENE
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: unitlist.Array.size
@@ -817,7 +817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: SKIP_INTENTIONAL_DELAY
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: 'unitlist.Array.data[6]'
@@ -825,7 +825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: initalUnitlist.Array.size
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: 'initalUnitlist.Array.data[5]'
