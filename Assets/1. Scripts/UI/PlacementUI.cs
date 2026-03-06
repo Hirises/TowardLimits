@@ -13,14 +13,14 @@ public class PlacementUI : MonoBehaviour
 
     public void Show_Placement(){
         gameObject.SetActive(true);
-        inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Placement);
+        inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Placement, null);
         UpdateDT();
         GenerateWarningMark();
     }
 
     public void Show_Purchase(){
         gameObject.SetActive(true);
-        inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Purchase);
+        inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Purchase, null);
         UpdateDT();
     }
 

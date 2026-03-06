@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using NaughtyAttributes;
 using UnityEngine.Events;
 
-public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [SerializeField] private Image icon;
     [SerializeField] private Image iconBorder;
@@ -15,11 +15,12 @@ public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private UnityAction<int> onPointerEnter;
     private UnityAction<int> onPointerExit;
     private UnityAction<int, bool> onDrag;
-
-    public void ReigsterEvents(UnityAction<int> onPointerEnter, UnityAction<int> onPointerExit, UnityAction<int, bool> onDrag){
+    private UnityAction<int> onClick;
+    public void ReigsterEvents(UnityAction<int> onPointerEnter, UnityAction<int> onPointerExit, UnityAction<int, bool> onDrag, UnityAction<int> onClick){
         this.onPointerEnter = onPointerEnter;
         this.onPointerExit = onPointerExit;
         this.onDrag = onDrag;
+        this.onClick = onClick;
     }
 
     public void Setup(UnitData status, int index){
@@ -55,5 +56,10 @@ public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnEndDrag(PointerEventData eventData)
     {
         onDrag?.Invoke(index, false);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        onClick?.Invoke(index);
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class UnitInfoPopup : MonoBehaviour
 {
-    public static UnitInfoPopup instance;
-
     [SerializeField] private GameObject root;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text descriptionText;
@@ -16,18 +14,19 @@ public class UnitInfoPopup : MonoBehaviour
     [SerializeField] private TMP_Text Level_Text;
     [SerializeField] private TMP_Text[] Colored_Text;
 
-    private void Awake(){
-        if(instance != null){
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    private UnitStatus fixedUnit = null;
+    public UnitStatus FixedUnit => fixedUnit;
 
     public void Show(UnitStatus status, float worldY = 0){
         root.transform.position = new Vector3(root.transform.position.x, worldY, root.transform.position.z);
-        root.SetActive(true);
+        Show(status);
+    }
+
+    public void UpdateInfo(){
+        if(fixedUnit != null) UpdateUI(fixedUnit);
+    }
+
+    private void UpdateUI(UnitStatus status){
         nameText.text = status.data.unitName;
         descriptionText.text = status.data.unitDescription;
         fullImage.sprite = status.data.fullFront;
@@ -40,7 +39,24 @@ public class UnitInfoPopup : MonoBehaviour
         }
     }
 
+    public void Show(UnitStatus status){
+        if(fixedUnit != null) return;
+        root.SetActive(true);
+        UpdateUI(status);
+    }
+
     public void Hide(){
+        if(fixedUnit != null) return;
         root.SetActive(false);
+    }
+
+    public void ToggleFix(UnitStatus status){
+        if(fixedUnit == status){
+            fixedUnit = null;
+            Hide();
+            return;
+        }
+        fixedUnit = status;
+        Show(status);
     }
 }

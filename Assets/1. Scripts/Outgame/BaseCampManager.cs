@@ -8,6 +8,8 @@ public class BaseCampManager : MonoBehaviour
     public static BaseCampManager instance;
 
     [SerializeField] private Inventory inventoryUI;
+    [SerializeField] private UnitReinforceArea unitReinforceArea;
+    [SerializeField] private UnitInfoPopup unitInfoPopup;
     [SerializeField] private TMP_Text stageText;
     [SerializeField] private string stageTextFormat = "Stage {0}";
     [SerializeField] private TMP_Text persuadedText;
@@ -30,9 +32,7 @@ public class BaseCampManager : MonoBehaviour
         stageText.text = string.Format(stageTextFormat, GameManager.instance.playerData.stage);
         persuadedText.text = $"{GameManager.instance.playerData.Persuaded}%";
         proveText.text = $"{GameManager.instance.playerData.Prove}%";
-        inventoryUI.Setup(GameManager.instance.playerData.units, (icon, status) => {
-            //no drag action -> pass
-        });
+        inventoryUI.Setup(GameManager.instance.playerData.units, unitReinforceArea.StartDrag, unitInfoPopup.ToggleFix);
     }
 
     public void TowardNorth(){

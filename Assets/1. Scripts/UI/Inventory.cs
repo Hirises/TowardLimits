@@ -7,14 +7,17 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject iconRoot;
     [SerializeField] private UnitIcon iconPrefab;
     [SerializeField] private int iconCount;
+    [SerializeField] private UnitInfoPopup unitInfoPopup;
+    [SerializeField] private bool useFixedPopupY = false;
 
     private UnitIcon[] icons;
     private List<UnitStatus> statuses;
     private int page;
     private Action<UnitIcon, UnitStatus> onStartDrag;
-
-    public void Setup(List<UnitStatus> units, Action<UnitIcon, UnitStatus> onStartDrag){
+    private Action<UnitStatus> onClick;
+    public void Setup(List<UnitStatus> units, Action<UnitIcon, UnitStatus> onStartDrag, Action<UnitStatus> onClick){
         this.onStartDrag = onStartDrag;
+        this.onClick = onClick;
         page = 0;
         UpdateUnit(units);
     }
@@ -34,7 +37,7 @@ public class Inventory : MonoBehaviour
             UnitIcon icon = Instantiate(iconPrefab, iconRoot.transform);
             icons[i] = icon;
             icon.Setup(statuses[i].unitType.GetUnitData(), i);
-            icon.ReigsterEvents(OnIconHoverUp, OnIconHoverDown, OnIconDrag);
+            icon.ReigsterEvents(OnIconHoverUp, OnIconHoverDown, OnIconDrag, OnIconClick);
         }
     }
 
@@ -61,12 +64,15 @@ public class Inventory : MonoBehaviour
     }
 
     public void OnIconHoverUp(int index){
-        UnitInfoPopup.instance.Show(statuses[index],
-          icons[index].transform.position.y - 40);
+        if(useFixedPopupY){
+            unitInfoPopup.Show(statuses[index]);
+        }else{
+            unitInfoPopup.Show(statuses[index], icons[index].transform.position.y - 40);
+        }
     }
 
     public void OnIconHoverDown(int index){
-        UnitInfoPopup.instance.Hide();
+        unitInfoPopup.Hide();
     }
 
     public void OnIconDrag(int index, bool beginDrag){
@@ -75,5 +81,11 @@ public class Inventory : MonoBehaviour
         if(beginDrag){
             onStartDrag?.Invoke(icons[index], statuses[index]);
         }
+    }
+
+    public void OnIconClick(int index){
+        //pass
+        Debug.Log("OnIconClick: " + index);
+        onClick?.Invoke(statuses[index]);
     }
 }

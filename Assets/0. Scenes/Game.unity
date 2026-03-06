@@ -2185,6 +2185,17 @@ MonoBehaviour:
   SkillIconRoot: {fileID: 61481886}
   currentWaveChart: {fileID: 0}
   phase: 0
+--- !u!114 &554171176 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1563437684954570553, guid: f5bd44b721f155941922c09da76a2982, type: 3}
+  m_PrefabInstance: {fileID: 5593765013267158703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f189aa71552014f8d40331e76e9959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &554391790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6219,6 +6230,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -461
       objectReference: {fileID: 0}
+    - target: {fileID: 6144997825521088544, guid: 5791bf8033c577449b9979025e4269e6, type: 3}
+      propertyPath: unitInfoPopup
+      value: 
+      objectReference: {fileID: 554171176}
     - target: {fileID: 6576521279357564592, guid: 5791bf8033c577449b9979025e4269e6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

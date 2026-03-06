@@ -1,5 +1,6 @@
 using UnityEngine;
 using NaughtyAttributes;
+using System;
 
 [CreateAssetMenu(fileName = "UnitData.asset", menuName = "Unit Data")]
 public class UnitData : ScriptableObject
