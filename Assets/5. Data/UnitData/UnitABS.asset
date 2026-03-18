@@ -26,15 +26,15 @@ MonoBehaviour:
   chibiIcon: {fileID: 21300000, guid: d93b2bbdde8d84c4089aa7eeaf482a73, type: 3}
   unitBehavior: {fileID: 4564091484682271408, guid: e693efc58a7215f4d8dc253cc1088146, type: 3}
   derivativeTo:
-  - unitType: 2
+  - unitType: 1
     probability: 1
     amount: 1
-  - unitType: 2
-    probability: 0.5
+  - unitType: 1
+    probability: 1
     amount: 1
   integralTo:
-  - unitType: 4
-    probability: 0.5
+  - unitType: 3
+    probability: 1
     amount: 1
   ATKSPD_buff: 0
   DMG_buff: 0

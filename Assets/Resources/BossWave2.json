@@ -2,32 +2,48 @@
 	"enemyList": [
 	{
 		"lane": 0,
-		"enemyType": "EIRNormal",
 		"emitOnce": false,
 		"startTime": 0.0,
+		"count": 15,
+		"interval": 0.4,
+		"enemyType": "EIRNormal"
+	},
+	{
+		"lane": 1,
+		"emitOnce": false,
+		"startTime": 0.5,
 		"count": 10,
-		"interval": 0.4
+		"interval": 0.5,
+		"enemyType": "EIRYellow"
 	},
 	{
 		"lane": 2,
 		"emitOnce": false,
 		"startTime": 0.0,
-		"count": 10,
+		"count": 15,
 		"interval": 0.4,
 		"enemyType": "EIRNormal"
+	},
+	{
+		"lane": 3,
+		"emitOnce": false,
+		"startTime": 0.5,
+		"count": 10,
+		"interval": 0.5,
+		"enemyType": "EIRYellow"
 	},
 	{
 		"lane": 4,
 		"emitOnce": false,
 		"startTime": 0.0,
-		"count": 10,
+		"count": 15,
 		"interval": 0.4,
 		"enemyType": "EIRNormal"
 	},
 	{
 		"lane": 2,
 		"emitOnce": true,
-		"startTime": 4.0,
+		"startTime": 10.0,
 		"count": 1,
 		"interval": 1,
 		"enemyType": "PolarBear"

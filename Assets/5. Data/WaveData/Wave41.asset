@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d244d7caa8bb2a447b20a37c9ae781ae, type: 3}
-  m_Name: BossWave1
+  m_Name: Wave41
   m_EditorClassIdentifier: 
   polar: 0
-  stageRange: {x: 1, y: 1}
+  stageRange: {x: 4, y: 99}
   difficulty: {x: 0, y: 99}
-  forFinalBoss: 1
-  filePath: BossWave1
+  forFinalBoss: 0
+  filePath: Wave31
   waveChartList:
     enemyList: []
   duration: 0
