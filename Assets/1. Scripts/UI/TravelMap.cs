@@ -9,6 +9,8 @@ public class TravelMap : MonoBehaviour
     [SerializeField] private Transform MarkerRoot;
     [SerializeField] private TravelMarker MarkerPrefab;
     [SerializeField] private TravelMarker PlayerMarker;
+    [SerializeField] private Sprite normalMarkerSprite;
+    [SerializeField] private Sprite bossMarkerSprite;
 
     float totalHeight;
     float markerHeight;
@@ -21,6 +23,11 @@ public class TravelMap : MonoBehaviour
         markerSpacing += markerHeight;
         for(int i = 0; i < waveCount + 1; i++){
             TravelMarker marker = Instantiate(MarkerPrefab, MarkerRoot);
+            if(i == waveCount){
+                marker.image.sprite = bossMarkerSprite;
+            }else{
+                marker.image.sprite = normalMarkerSprite;
+            }
             marker.rectTransform.anchoredPosition = new Vector2(0, markerSpacing * i);
         }
         PlayerMarker.rectTransform.anchoredPosition = new Vector2(0, markerHeight / 2);
