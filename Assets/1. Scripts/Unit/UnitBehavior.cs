@@ -38,7 +38,7 @@ public abstract class UnitBehavior : LivingEntity
     /// </summary>
     public void OnPlacement(Slot newSlot){
         slot = newSlot;
-        slot.unit = this;
+        slot.SetUnit_Internal(this);
         transform.SetParent(newSlot.UnitPoint.transform);
         transform.localPosition = Vector3.zero;
         OnPlacement_Internal();
@@ -51,7 +51,7 @@ public abstract class UnitBehavior : LivingEntity
     /// </summary>
     public void OnDisplacement(){
         OnDisplacement_Internal();
-        slot.unit = null;
+        slot.SetUnit_Internal(null);
         slot = null;
         transform.SetParent(null);
     }
