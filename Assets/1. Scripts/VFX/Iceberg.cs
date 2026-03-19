@@ -14,6 +14,7 @@ public class Iceberg : MonoBehaviour
     private void Awake(){
         spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
         speed = Random.Range(speedRange.x, speedRange.y);
+        spriteRenderer.flipX = Random.Range(0, 2) == 0;
     }
 
     private void Update(){
