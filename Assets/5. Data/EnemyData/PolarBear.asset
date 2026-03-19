@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PolarBear
   m_EditorClassIdentifier: 
   enemyType: 4
-  enemyBehavior: {fileID: 2892143703089652887, guid: a1c5cf39ad0771040b599d41f5050510, type: 3}
+  enemyBehavior: {fileID: 3712245646842169510, guid: 1b6a438b31680d94884b1e7c26d546dc, type: 3}
   health: 2500
   damage: 100
   persuade: 30

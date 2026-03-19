@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EIR_Yellow
   m_EditorClassIdentifier: 
   enemyType: 2
-  enemyBehavior: {fileID: 5678767680331719301, guid: c5a9ccce96189144c80ad67a1e6e45b7, type: 3}
+  enemyBehavior: {fileID: 3978343570478821368, guid: d9d701c4b3f17984eaffd06fc9cb7504, type: 3}
   health: 80
   damage: 20
   persuade: 10

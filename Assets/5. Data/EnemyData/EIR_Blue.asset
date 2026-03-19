@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EIR_Blue
   m_EditorClassIdentifier: 
   enemyType: 1
-  enemyBehavior: {fileID: 3062142743862727656, guid: 50e16daf2f9609044a74a0d4cd153286, type: 3}
+  enemyBehavior: {fileID: 6498056298899336411, guid: 2cda59fd9094e514c8937d04cafd3504, type: 3}
   health: 120
   damage: 10
   persuade: 5

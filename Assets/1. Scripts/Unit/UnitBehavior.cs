@@ -7,7 +7,7 @@ public abstract class UnitBehavior : LivingEntity
 {
     public abstract UnitType unitType { get; }
     [ReadOnly] public UnitStatus status;
-    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [ReadOnly] public Slot slot;
 
     private EntityVFX vfx;
@@ -18,7 +18,7 @@ public abstract class UnitBehavior : LivingEntity
     /// <param name="data"></param>
     public void Initialize(UnitStatus data){
         this.status = data;
-        meshRenderer.material.color = Color.white;
+        spriteRenderer.color = Color.white;
 
         vfx = new EntityVFX();
         vfx.Initalize(this);
@@ -39,7 +39,7 @@ public abstract class UnitBehavior : LivingEntity
     public void OnPlacement(Slot newSlot){
         slot = newSlot;
         slot.unit = this;
-        transform.SetParent(newSlot.transform);
+        transform.SetParent(newSlot.UnitPoint.transform);
         transform.localPosition = Vector3.zero;
         OnPlacement_Internal();
     }
@@ -98,10 +98,10 @@ public abstract class UnitBehavior : LivingEntity
     }
 
     public void StartDrag(){
-        meshRenderer.material.color = new Color(1, 0, 0, 0.5f);
+        spriteRenderer.color = new Color(1, 0, 0, 0.5f);
     }
 
     public void EndDrag(){
-        meshRenderer.material.color = Color.white;
+        spriteRenderer.color = Color.white;
     }
 }

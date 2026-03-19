@@ -31,7 +31,7 @@ public class RelavtiveLineHandler : MonoBehaviour
     private void Update(){
         for(int i = 0; i < Columns.Length; i++){
             for(int j = 0; j < Rows.Length; j++){
-                combatManager.GetSlot(j, i).transform.position = new Vector3(Columns[i].position.x, 0, Rows[j].position.z);
+                combatManager.GetSlot(j, i).transform.position = new Vector3(Columns[i].position.x, 0.01f, Rows[j].position.z);
             }
         }
     }

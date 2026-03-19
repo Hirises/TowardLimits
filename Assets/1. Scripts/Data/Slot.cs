@@ -1,10 +1,12 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class Slot : MonoBehaviour
 {
     [SerializeField] public Vector2Int position;
     [SerializeField] public GameObject slotBase;
-    public UnitBehavior unit;
+    [SerializeField] public GameObject UnitPoint;
+    [ReadOnly] public UnitBehavior unit;
 
     public int DMG_buff = 0;
     public float ATKSPD_buff = 0;

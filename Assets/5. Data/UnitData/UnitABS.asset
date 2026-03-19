@@ -24,7 +24,7 @@ MonoBehaviour:
   bulletSpeed: 15
   fullFront: {fileID: 21300000, guid: e66d1e4b955d50a4f996861795f77c50, type: 3}
   chibiIcon: {fileID: 21300000, guid: d93b2bbdde8d84c4089aa7eeaf482a73, type: 3}
-  unitBehavior: {fileID: 4564091484682271408, guid: e693efc58a7215f4d8dc253cc1088146, type: 3}
+  unitBehavior: {fileID: 3201233055509378080, guid: 9444d944ee7af394cbd6fbedbb944a7f, type: 3}
   derivativeTo:
   - unitType: 1
     probability: 1
