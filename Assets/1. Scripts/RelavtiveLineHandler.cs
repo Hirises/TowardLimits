@@ -21,10 +21,26 @@ public class RelavtiveLineHandler : MonoBehaviour
     [SerializeField] private Transform BottomRow;
     public float BottomRowZ => BottomRow.position.z;
 
+    [Header("Deco Lines")]
+    [SerializeField] private Transform[] LeftDecoLines;
+    [SerializeField] private Transform[] RightDecoLines;
+
     public float ColumnX(int column) => Columns[column].position.x;
 
     private void Awake(){
         instance = this;
+    }
+
+    private void OnDestroy(){
+        instance = null;
+    }
+
+    public Transform RandomDecoLine(){
+        if(UnityEngine.Random.Range(0, 2) == 0){
+            return LeftDecoLines[UnityEngine.Random.Range(0, LeftDecoLines.Length)];
+        } else {
+            return RightDecoLines[UnityEngine.Random.Range(0, RightDecoLines.Length)];
+        }
     }
 
 #if UNITY_EDITOR

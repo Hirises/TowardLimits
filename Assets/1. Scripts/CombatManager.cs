@@ -48,8 +48,17 @@ public class CombatManager : MonoBehaviour
     private bool isDragging = false;
     private Action<Slot> endDrag;
     private float skillCoolTime = 0;
-
-    [ReadOnly] public Phase phase;
+    public event Action<Phase> onPhaseChange;
+    [ReadOnly] private Phase _phase;
+    public Phase phase {
+        get => _phase;
+        private set{
+            if(value != _phase){
+                _phase = value;
+                onPhaseChange?.Invoke(value);
+            }
+        }
+    }
     private bool isSummonEnded = false;
 
     public enum Phase {

@@ -11,7 +11,7 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
 
     private void Update(){
         transform.position -= Vector3.forward * data.GetSpeed() * Time.deltaTime;
-        if(transform.position.z <= -10){
+        if(transform.position.z <= RelavtiveLineHandler.instance.BottomRowZ){
             CombatManager.instance.Persuade(data.persuade);
             OnDeath();
         }
