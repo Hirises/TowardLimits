@@ -3,6 +3,8 @@ using UnityEngine;
 
 public abstract class LivingEntity : MonoBehaviour, IDamageable
 {
+    [SerializeField] protected SpriteRenderer spriteRenderer;
+    public SpriteRenderer SpriteRenderer => spriteRenderer;
     public Action<int> onBeforeTakeDamage;
     
     public void TakeDamage(int damage){

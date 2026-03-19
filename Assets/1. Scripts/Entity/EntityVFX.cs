@@ -4,23 +4,37 @@ using UnityEngine;
 public class EntityVFX
 {
     private LivingEntity entity;
+    private Sequence damageEffectTween;
 
-    public void Initalize(LivingEntity entity){
+    public EntityVFX(LivingEntity entity){
         this.entity = entity;
         entity.onBeforeTakeDamage += ShowDamageVFX;
     }
 
-    public void Dispose(){
-        if(entity == null){
-            return;
+    public virtual void Dispose(){
+        if(damageEffectTween != null){
+            damageEffectTween.Kill();
         }
-        entity.onBeforeTakeDamage -= ShowDamageVFX;
-        entity = null;
+        damageEffectTween = null;
+        if(entity != null){
+            entity.onBeforeTakeDamage -= ShowDamageVFX;
+            entity = null;
+        }
     }
 
     private void ShowDamageVFX(int damage){
         var inst = GameObject.Instantiate(ResourceHolder.Instance.damageVFXPrefab, entity.transform.position, Quaternion.identity);
         inst.transform.position = entity.transform.position;
         inst.Show(damage);
+    }
+
+    public void InvokeDamageEffect(){
+        if(damageEffectTween != null){
+            damageEffectTween.Kill();
+        }
+        damageEffectTween = DOTween.Sequence();
+        damageEffectTween.Append(entity.SpriteRenderer.DOColor(Color.red, 0.07f).SetEase(Ease.OutQuad));
+        damageEffectTween.Append(entity.SpriteRenderer.DOColor(Color.white, 0.07f).SetEase(Ease.OutQuad));
+        damageEffectTween.Play();
     }
 }

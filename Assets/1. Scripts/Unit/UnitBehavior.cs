@@ -7,7 +7,6 @@ public abstract class UnitBehavior : LivingEntity
 {
     public abstract UnitType unitType { get; }
     [ReadOnly] public UnitStatus status;
-    [SerializeField] private SpriteRenderer spriteRenderer;
     [ReadOnly] public Slot slot;
 
     private EntityVFX vfx;
@@ -20,8 +19,7 @@ public abstract class UnitBehavior : LivingEntity
         this.status = data;
         spriteRenderer.color = Color.white;
 
-        vfx = new EntityVFX();
-        vfx.Initalize(this);
+        vfx = new EntityVFX(this);
     }
 
     /// <summary>
@@ -85,7 +83,9 @@ public abstract class UnitBehavior : LivingEntity
         status.currentHealth -= damage;
         if(status.currentHealth <= 0){
             OnDeath();
+            return;
         }
+        vfx.InvokeDamageEffect();
     }
 
     public void PerformSkill(){

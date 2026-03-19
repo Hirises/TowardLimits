@@ -7,15 +7,14 @@ public abstract class EnemyBehavior : LivingEntity
     protected EnemyData data;
     [ReadOnly] public int health;
 
-    private EntityVFX vfx;
+    private EnemyVFX vfx;
 
     public void OnSummon(){
         data = enemyType.GetEnemyData();
         health = data.GetHealth();
         OnSummon_Internal();
 
-        vfx = new EntityVFX();
-        vfx.Initalize(this);
+        vfx = new EnemyVFX(this);
     }
 
     protected abstract void OnSummon_Internal();
@@ -34,6 +33,8 @@ public abstract class EnemyBehavior : LivingEntity
         health -= damage;
         if(health <= 0){
             OnDeath();
+            return;
         }
+        vfx.InvokeDamageEffect();
     }
 }
