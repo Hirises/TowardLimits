@@ -5,6 +5,9 @@ using UnityEngine;
 [Serializable]
 public class UnitModel
 {
+    private UnitType unitType;
+    public UnitType UnitType => unitType;
+
     [Header("Basic")]
     public string unitName;
     [TextArea] public string unitDescription;

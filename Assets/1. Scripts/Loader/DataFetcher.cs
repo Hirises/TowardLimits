@@ -1,16 +1,65 @@
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
-public class DataFetcher : MonoBehaviour
+/// <summary>
+/// 인게임 데이터 파싱 클래스
+/// </summary>
+public static class DataFetcher
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    private const string STAGE_DATA_PATH = "Data/Stage";
+    private const string UNIT_DATA_PATH = "Data/Unit";
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public static StageModel[] stageData;
+    public static Dictionary<UnitType, UnitModel> unitData;
+
+#region Fetch Data
+    public static void FetchData(){
+        stageData = FetchStageData();
+        unitData = FetchUnitData();
     }
+    
+    public static Dictionary<UnitType, UnitModel> FetchUnitData(){
+        Dictionary<UnitType, UnitModel> unitModels = new Dictionary<UnitType, UnitModel>();
+        foreach(UnitData unitData in ResourceHolder.Instance.unitDatas){
+            unitModels.Add(unitData.unitType, unitData.unitModel);
+        }
+        
+        #if !OVERRIDE_DATA
+        string filePath = Path.Combine(Application.persistentDataPath, UNIT_DATA_PATH);
+        if(Directory.Exists(filePath)){
+            //override
+            foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
+                string json = File.ReadAllText(file);
+                UnitModel unitModel = JsonUtility.FromJson<UnitModel>(json);
+                unitModels[unitModel.UnitType] = unitModel;  //override
+            }
+        }
+        #endif
+        
+        return unitModels;
+    }
+    
+    public static StageModel[] FetchStageData(){
+        List<StageModel> stageModels = new List<StageModel>();
+        
+        #if !OVERRIDE_DATA
+        string filePath = Path.Combine(Application.persistentDataPath, STAGE_DATA_PATH);
+        if(Directory.Exists(filePath)){
+            //override
+            foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
+                string json = File.ReadAllText(file);
+                StageModel stageModel = JsonUtility.FromJson<StageModel>(json);
+                stageModels.Add(stageModel);
+            }
+            return stageModels.ToArray();
+        }
+        #endif
+    
+        foreach(StageData stageData in ResourceHolder.Instance.stageData){
+            stageModels.Add(StageModel.FromStageData(stageData));
+        }
+        return stageModels.ToArray();
+    }
+#endregion
 }
