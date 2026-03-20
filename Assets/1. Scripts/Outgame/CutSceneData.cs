@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CutSceneData", menuName = "CutSceneData", order = 1)]
@@ -26,7 +26,7 @@ public class CutSceneAction{
     public string name;
     [TextArea] public string text;
     public bool clearSprite;
-    [Label("MySide")] public bool isLeft;
+    [LabelText("MySide")] public bool isLeft;
     public Sprite sprite;
     public bool callFunction;
     public string clazz;

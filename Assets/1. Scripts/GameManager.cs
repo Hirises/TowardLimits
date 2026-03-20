@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using NaughtyAttributes;
-using RotaryHeart.Lib.SerializableDictionary;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 /// <summary>

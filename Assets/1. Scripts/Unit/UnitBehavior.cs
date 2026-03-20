@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 
 public abstract class UnitBehavior : LivingEntity

@@ -1,4 +1,6 @@
 using System;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 [Serializable]
 public class EnemyModel

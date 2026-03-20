@@ -1,5 +1,5 @@
 using UnityEngine;
-using NaughtyAttributes;
+using Sirenix.OdinInspector;
 
 public abstract class EnemyBehavior : LivingEntity
 {

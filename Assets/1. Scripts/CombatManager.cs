@@ -1,6 +1,4 @@
 using UnityEngine;
-using NaughtyAttributes;
-using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -9,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 
 /// <summary>
 /// 인게임 메니저
@@ -18,9 +17,9 @@ public class CombatManager : MonoBehaviour
     public static CombatManager instance;
 
     [Header("Grid")]
-    [Label("그리드 크기 Row, Column")]
+    [LabelText("그리드 크기 Row, Column")]
     [SerializeField] public Vector2Int girdSize;
-    [Label("슬롯 (좌상단에서 시작. hor->ver)")]
+    [LabelText("슬롯 (좌상단에서 시작. hor->ver)")]
     [SerializeField] public Slot[] slots;
 
     [Header("Entities")]

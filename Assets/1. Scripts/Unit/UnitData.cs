@@ -1,5 +1,5 @@
 using UnityEngine;
-using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using System;
 
 [CreateAssetMenu(fileName = "UnitData.asset", menuName = "Unit Data")]

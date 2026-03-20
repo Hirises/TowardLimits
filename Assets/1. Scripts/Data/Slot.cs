@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Slot : MonoBehaviour
