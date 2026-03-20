@@ -9,11 +9,20 @@ public class ResourceHolder : ScriptableObject
     {
         get {
             if(instance == null){
-                instance = Resources.Load<ResourceHolder>("ResourceHolder");
+                if(GameManager.instance == null || GameManager.instance.resourceHolder == null){
+                    instance = Resources.Load<ResourceHolder>("ResourceHolder");
+                }else{
+                    instance = GameManager.instance.resourceHolder;
+                }
             }
             return instance;
         }
     }
+
+    [Header("Data")]
+    [SerializeField] public StageData[] stageData;
+    [SerializeField] public UnitData[] unitDatas;
+    [SerializeField] public EnemyData[] enemyDatas;
     
     [Header("VFX")]
     public DamageVFX damageVFXPrefab;

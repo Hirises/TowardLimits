@@ -14,9 +14,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public ResourceHolder resourceHolder;
 
     [Header("Objects")]
-    [SerializeField] public StageData[] stageDatas;
-    [SerializeField] public UnitData[] unitDatas;
-    [SerializeField] public EnemyData[] enemyDatas;
     [SerializeField] public List<UnitType> initalUnitlist;
 
     [Header("Debug")]
@@ -28,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Polar direction;
 
     public PlayerData playerData;
-    public StageData currentStage;
+    public StageModel currentStage;
 
     private void Awake(){
         if(instance != null){
@@ -37,6 +34,7 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        //싱글톤 검증 완료 -----
 
         if(playerData == null){
             playerData = new PlayerData();
@@ -54,7 +52,7 @@ public class GameManager : MonoBehaviour
     }
 
     public UnitData GetUnitData(UnitType unitType){
-        foreach(UnitData data in unitDatas){
+        foreach(UnitData data in ResourceHolder.Instance.unitDatas){
             if(data.unitType == unitType){
                 return data;
             }
@@ -63,7 +61,7 @@ public class GameManager : MonoBehaviour
     }
 
     public EnemyData GetEnemyData(EnemyType enemyType){
-        foreach(EnemyData data in enemyDatas){
+        foreach(EnemyData data in ResourceHolder.Instance.enemyDatas){
             if(data.enemyType == enemyType){
                 return data;
             }

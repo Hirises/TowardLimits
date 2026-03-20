@@ -40,7 +40,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Image Whiteout;
     [SerializeField] public GameObject SkillIconRoot;
 
-    [ReadOnly] private StageData currentStage;
+    [ReadOnly] private StageModel currentStage;
     [ReadOnly] public WaveChart currentWaveChart;
     [ReadOnly] private int currentWave = 0;
     private float waveStartTime = 0;
