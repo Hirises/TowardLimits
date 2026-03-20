@@ -12,6 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e67d604ce15cb438e766712050883b, type: 3}
   m_Name: UnitC
   m_EditorClassIdentifier: 
+  unitModel:
+    unitName: "\uC0C1\uC218\uD568\uC218"
+    unitDescription: "\uC5B4\uB514\uC11C\uB098 \uBCFC \uC218 \uC788\uB294 \uC0C1\uC218\uD568\uC218\uC9F1\uC774\uB2E4.\n\uB2E4\uB978
+      \uD568\uC218\uB4E4\uC744 \uC751\uC6D0\uD558\uC5EC \uD798\uC744 \uB0B4\uAC8C
+      \uD55C\uB2E4."
+    unitColor: {r: 0.2508864, g: 0.79622644, b: 0.6695416, a: 1}
+    maxHealth: 30
+    attack: 10
+    attackSpeed: 6
+    attackRange: 100
+    bulletSpeed: 15
+    derivativeTo:
+    - unitType: 0
+      probability: 1
+      amount: 1
+    integralTo:
+    - unitType: 2
+      probability: 1
+      amount: 1
+    ATKSPD_buff: 1
+    DMG_buff: 5
+    damageRatio: 0.5
+    attackCount: 3
   unitType: 1
   unitName: "\uC0C1\uC218\uD568\uC218"
   unitDescription: "\uC5B4\uB514\uC11C\uB098 \uBCFC \uC218 \uC788\uB294 \uC0C1\uC218\uD568\uC218\uC9F1\uC774\uB2E4.\n\uB2E4\uB978

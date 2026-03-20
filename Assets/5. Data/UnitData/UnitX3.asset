@@ -12,6 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70e67d604ce15cb438e766712050883b, type: 3}
   m_Name: UnitX3
   m_EditorClassIdentifier: 
+  unitModel:
+    unitName: "\uC0BC\uCC28\uD568\uC218"
+    unitDescription: "\uCC28\uAC00\uC6B4 \uC0BC\uCC28\uD568\uC218\uC9F1\uC774\uB2E4.\n\uAD00\uD1B5\uACF5\uACA9\uC744
+      \uAC00\uD55C\uB2E4."
+    unitColor: {r: 0.13432506, g: 0.4792453, b: 0.11845496, a: 1}
+    maxHealth: 100
+    attack: 50
+    attackSpeed: 4
+    attackRange: 100
+    bulletSpeed: 10
+    derivativeTo:
+    - unitType: 3
+      probability: 1
+      amount: 1
+    integralTo: []
+    ATKSPD_buff: 0
+    DMG_buff: 0
+    damageRatio: 0.5
+    attackCount: 3
   unitType: 4
   unitName: "\uC0BC\uCC28\uD568\uC218"
   unitDescription: "\uCC28\uAC00\uC6B4 \uC0BC\uCC28\uD568\uC218\uC9F1\uC774\uB2E4.\n\uAD00\uD1B5\uACF5\uACA9\uC744

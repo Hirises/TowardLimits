@@ -576,6 +576,7 @@ public class CombatManager : MonoBehaviour
                 continue;
             }
             for(int i = 0; i < element.amount; i++){
+                if(element.unitType == UnitType.None) continue;
                 GameManager.instance.playerData.units.Insert(index, UnitStatus.FromType(element.unitType));
             }
         }
