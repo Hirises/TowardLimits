@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -8,10 +10,10 @@ public class UnitX : DefaultUnitBehavior
 {
     public override UnitType unitType => UnitType.UnitX;
 
-    protected override IEnumerator SkillLoop(){
+    protected override async UniTask SkillLoop(CancellationToken ct){
         for(int i = 0; i < 5; i++){
             OnShoot();
-            yield return new WaitForSeconds(0.1f);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: ct);
         }
     }
 }

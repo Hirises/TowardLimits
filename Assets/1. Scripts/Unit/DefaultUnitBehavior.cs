@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public abstract class DefaultUnitBehavior : UnitBehavior
@@ -6,16 +9,17 @@ public abstract class DefaultUnitBehavior : UnitBehavior
     [SerializeField] private BulletBehavior bulletPrefab;
     [SerializeField] private Transform bulletSpawnPoint;
 
-    private Coroutine mainLoop;
-    private Coroutine skillLoop;
+    private CancellationTokenSource mainLoop;
+    private CancellationTokenSource skillLoop;
     
     protected override void OnCombatStart_Internal(){
-        mainLoop = StartCoroutine(MainLoop());
+        mainLoop = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+        MainLoop(mainLoop.Token).Forget();
     }
 
-    private IEnumerator MainLoop(){
+    private async UniTask MainLoop(CancellationToken ct){
         while(true){
-            yield return new WaitForSeconds(1f / (status.data.attackSpeed + slot.ATKSPD_buff));
+            await UniTask.Delay(TimeSpan.FromSeconds(1f / (status.data.attackSpeed + slot.ATKSPD_buff)), cancellationToken: ct);
             OnShoot();
         }
     }
@@ -37,10 +41,16 @@ public abstract class DefaultUnitBehavior : UnitBehavior
     }
 
     public override void OnCombatEnd(){
-        if(mainLoop != null) StopCoroutine(mainLoop);
-        mainLoop = null;
-        if(skillLoop != null) StopCoroutine(skillLoop);
-        skillLoop = null;
+        if(mainLoop != null){
+            mainLoop.Cancel();
+            mainLoop.Dispose();
+            mainLoop = null;
+        }
+        if(skillLoop != null){
+            skillLoop.Cancel();
+            skillLoop.Dispose();
+            skillLoop = null;
+        }
     }
 
     protected override void OnPlacement_Internal(){
@@ -52,8 +62,9 @@ public abstract class DefaultUnitBehavior : UnitBehavior
     }
 
     protected override void PerformSkill_Internal(){
-        skillLoop = StartCoroutine(SkillLoop());
+        skillLoop = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+        SkillLoop(skillLoop.Token).Forget();
     }
 
-    protected abstract IEnumerator SkillLoop();
+    protected abstract UniTask SkillLoop(CancellationToken ct);
 }

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -32,6 +33,6 @@ public class TitleSceneManager : MonoBehaviour
     public void StartNewGame(){
         startCutScene = false;
         GameManager.instance.playerData = new PlayerData();
-        LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY);
+        LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY).Forget();
     }
 }

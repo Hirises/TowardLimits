@@ -1,10 +1,12 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UnitC : UnitBehavior
 {
     public override UnitType unitType => UnitType.UnitC;
-    private Coroutine skillLoop;
+    private CancellationTokenSource skillLoop;
 
     protected override void OnPlacement_Internal()
     {
@@ -36,12 +38,13 @@ public class UnitC : UnitBehavior
     }
 
     protected override void PerformSkill_Internal(){
-        skillLoop = StartCoroutine(SkillLoop());
+        skillLoop = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+        SkillLoop(skillLoop.Token).Forget();
     }
 
-    private IEnumerator SkillLoop(){
+    private async UniTask SkillLoop(CancellationToken ct){
         OnPlacement_Internal();
-        yield return new WaitForSeconds(5f);
+        await UniTask.Delay(TimeSpan.FromSeconds(5f), cancellationToken: ct);
         OnDisplacement_Internal();
     }
 
@@ -54,8 +57,11 @@ public class UnitC : UnitBehavior
 
     public override void OnCombatEnd()
     {
-        if(skillLoop != null) StopCoroutine(skillLoop);
-        skillLoop = null;
+        if(skillLoop != null){
+            skillLoop.Cancel();
+            skillLoop.Dispose();
+            skillLoop = null;
+        }
     }
 
     protected override void OnDisplacement_Internal()

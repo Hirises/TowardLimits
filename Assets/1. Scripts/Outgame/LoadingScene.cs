@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,27 +23,11 @@ public class LoadingScene : MonoBehaviour
     [SerializeField] private LoadingText[] loadingTextList;
 
     public void Show(){
-        loadingText.text = loadingTextList[Random.Range(0, loadingTextList.Length)].text;
+        loadingText.text = loadingTextList[UnityEngine.Random.Range(0, loadingTextList.Length)].text;
         root.SetActive(true);
     }
-
-#if UNITY_WEBGL
-    public void ShowAndLoad(string sceneName, float minDelay = 0f){
-        if(GameManager.instance.SKIP_INTENTIONAL_DELAY){
-            minDelay = 0f;
-        }
-
-        CancelInvoke(nameof(Hide));
-        Show();
-        SceneManager.LoadScene(sceneName);
-        if(minDelay <= float.Epsilon){
-            Hide();
-        }else{
-            Invoke(nameof(Hide), minDelay);
-        }
-    }
-#else
-    public async void ShowAndLoad(string sceneName, float minDelay = 0f){
+    
+    public async UniTask ShowAndLoad(string sceneName, float minDelay = 0f){
         if(GameManager.instance.SKIP_INTENTIONAL_DELAY){
             minDelay = 0f;
         }
@@ -49,18 +35,17 @@ public class LoadingScene : MonoBehaviour
         Show();
         //wait for both mindelay and scene load
         if(minDelay <= float.Epsilon){
-            await SceneManager.LoadSceneAsync(sceneName);
+            await SceneManager.LoadSceneAsync(sceneName).ToUniTask();
         }else{
-            await Task.WhenAll(
-                Task.Delay((int)(minDelay * 1000)),
-                Task.FromResult(SceneManager.LoadSceneAsync(sceneName))
+            await UniTask.WhenAll(
+                UniTask.Delay(TimeSpan.FromSeconds(minDelay)),
+                SceneManager.LoadSceneAsync(sceneName).ToUniTask()
             );
         }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
         Hide();
     }
-#endif
-
+    
     public void Hide(){
         root.SetActive(false);
     }

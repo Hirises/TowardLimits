@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class UnitABS : DefaultUnitBehavior
@@ -10,10 +13,10 @@ public class UnitABS : DefaultUnitBehavior
         if(slot.position.y - 1 >= 0) ShootBullet(slot.position.y - 1);
     }
 
-    protected override IEnumerator SkillLoop(){
+    protected override async UniTask SkillLoop(CancellationToken ct){
         for(int i = 0; i < 5; i++){
             OnShoot();
-            yield return new WaitForSeconds(0.1f);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: ct);
         }
     }
 }

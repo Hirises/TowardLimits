@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class ClearSceneManager : MonoBehaviour
     private void Update(){
         if(Input.anyKeyDown || Input.GetMouseButtonDown(0)){
             if(!CutsceneManager.instance.isPlaying){
-                LoadingScene.instance.ShowAndLoad("Title", GameManager.instance.MIN_LOADING_DELAY);
+                LoadingScene.instance.ShowAndLoad("Title", GameManager.instance.MIN_LOADING_DELAY).Forget();
             }
         }
     }

@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class DecoManager : MonoBehaviour
@@ -7,7 +10,7 @@ public class DecoManager : MonoBehaviour
     [SerializeField] private Vector2 icebergSpawnInterval;
     [SerializeField] private int prewarmCount;
 
-    private Coroutine icebergSpawnLoop;
+    private CancellationTokenSource icebergSpawnLoop;
 
     private void Start()
     {
@@ -21,10 +24,14 @@ public class DecoManager : MonoBehaviour
 
     private void OnPhaseChange(CombatManager.Phase phase){
         if(phase == CombatManager.Phase.Combat){
-            icebergSpawnLoop = StartCoroutine(IcebergSpawnLoop());
+            icebergSpawnLoop = new CancellationTokenSource();
+            IcebergSpawnLoop(icebergSpawnLoop.Token).Forget();
         }else{
-            if(icebergSpawnLoop != null) StopCoroutine(icebergSpawnLoop);
-            icebergSpawnLoop = null;
+            if(icebergSpawnLoop != null){
+                icebergSpawnLoop.Cancel();
+                icebergSpawnLoop.Dispose();
+                icebergSpawnLoop = null;
+            }
         }
     }
 
@@ -36,9 +43,9 @@ public class DecoManager : MonoBehaviour
         }
     }
 
-    private IEnumerator IcebergSpawnLoop(){
+    private async UniTask IcebergSpawnLoop(CancellationToken ct){
         while(CombatManager.instance.phase == CombatManager.Phase.Combat){
-            yield return new WaitForSeconds(UnityEngine.Random.Range(icebergSpawnInterval.x, icebergSpawnInterval.y));
+            await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(icebergSpawnInterval.x, icebergSpawnInterval.y)), cancellationToken: ct);
             Iceberg iceberg = GameObject.Instantiate(icebergPrefab);
             iceberg.transform.SetParent(RelavtiveLineHandler.instance.RandomDecoLine());
             iceberg.transform.localPosition = new Vector3(0, 0, RelavtiveLineHandler.instance.TopRowZ);

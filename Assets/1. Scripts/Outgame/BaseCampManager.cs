@@ -1,4 +1,5 @@
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -49,6 +50,6 @@ public class BaseCampManager : MonoBehaviour
             && stage.stageNumber.y >= GameManager.instance.playerData.stage
             && (stage.direction == direction || stage.direction == Polar.Both)).ToArray();
         GameManager.instance.currentStage = stageDatas[Random.Range(0, stageDatas.Length)];
-        LoadingScene.instance.ShowAndLoad("Game", GameManager.instance.MIN_LOADING_DELAY);
+        LoadingScene.instance.ShowAndLoad("Game", GameManager.instance.MIN_LOADING_DELAY).Forget();
     }
 }

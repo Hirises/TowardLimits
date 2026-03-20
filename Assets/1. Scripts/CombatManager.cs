@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 /// <summary>
 /// 인게임 메니저
@@ -43,7 +45,7 @@ public class CombatManager : MonoBehaviour
     [ReadOnly] private int currentWave = 0;
     private float waveStartTime = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
-    private Coroutine enemySpawnLoop;
+    private CancellationTokenSource enemySpawnLoop;
     private bool isDragging = false;
     private Action<Slot> endDrag;
     private float skillCoolTime = 0;
@@ -142,8 +144,11 @@ public class CombatManager : MonoBehaviour
     /// 게임을 종료하고 자원을 반환합니다. phase가 none일때 호출해야합니다.
     /// </summary>
     public void EndGame(){
-        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
-        enemySpawnLoop = null;
+        if(enemySpawnLoop != null){
+            enemySpawnLoop.Cancel();
+            enemySpawnLoop.Dispose();
+            enemySpawnLoop = null;
+        }
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 UnitBehavior unit = slot.unit;
@@ -197,7 +202,7 @@ public class CombatManager : MonoBehaviour
         currentWave++;
         if(currentWave >= currentStage.waveCount){
             EndCombatPhase();
-            StartCoroutine(PurchasePhaseAnimation());
+            PurchasePhaseAnimation().Forget();
             return;
         }
         if(currentWave == 0){
@@ -216,17 +221,17 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public IEnumerator PurchasePhaseAnimation(){
+    public async UniTask PurchasePhaseAnimation(){
         foreach(Slot slot in slots){
             slot.ShowBase(false);
         }
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(RelavtiveLineHandler.instance.RowBase.transform.DOMoveZ(RelavtiveLineHandler.instance.TopRowZ, 3f).SetEase(Ease.InOutSine));
-        sequence.Insert(2, DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 1), 1f).SetEase(Ease.InOutSine));
-        yield return sequence.WaitForCompletion();
+        await DOTween.Sequence()
+            .Append(RelavtiveLineHandler.instance.RowBase.transform.DOMoveZ(RelavtiveLineHandler.instance.TopRowZ, 3f).SetEase(Ease.InOutSine))
+            .Insert(2, DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 1), 1f).SetEase(Ease.InOutSine))
+            .ToUniTask();
         StartPurchasePhase();
         RelavtiveLineHandler.instance.RowBase.transform.position = Vector3.zero;
-        yield return DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 0), 0.5f).SetEase(Ease.InOutSine).WaitForCompletion();
+        await DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 0), 0.5f).SetEase(Ease.InOutSine).ToUniTask();
         if(GameManager.instance.playerData.stage == 0){
             CutsceneManager.instance.PlayCutScene("Combat3");
             GameManager.instance.playerData.DT = 5;
@@ -248,14 +253,14 @@ public class CombatManager : MonoBehaviour
         GameManager.instance.playerData.stage++;
         GameManager.instance.playerData.Prove += currentStage.prove;
         if(GameManager.instance.playerData.Prove >= 100){
-            LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY);
+            LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY).Forget();
         }else{
-            LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY);
+            LoadingScene.instance.ShowAndLoad("BaseCamp", GameManager.instance.MIN_LOADING_DELAY).Forget();
         }
     }
 
     public void GameOver(){
-        LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY);
+        LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY).Forget();
     }
 #endregion
 
@@ -380,15 +385,19 @@ public class CombatManager : MonoBehaviour
         }
         phase = Phase.Combat;
         isSummonEnded = false;
-        enemySpawnLoop = StartCoroutine(WaveChartSpawnLoop(currentWaveChart));
+        enemySpawnLoop = new CancellationTokenSource();
+        WaveChartSpawnLoop(currentWaveChart, enemySpawnLoop.Token).Forget();
         skillCoolTime = 0;
         SkillIconRoot.SetActive(true);
     }
 
     public void EndCombatPhase(){
         phase = Phase.None;
-        if(enemySpawnLoop != null) StopCoroutine(enemySpawnLoop);
-        enemySpawnLoop = null;
+        if(enemySpawnLoop != null){
+            enemySpawnLoop.Cancel();
+            enemySpawnLoop.Dispose();
+            enemySpawnLoop = null;
+        }
         isSummonEnded = false;
         List<EnemyBehavior> copy = new List<EnemyBehavior>(enemiesList);
         foreach(EnemyBehavior enemy in copy){
@@ -419,23 +428,15 @@ public class CombatManager : MonoBehaviour
         return waveChart[UnityEngine.Random.Range(0, waveChart.Length)];
     }
     
-    private IEnumerator WaveChartSpawnLoop(WaveChart waveChart){
+    private async UniTask WaveChartSpawnLoop(WaveChart waveChart, CancellationToken ct){
         float time = 0;
         waveStartTime = Time.time;
         foreach(var summon in waveChart.summonList){
             if(summon.startTime - time > 0.01f){
-                yield return new WaitForSeconds(summon.startTime - time);
+                await UniTask.Delay(TimeSpan.FromSeconds(summon.startTime - time), cancellationToken: ct);
             }
             time = summon.startTime;
             SummonEnemy(summon.enemyType, summon.lane);
-        }
-        isSummonEnded = true;
-    }
-
-    private IEnumerator SimpleEnemySpawnLoop(){
-        for(int i = 0; i < 1000; i++){
-            yield return new WaitForSeconds(0.1f);
-            SummonEnemy(EnemyType.EIRNormal, UnityEngine.Random.Range(0, girdSize.y));
         }
         isSummonEnded = true;
     }
