@@ -5,8 +5,7 @@ using UnityEngine;
 [Serializable]
 public class EnemyModel
 {
-    [Header("Basic")]
-    [SerializeField] public EnemyType enemyType;
+    [Header("Stats")]
     [SerializeField] public int health;
     [SerializeField] public int damage;
     [SerializeField] public int persuade;

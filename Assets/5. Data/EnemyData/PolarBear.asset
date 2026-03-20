@@ -14,6 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 4
   enemyBehavior: {fileID: 3712245646842169510, guid: 1b6a438b31680d94884b1e7c26d546dc, type: 3}
+  enemyModel:
+    health: 2500
+    damage: 100
+    persuade: 30
+    speed: 6
+    color: {r: 1, g: 0, b: 0, a: 1}
+    health_add: 1000
+    damage_add: 20
+    speed_add: 0.5
   health: 2500
   damage: 100
   persuade: 30
