@@ -6,7 +6,7 @@ public class BulletX3Behavior : BulletBehavior
     
     public override void Shoot(float distance, float speed, int damage){
         base.Shoot(distance, speed, damage);
-        count = GameManager.instance.GetUnitData(UnitType.UnitX3).attackCount;
+        count = DataFetcher.GetUnitModel(UnitType.UnitX3).attackCount;
     }
 
     public override void OnHitEnemy(EnemyBehavior enemy){

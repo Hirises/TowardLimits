@@ -3,15 +3,18 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public class UnitModel
+public class UnitModel : ICloneable
 {
-    private UnitType unitType;
-    public UnitType UnitType => unitType;
-
     [Header("Basic")]
+    public UnitType unitType;
     public string unitName;
     [TextArea] public string unitDescription;
     public Color unitColor = Color.white;
+
+    [Header("Images")]
+    public Sprite fullFront;
+    public Sprite chibiIcon;
+    public UnitBehavior unitBehavior;
 
     [Header("Stats")]
     public int maxHealth = 100;
@@ -33,6 +36,11 @@ public class UnitModel
 
     [Header("UnitX3")]
     public int attackCount = 3;
+
+    public object Clone()
+    {
+        return MemberwiseClone();
+    }
 }
 
 [System.Serializable]

@@ -5,16 +5,6 @@ using System;
 [CreateAssetMenu(fileName = "UnitData.asset", menuName = "Unit Data")]
 public class UnitData : ScriptableObject
 {
-
-    [Header("Basic")]
-    public UnitType unitType;
-
-    [Header("Images")]
-    public Sprite fullFront;
-    public Sprite chibiIcon;
-    public UnitBehavior unitBehavior;
-
-    [Title("Model")]
     [InlineProperty, HideLabel] public UnitModel unitModel;
 
 

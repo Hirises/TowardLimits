@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: UnitC
   m_EditorClassIdentifier: 
   unitModel:
+    unitType: 1
     unitName: "\uC0C1\uC218\uD568\uC218"
     unitDescription: "\uC5B4\uB514\uC11C\uB098 \uBCFC \uC218 \uC788\uB294 \uC0C1\uC218\uD568\uC218\uC9F1\uC774\uB2E4.\n\uB2E4\uB978
       \uD568\uC218\uB4E4\uC744 \uC751\uC6D0\uD558\uC5EC \uD798\uC744 \uB0B4\uAC8C
       \uD55C\uB2E4."
     unitColor: {r: 0.2508864, g: 0.79622644, b: 0.6695416, a: 1}
+    fullFront: {fileID: 21300000, guid: 3810b06ff2590df4da569a02148382f4, type: 3}
+    chibiIcon: {fileID: 21300000, guid: b5e4dc07e63f1d949a971cd11acb703b, type: 3}
+    unitBehavior: {fileID: 897302256310821516, guid: 76ad088fa89bfba49a557637ee827514, type: 3}
     maxHealth: 30
     attack: 10
     attackSpeed: 6
@@ -35,25 +39,3 @@ MonoBehaviour:
     DMG_buff: 5
     damageRatio: 0.5
     attackCount: 3
-  unitType: 1
-  unitName: "\uC0C1\uC218\uD568\uC218"
-  unitDescription: "\uC5B4\uB514\uC11C\uB098 \uBCFC \uC218 \uC788\uB294 \uC0C1\uC218\uD568\uC218\uC9F1\uC774\uB2E4.\n\uB2E4\uB978
-    \uD568\uC218\uB4E4\uC744 \uC751\uC6D0\uD558\uC5EC \uD798\uC744 \uB0B4\uAC8C \uD55C\uB2E4."
-  unitColor: {r: 0.2508864, g: 0.79622644, b: 0.6695416, a: 1}
-  maxHealth: 30
-  attack: 10
-  attackSpeed: 6
-  attackRange: 100
-  bulletSpeed: 15
-  fullFront: {fileID: 21300000, guid: 3810b06ff2590df4da569a02148382f4, type: 3}
-  chibiIcon: {fileID: 21300000, guid: b5e4dc07e63f1d949a971cd11acb703b, type: 3}
-  unitBehavior: {fileID: 897302256310821516, guid: 76ad088fa89bfba49a557637ee827514, type: 3}
-  derivativeTo: []
-  integralTo:
-  - unitType: 2
-    probability: 1
-    amount: 1
-  ATKSPD_buff: 1
-  DMG_buff: 5
-  damageRatio: 0.5
-  attackCount: 3

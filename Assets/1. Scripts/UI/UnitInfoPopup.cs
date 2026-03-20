@@ -27,15 +27,15 @@ public class UnitInfoPopup : MonoBehaviour
     }
 
     private void UpdateUI(UnitStatus status){
-        nameText.text = status.data.unitName;
-        descriptionText.text = status.data.unitDescription;
-        fullImage.sprite = status.data.fullFront;
+        nameText.text = status.model.unitName;
+        descriptionText.text = status.model.unitDescription;
+        fullImage.sprite = status.model.fullFront;
         ATK_Text.text = status.CurrentAttack.ToString();
         HP_Text.text = status.CurrentMaxHealth.ToString();
-        ATS_Text.text = status.data.attackSpeed.ToString();
+        ATS_Text.text = status.model.attackSpeed.ToString();
         Level_Text.text = status.level.ToString();
         for(int i = 0; i < Colored_Text.Length; i++){
-            Colored_Text[i].color = status.data.unitColor;
+            Colored_Text[i].color = status.model.unitColor;
         }
     }
 

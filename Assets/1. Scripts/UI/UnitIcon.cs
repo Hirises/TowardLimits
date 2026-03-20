@@ -23,10 +23,10 @@ public class UnitIcon : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         this.onClick = onClick;
     }
 
-    public void Setup(UnitData status, int index){
+    public void Setup(UnitModel model, int index){
         this.index = index;
-        icon.sprite = status.chibiIcon;
-        iconBorder.color = status.unitColor;
+        icon.sprite = model.chibiIcon;
+        iconBorder.color = model.unitColor;
         SetAlpha(1f);
     }
 

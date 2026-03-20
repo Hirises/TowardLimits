@@ -51,15 +51,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public UnitData GetUnitData(UnitType unitType){
-        foreach(UnitData data in ResourceHolder.Instance.unitDatas){
-            if(data.unitType == unitType){
-                return data;
-            }
-        }
-        return null;
-    }
-
     public EnemyData GetEnemyData(EnemyType enemyType){
         foreach(EnemyData data in ResourceHolder.Instance.enemyDatas){
             if(data.enemyType == enemyType){

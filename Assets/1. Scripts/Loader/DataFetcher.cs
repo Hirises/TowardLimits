@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -13,6 +14,10 @@ public static class DataFetcher
     public static StageModel[] stageData;
     public static Dictionary<UnitType, UnitModel> unitData;
 
+    public static UnitModel GetUnitModel(UnitType unitType){
+        return unitData[unitType];
+    }
+
 #region Fetch Data
     public static void FetchData(){
         stageData = FetchStageData();
@@ -22,7 +27,7 @@ public static class DataFetcher
     public static Dictionary<UnitType, UnitModel> FetchUnitData(){
         Dictionary<UnitType, UnitModel> unitModels = new Dictionary<UnitType, UnitModel>();
         foreach(UnitData unitData in ResourceHolder.Instance.unitDatas){
-            unitModels.Add(unitData.unitType, unitData.unitModel);
+            unitModels.Add(unitData.unitModel.unitType, unitData.unitModel.Clone() as UnitModel);
         }
         
         #if !OVERRIDE_DATA
@@ -30,9 +35,10 @@ public static class DataFetcher
         if(Directory.Exists(filePath)){
             //override
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
-                string json = File.ReadAllText(file);
-                UnitModel unitModel = JsonUtility.FromJson<UnitModel>(json);
-                unitModels[unitModel.UnitType] = unitModel;  //override
+                if(Enum.TryParse<UnitType>(Path.GetFileNameWithoutExtension(file), out UnitType unitType)){
+                    string json = File.ReadAllText(file);
+                    JsonUtility.FromJsonOverwrite(json, unitModels[unitType]);
+                }
             }
         }
         #endif

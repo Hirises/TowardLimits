@@ -296,7 +296,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public UnitBehavior SummonUnit(UnitStatus status){
-        UnitBehavior unit = Instantiate(status.unitType.GetUnitData().unitBehavior, transform);
+        UnitBehavior unit = Instantiate(status.model.unitBehavior, transform);
         unit.Initialize(status);
         return unit;
     }
@@ -532,17 +532,17 @@ public class CombatManager : MonoBehaviour
     }
 
     public bool IsIntegrable(UnitStatus status){
-        UnitData data = status.unitType.GetUnitData();
+        UnitModel data = status.unitType.GetUnitModel();
         return data.integralTo.Length > 0;
     }
 
     public bool IsDerivative(UnitStatus status){
-        UnitData data = status.unitType.GetUnitData();
+        UnitModel data = status.unitType.GetUnitModel();
         return data.derivativeTo.Length > 0;
     }
 
     public void Integrate(UnitStatus status){
-        UnitData data = status.unitType.GetUnitData();
+        UnitModel data = status.unitType.GetUnitModel();
         if(!IsIntegrable(status)){
             return;
         }
@@ -562,7 +562,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void Derivative(UnitStatus status){
-        UnitData data = status.unitType.GetUnitData();
+        UnitModel data = status.unitType.GetUnitModel();
         if(!IsDerivative(status)){
             return;
         }

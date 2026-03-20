@@ -25,16 +25,16 @@ public class UnitC : UnitBehavior
         if(slot == null){
             return;
         }
-        slot.DMG_buff += status.data.DMG_buff;
-        slot.ATKSPD_buff += status.data.ATKSPD_buff;
+        slot.DMG_buff += status.model.DMG_buff;
+        slot.ATKSPD_buff += status.model.ATKSPD_buff;
     }
 
     private void RemoveBuff(Slot slot){
         if(slot == null){
             return;
         }
-        slot.DMG_buff -= status.data.DMG_buff;
-        slot.ATKSPD_buff -= status.data.ATKSPD_buff;
+        slot.DMG_buff -= status.model.DMG_buff;
+        slot.ATKSPD_buff -= status.model.ATKSPD_buff;
     }
 
     protected override void PerformSkill_Internal(){

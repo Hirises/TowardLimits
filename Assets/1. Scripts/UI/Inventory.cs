@@ -36,7 +36,7 @@ public class Inventory : MonoBehaviour
             }
             UnitIcon icon = Instantiate(iconPrefab, iconRoot.transform);
             icons[i] = icon;
-            icon.Setup(statuses[i].unitType.GetUnitData(), i);
+            icon.Setup(statuses[i].model, i);
             icon.ReigsterEvents(OnIconHoverUp, OnIconHoverDown, OnIconDrag, OnIconClick);
         }
     }
