@@ -36,10 +36,10 @@ public class PlacementUI : MonoBehaviour
             foreach(EnemyType enemyType in CombatManager.instance.currentWaveChart.commonEnemyTypes[column]){
                 if(enemyType == EnemyType.PolarBear){
                     Image warningMark = Instantiate(BossWarningMarkPrefab, WarningMarkRoot[column].transform);
-                    warningMark.color = enemyType.GetEnemyData().color;
+                    warningMark.color = enemyType.GetEnemyModel().color;
                 }else{
                     Image warningMark = Instantiate(WarningMarkPrefab, WarningMarkRoot[column].transform);
-                    warningMark.color = enemyType.GetEnemyData().color;
+                    warningMark.color = enemyType.GetEnemyModel().color;
                 }
             }
         }

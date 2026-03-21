@@ -22,12 +22,15 @@ public class LoadingScene : MonoBehaviour
     [SerializeField] private TMP_Text loadingText;
     [SerializeField] private LoadingText[] loadingTextList;
 
+    public bool isLoading = false;
+
     public void Show(){
         loadingText.text = loadingTextList[UnityEngine.Random.Range(0, loadingTextList.Length)].text;
         root.SetActive(true);
     }
     
     public async UniTask ShowAndLoad(string sceneName, float minDelay = 0f){
+        isLoading = true;
         if(GameManager.instance.SKIP_INTENTIONAL_DELAY){
             minDelay = 0f;
         }
@@ -42,8 +45,9 @@ public class LoadingScene : MonoBehaviour
                 SceneManager.LoadSceneAsync(sceneName).ToUniTask()
             );
         }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
         Hide();
+        isLoading = false;
     }
     
     public void Hide(){

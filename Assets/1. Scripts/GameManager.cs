@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         //싱글톤 검증 완료 -----
 
+        DataFetcher.FetchData();
         if(playerData == null){
             playerData = new PlayerData();
         }
@@ -49,14 +50,5 @@ public class GameManager : MonoBehaviour
             }
             playerData.direction = direction;
         }
-    }
-
-    public EnemyData GetEnemyData(EnemyType enemyType){
-        foreach(EnemyData data in ResourceHolder.Instance.enemyDatas){
-            if(data.enemyType == enemyType){
-                return data;
-            }
-        }
-        return null;
     }
 }

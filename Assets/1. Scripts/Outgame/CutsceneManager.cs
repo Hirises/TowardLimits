@@ -55,7 +55,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void Update(){
         if(currentAction != null){
-            if(Input.anyKeyDown || Input.GetMouseButtonDown(0)){
+            if(Input.anyKeyDown || Input.GetMouseButtonDown(0) || !LoadingScene.instance.isLoading){
                 NextAction();
             }
         }

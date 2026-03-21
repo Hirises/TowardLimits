@@ -442,7 +442,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void SummonEnemy(EnemyType enemyType, int column){
-        EnemyBehavior enemy = Instantiate(enemyType.GetEnemyData().enemyBehavior, enemySpawnRoot);
+        EnemyBehavior enemy = Instantiate(enemyType.GetEnemyModel().enemyBehavior, enemySpawnRoot);
         enemy.transform.position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), 0, RelavtiveLineHandler.instance.TopRowZ);
         enemiesList.Add(enemy);
         enemy.OnSummon();

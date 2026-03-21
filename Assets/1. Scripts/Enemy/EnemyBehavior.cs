@@ -4,13 +4,13 @@ using Sirenix.OdinInspector;
 public abstract class EnemyBehavior : LivingEntity
 {
     public abstract EnemyType enemyType { get; }
-    protected EnemyData data;
+    protected EnemyModel data;
     [ReadOnly] public int health;
 
     private EnemyVFX vfx;
 
     public void OnSummon(){
-        data = enemyType.GetEnemyData();
+        data = enemyType.GetEnemyModel();
         health = data.GetHealth();
         OnSummon_Internal();
 

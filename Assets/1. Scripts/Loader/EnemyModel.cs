@@ -3,8 +3,12 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public class EnemyModel
+public class EnemyModel : ICloneable
 {
+    [Header("Basic")]
+    public EnemyType enemyType;
+    public EnemyBehavior enemyBehavior;
+
     [Header("Stats")]
     [SerializeField] public int health;
     [SerializeField] public int damage;
@@ -16,4 +20,20 @@ public class EnemyModel
     [SerializeField] public int health_add;
     [SerializeField] public int damage_add;
     [SerializeField] public float speed_add;
+
+    public int GetHealth(){
+        return health + health_add * GameManager.instance.playerData.stage;
+    }
+
+    public int GetDamage(){
+        return damage + damage_add * GameManager.instance.playerData.stage;
+    }
+
+    public float GetSpeed(){
+        return speed + speed_add * GameManager.instance.playerData.stage;
+    }
+
+    public object Clone(){
+        return MemberwiseClone();
+    }
 }

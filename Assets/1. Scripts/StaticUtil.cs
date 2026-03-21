@@ -6,7 +6,7 @@ public static class StaticUtil
         return DataFetcher.GetUnitModel(unitType);
     }
 
-    public static EnemyData GetEnemyData(this EnemyType enemyType){
-        return GameManager.instance.GetEnemyData(enemyType);
+    public static EnemyModel GetEnemyModel(this EnemyType enemyType){
+        return DataFetcher.GetEnemyModel(enemyType);
     }
 }
