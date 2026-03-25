@@ -13,6 +13,8 @@ public static class DataFetcher
     private const string UNIT_DATA_PATH = "OverrideData/Unit";
     private const string ENEMY_DATA_PATH = "OverrideData/Enemy";
     private const string WAVE_DATA_PATH = "OverrideData/Wave";
+    private const string WAVE_ADDITIONAL_DATA_PATH = "OverrideData/WaveAdditional";
+    private const string STAGE_ADDITIONAL_DATA_PATH = "OverrideData/StageAdditional";
 
     private static bool isInitialized = false;
 
@@ -119,6 +121,18 @@ public static class DataFetcher
             Debug.Log($"Override WaveData: {waveModels.Count}");
             return waveModels.ToArray();
         }
+
+        filePath = Path.Combine(Application.persistentDataPath, WAVE_ADDITIONAL_DATA_PATH);
+        if(Directory.Exists(filePath)){
+            //override
+            foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
+                string json = File.ReadAllText(file);
+                WaveModel waveModel = JsonUtility.FromJson<WaveModel>(json);
+                waveModels.Add(waveModel);
+                waveModel.isOverriden = true;
+            }
+            Debug.Log($"Override WaveData: {waveModels.Count}");
+        }
         #endif
     
         foreach(WaveChart waveChart in ResourceHolder.Instance.waveCharts){
@@ -142,6 +156,18 @@ public static class DataFetcher
             }
             Debug.Log($"Override StageData: {stageModels.Count}");
             return stageModels.ToArray();
+        }
+        
+        filePath = Path.Combine(Application.persistentDataPath, STAGE_ADDITIONAL_DATA_PATH);
+        if(Directory.Exists(filePath)){
+            //override
+            foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
+                string json = File.ReadAllText(file);
+                StageModel stageModel = JsonUtility.FromJson<StageModel>(json);
+                stageModels.Add(stageModel);
+                stageModel.isOverriden = true;
+            }
+            Debug.Log($"Override StageData: {stageModels.Count}");
         }
         #endif
     
