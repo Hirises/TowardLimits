@@ -12,9 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Data")]
     [SerializeField] public ResourceHolder resourceHolder;
-
-    [Header("Objects")]
-    [SerializeField] public List<UnitType> initalUnitlist;
+    [SerializeField, InlineEditor, HideLabel] public CommonSettingsModel commonSettings;
 
     [Header("Debug")]
     [SerializeField] public bool DEBUG_MODE = false;
@@ -50,5 +48,6 @@ public class GameManager : MonoBehaviour
             }
             playerData.direction = direction;
         }
+        Application.targetFrameRate = 60;
     }
 }

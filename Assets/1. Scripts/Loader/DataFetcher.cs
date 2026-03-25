@@ -8,10 +8,11 @@ using UnityEngine;
 /// </summary>
 public static class DataFetcher
 {
-    private const string STAGE_DATA_PATH = "Data/Stage";
-    private const string UNIT_DATA_PATH = "Data/Unit";
-    private const string ENEMY_DATA_PATH = "Data/Enemy";
-    private const string WAVE_DATA_PATH = "Data/Wave";
+    private const string COMMON_DATA_PATH = "OverrideData/common_settings.json";
+    private const string STAGE_DATA_PATH = "OverrideData/Stage";
+    private const string UNIT_DATA_PATH = "OverrideData/Unit";
+    private const string ENEMY_DATA_PATH = "OverrideData/Enemy";
+    private const string WAVE_DATA_PATH = "OverrideData/Wave";
 
     private static bool isInitialized = false;
 
@@ -36,19 +37,31 @@ public static class DataFetcher
 
 #region Fetch Data
     public static void FetchData(){
+        FetchCommonSettings();
         stageData = FetchStageData();
         waveData = FetchWaveData();
         unitData = FetchUnitData();
         enemyData = FetchEnemyData();
+        
+        isInitialized = true;
     }
     
+    public static void FetchCommonSettings(){
+        #if OVERRIDE_DATA
+        string filePath = Path.Combine(Application.persistentDataPath, COMMON_DATA_PATH);
+        if(File.Exists(filePath)){
+            string json = File.ReadAllText(filePath);
+            JsonUtility.FromJsonOverwrite(json, GameManager.instance.commonSettings);
+        }
+        #endif
+    }
     public static Dictionary<EnemyType, EnemyModel> FetchEnemyData(){
         Dictionary<EnemyType, EnemyModel> enemyModels = new Dictionary<EnemyType, EnemyModel>();
         foreach(EnemyData enemyData in ResourceHolder.Instance.enemyDatas){
             enemyModels.Add(enemyData.enemyModel.enemyType, enemyData.enemyModel.Clone() as EnemyModel);
         }
         
-        #if !OVERRIDE_DATA
+        #if OVERRIDE_DATA
         string filePath = Path.Combine(Application.persistentDataPath, ENEMY_DATA_PATH);
         if(Directory.Exists(filePath)){
             //override
@@ -72,7 +85,7 @@ public static class DataFetcher
             unitModels.Add(unitData.unitModel.unitType, unitData.unitModel.Clone() as UnitModel);
         }
         
-        #if !OVERRIDE_DATA
+        #if OVERRIDE_DATA
         string filePath = Path.Combine(Application.persistentDataPath, UNIT_DATA_PATH);
         if(Directory.Exists(filePath)){
             //override
@@ -93,7 +106,7 @@ public static class DataFetcher
     public static WaveModel[] FetchWaveData(){
         List<WaveModel> waveModels = new List<WaveModel>();
         
-        #if !OVERRIDE_DATA
+        #if OVERRIDE_DATA
         string filePath = Path.Combine(Application.persistentDataPath, WAVE_DATA_PATH);
         if(Directory.Exists(filePath)){
             //override
@@ -117,7 +130,7 @@ public static class DataFetcher
     public static StageModel[] FetchStageData(){
         List<StageModel> stageModels = new List<StageModel>();
         
-        #if !OVERRIDE_DATA
+        #if OVERRIDE_DATA
         string filePath = Path.Combine(Application.persistentDataPath, STAGE_DATA_PATH);
         if(Directory.Exists(filePath)){
             //override

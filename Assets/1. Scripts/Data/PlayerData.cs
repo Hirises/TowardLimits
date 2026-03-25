@@ -12,7 +12,7 @@ public class PlayerData
     public int stage;   //현재 스테이지 카운트
 
     public PlayerData(){
-        units = new List<UnitStatus>(GameManager.instance.initalUnitlist.Select(type => UnitStatus.FromType(type)));
+        units = new List<UnitStatus>(GameManager.instance.commonSettings.initalUnitlist.Select(type => UnitStatus.FromType(type)));
         DT = 0;
         Persuaded = 0;
         direction = Polar.North;
