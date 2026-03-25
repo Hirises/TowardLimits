@@ -11,10 +11,12 @@ public static class DataFetcher
     private const string STAGE_DATA_PATH = "Data/Stage";
     private const string UNIT_DATA_PATH = "Data/Unit";
     private const string ENEMY_DATA_PATH = "Data/Enemy";
+    private const string WAVE_DATA_PATH = "Data/Wave";
 
     private static bool isInitialized = false;
 
     public static StageModel[] stageData;
+    public static WaveModel[] waveData;
     public static Dictionary<UnitType, UnitModel> unitData;
     public static Dictionary<EnemyType, EnemyModel> enemyData;
 
@@ -35,6 +37,7 @@ public static class DataFetcher
 #region Fetch Data
     public static void FetchData(){
         stageData = FetchStageData();
+        waveData = FetchWaveData();
         unitData = FetchUnitData();
         enemyData = FetchEnemyData();
     }
@@ -83,6 +86,28 @@ public static class DataFetcher
         return unitModels;
     }
     
+    public static WaveModel[] FetchWaveData(){
+        List<WaveModel> waveModels = new List<WaveModel>();
+        
+        #if !OVERRIDE_DATA
+        string filePath = Path.Combine(Application.persistentDataPath, WAVE_DATA_PATH);
+        if(Directory.Exists(filePath)){
+            //override
+            foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
+                string json = File.ReadAllText(file);
+                WaveModel waveModel = JsonUtility.FromJson<WaveModel>(json);
+                waveModels.Add(waveModel);
+            }
+            return waveModels.ToArray();
+        }
+        #endif
+    
+        foreach(WaveChart waveChart in ResourceHolder.Instance.waveCharts){
+            waveModels.Add(WaveModel.FromWaveChart(waveChart));
+        }
+        return waveModels.ToArray();
+    }
+
     public static StageModel[] FetchStageData(){
         List<StageModel> stageModels = new List<StageModel>();
         

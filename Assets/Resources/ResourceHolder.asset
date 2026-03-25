@@ -28,5 +28,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b18c69e278bb694fa1c62efd9b7fdc0, type: 2}
   - {fileID: 11400000, guid: 04acb89e4c313e14c9cb01cd1f31ad7f, type: 2}
   - {fileID: 11400000, guid: 0a142697c4936284a8e656f42504cfe5, type: 2}
+  waveCharts:
+  - {fileID: 11400000, guid: bf260e23b37714046890b58ccdef1d33, type: 2}
+  - {fileID: 11400000, guid: c9c5fc49ccacdaa4994073f22dc1c05f, type: 2}
+  - {fileID: 11400000, guid: 676b8cdb07ac4b34cb9ffe85925b40f8, type: 2}
+  - {fileID: 11400000, guid: 3812c6393a4363f4f8d0fbab8a32e8ee, type: 2}
+  - {fileID: 11400000, guid: b2e4e22a6d7925941b967ee049fc2215, type: 2}
+  - {fileID: 11400000, guid: fa6996dceb92eb540bf7cb6cc8523005, type: 2}
+  - {fileID: 11400000, guid: 0d8b15d4953cf1f40be020eee09175d2, type: 2}
+  - {fileID: 11400000, guid: 7527c579d0baf89419658527d7d442d9, type: 2}
+  - {fileID: 11400000, guid: e6bf2bf3b1f08f745b6b0f36fb3d50e5, type: 2}
+  - {fileID: 11400000, guid: 6408bfd6b2b10614baf24e9d02e4930b, type: 2}
+  - {fileID: 11400000, guid: a551ec652ca44c341a5d6980bb108902, type: 2}
+  - {fileID: 11400000, guid: 8e55a32f0df3fbc4295a828290466a4f, type: 2}
+  - {fileID: 11400000, guid: 247e8db72dc6f9f4d930ed84381153c1, type: 2}
+  - {fileID: 11400000, guid: 9176b21eab0cb29409d626a3ce1ea3d1, type: 2}
+  - {fileID: 11400000, guid: ea379400b7b00064ebd108ca30a9aa6f, type: 2}
+  - {fileID: 11400000, guid: 01c63803dd7f03e4cb2b65c0e3873237, type: 2}
+  - {fileID: 11400000, guid: eece31ef1d4ae7048ab7b16c0c4d3543, type: 2}
+  - {fileID: 11400000, guid: acedd38d564254442b8d8f3052dad058, type: 2}
+  - {fileID: 11400000, guid: e85b764123c068e4a8449fcb3f928767, type: 2}
+  - {fileID: 11400000, guid: 2353501e0edc1654bb8bcc26f7765f66, type: 2}
   damageVFXPrefab: {fileID: 8059752359908663914, guid: 5a436e7b1516bea4ebb412237874f2a1, type: 3}
   skillCoolTime: 15

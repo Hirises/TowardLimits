@@ -16,7 +16,53 @@ MonoBehaviour:
   stageRange: {x: 3, y: 3}
   difficulty: {x: 0, y: 99}
   forFinalBoss: 0
+  enemyList:
+  - lane: 0
+    emitOnce: 0
+    startTime: 0
+    count: 18
+    interval: 0.4
+    enemyType: 0
+  - lane: 1
+    emitOnce: 0
+    startTime: 0
+    count: 13
+    interval: 0.4
+    enemyType: 0
+  - lane: 1
+    emitOnce: 0
+    startTime: 0.5
+    count: 8
+    interval: 0.5
+    enemyType: 0
+  - lane: 2
+    emitOnce: 0
+    startTime: 0
+    count: 15
+    interval: 0.4
+    enemyType: 0
+  - lane: 2
+    emitOnce: 0
+    startTime: 0.3
+    count: 3
+    interval: 3
+    enemyType: 0
+  - lane: 3
+    emitOnce: 0
+    startTime: 0
+    count: 13
+    interval: 0.4
+    enemyType: 0
+  - lane: 3
+    emitOnce: 0
+    startTime: 0.5
+    count: 8
+    interval: 0.5
+    enemyType: 0
+  - lane: 4
+    emitOnce: 0
+    startTime: 0
+    count: 18
+    interval: 0.4
+    enemyType: 0
   filePath: Wave30
-  waveChartList:
-    enemyList: []
-  duration: 0

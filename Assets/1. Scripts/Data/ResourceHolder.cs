@@ -23,6 +23,7 @@ public class ResourceHolder : ScriptableObject
     [SerializeField] public StageData[] stageData;
     [SerializeField] public UnitData[] unitDatas;
     [SerializeField] public EnemyData[] enemyDatas;
+    [SerializeField] public WaveChart[] waveCharts;
     
     [Header("VFX")]
     public DamageVFX damageVFXPrefab;

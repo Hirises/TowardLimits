@@ -16,7 +16,23 @@ MonoBehaviour:
   stageRange: {x: 0, y: 0}
   difficulty: {x: 0, y: 99}
   forFinalBoss: 0
+  enemyList:
+  - lane: 1
+    emitOnce: 0
+    startTime: 0
+    count: 13
+    interval: 0.4
+    enemyType: 0
+  - lane: 2
+    emitOnce: 0
+    startTime: 0
+    count: 13
+    interval: 0.4
+    enemyType: 0
+  - lane: 3
+    emitOnce: 0
+    startTime: 0
+    count: 13
+    interval: 0.4
+    enemyType: 0
   filePath: Wave0
-  waveChartList:
-    enemyList: []
-  duration: 0

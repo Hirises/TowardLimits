@@ -26,7 +26,6 @@ public class CombatManager : MonoBehaviour
 
     [Header("Entities")]
     [SerializeField] public Transform enemySpawnRoot;
-    [SerializeField] public WaveChart[] waveCharts;
     [SerializeField] public Transform bulletRoot;
 
     [Header("UI")]
@@ -41,7 +40,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public GameObject SkillIconRoot;
 
     [ReadOnly] private StageModel currentStage;
-    [ReadOnly] public WaveChart currentWaveChart;
+    [ReadOnly] public WaveModel currentWaveChart;
     [ReadOnly] private int currentWave = 0;
     private float waveStartTime = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
@@ -417,9 +416,9 @@ public class CombatManager : MonoBehaviour
         SkillIconRoot.SetActive(false);
     }
 
-    public WaveChart ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
+    public WaveModel ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
         int stage = GameManager.instance.playerData.stage;
-        WaveChart[] waveChart = waveCharts.Where(w => w.difficulty.x <= difficulty && (w.difficulty.y < 0 || difficulty <= w.difficulty.y)  
+        WaveModel[] waveChart = DataFetcher.waveData.Where(w => w.difficulty.x <= difficulty && (w.difficulty.y < 0 || difficulty <= w.difficulty.y)  
             && (w.polar == polar || w.polar == Polar.Both) && w.forFinalBoss == forFinalBoss
             && w.stageRange.x <= stage && (w.stageRange.y < 0 || stage <= w.stageRange.y)).ToArray();
         if(waveChart.Length == 0){
@@ -428,7 +427,7 @@ public class CombatManager : MonoBehaviour
         return waveChart[UnityEngine.Random.Range(0, waveChart.Length)];
     }
     
-    private async UniTask WaveChartSpawnLoop(WaveChart waveChart, CancellationToken ct){
+    private async UniTask WaveChartSpawnLoop(WaveModel waveChart, CancellationToken ct){
         float time = 0;
         waveStartTime = Time.time;
         foreach(var summon in waveChart.summonList){
