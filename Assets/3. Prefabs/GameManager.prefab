@@ -45,27 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceHolder: {fileID: 11400000, guid: 10b9e286f76dc61459dcc2045fd36598, type: 2}
-  stageDatas:
-  - {fileID: 11400000, guid: 848079bf6db95b049898e55ea1b58c41, type: 2}
-  - {fileID: 11400000, guid: af478290c7bc7b34d8ad9e878c37aba3, type: 2}
-  - {fileID: 11400000, guid: a75f5585e08911747aac1d01dd3fcbdb, type: 2}
-  unitDatas:
-  - {fileID: 11400000, guid: 74637a66c4ec9c8439b4529258b04746, type: 2}
-  - {fileID: 11400000, guid: 42877779549800944bae61c096a480d0, type: 2}
-  - {fileID: 11400000, guid: 83528374245d6ed418ea7cae151802c9, type: 2}
-  - {fileID: 11400000, guid: ca5023aec7b678546a4d1153d7dfae3d, type: 2}
-  - {fileID: 11400000, guid: 626089e3a7fdc154881e1302e1f707d0, type: 2}
-  enemyDatas:
-  - {fileID: 11400000, guid: 0a142697c4936284a8e656f42504cfe5, type: 2}
-  - {fileID: 11400000, guid: e69a651a7ce6ace4da50ffd53fffd9a4, type: 2}
-  - {fileID: 11400000, guid: 3b18c69e278bb694fa1c62efd9b7fdc0, type: 2}
-  - {fileID: 11400000, guid: 04acb89e4c313e14c9cb01cd1f31ad7f, type: 2}
-  - {fileID: 11400000, guid: 7c039f1718b987e489833f998fe69d20, type: 2}
-  initalUnitlist: 0200000002000000020000000200000002000000
+  commonSettings:
+    initalUnitlist: 020000000200000002000000
   DEBUG_MODE: 1
   SKIP_INTENTIONAL_DELAY: 0
   SKIP_CUTSCENE: 0
   MIN_LOADING_DELAY: 3
   unitlist: 020000000300000004000000010000000200000002000000
   direction: 1
-  currentStage: {fileID: 11400000, guid: 848079bf6db95b049898e55ea1b58c41, type: 2}

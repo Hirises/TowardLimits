@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Data")]
     [SerializeField] public ResourceHolder resourceHolder;
-    [SerializeField, InlineEditor, HideLabel] public CommonSettingsModel commonSettings;
+    [SerializeField, InlineProperty, HideLabel] public CommonSettingsModel commonSettings;
 
     [Header("Debug")]
     [SerializeField] public bool DEBUG_MODE = false;
