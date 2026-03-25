@@ -8,6 +8,7 @@ public class EnemyModel : ICloneable
     [Header("Basic")]
     public EnemyType enemyType;
     public EnemyBehavior enemyBehavior;
+    [NonSerialized] public bool isOverriden = false;
 
     [Header("Stats")]
     [SerializeField] public int health;

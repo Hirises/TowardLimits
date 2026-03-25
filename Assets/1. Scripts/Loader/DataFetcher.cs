@@ -54,8 +54,10 @@ public static class DataFetcher
             //override
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
                 if(Enum.TryParse<EnemyType>(Path.GetFileNameWithoutExtension(file), out EnemyType enemyType)){
+                    Debug.Log($"Override EnemyData: {enemyType}");
                     string json = File.ReadAllText(file);
                     JsonUtility.FromJsonOverwrite(json, enemyModels[enemyType]);
+                    enemyModels[enemyType].isOverriden = true;
                 }
             }
         }
@@ -76,8 +78,10 @@ public static class DataFetcher
             //override
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
                 if(Enum.TryParse<UnitType>(Path.GetFileNameWithoutExtension(file), out UnitType unitType)){
+                    Debug.Log($"Override UnitData: {unitType}");
                     string json = File.ReadAllText(file);
                     JsonUtility.FromJsonOverwrite(json, unitModels[unitType]);
+                    unitModels[unitType].isOverriden = true;
                 }
             }
         }
@@ -97,7 +101,9 @@ public static class DataFetcher
                 string json = File.ReadAllText(file);
                 WaveModel waveModel = JsonUtility.FromJson<WaveModel>(json);
                 waveModels.Add(waveModel);
+                waveModel.isOverriden = true;
             }
+            Debug.Log($"Override WaveData: {waveModels.Count}");
             return waveModels.ToArray();
         }
         #endif
@@ -119,7 +125,9 @@ public static class DataFetcher
                 string json = File.ReadAllText(file);
                 StageModel stageModel = JsonUtility.FromJson<StageModel>(json);
                 stageModels.Add(stageModel);
+                stageModel.isOverriden = true;
             }
+            Debug.Log($"Override StageData: {stageModels.Count}");
             return stageModels.ToArray();
         }
         #endif

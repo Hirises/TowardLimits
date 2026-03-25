@@ -4,6 +4,7 @@ using UnityEngine;
 public class StageModel
 {
     public Vector2Int stageNumber;
+    [NonSerialized] public bool isOverriden = false;
     public Polar direction;
     public int waveCount;
     public int DT;

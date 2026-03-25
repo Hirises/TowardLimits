@@ -10,6 +10,7 @@ public class UnitModel : ICloneable
     public string unitName;
     [TextArea] public string unitDescription;
     public Color unitColor = Color.white;
+    [NonSerialized] public bool isOverriden = false;
 
     [Header("Images")]
     public Sprite fullFront;

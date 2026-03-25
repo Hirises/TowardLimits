@@ -10,6 +10,7 @@ public class WaveModel
     public Vector2Int stageRange;   //스테이지
     public Vector2Int difficulty;   //난이도 계수
     public bool forFinalBoss = false;   //마지막 보스 전용 차트인가?
+    [NonSerialized] public bool isOverriden = false;
 
     [HideInInspector] public List<WaveChartData> enemyList;    //생성 정보
 
