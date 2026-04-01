@@ -20,6 +20,8 @@ public class RelavtiveLineHandler : MonoBehaviour
     public float TopRowZ => TopRow.position.z;
     [SerializeField] private Transform BottomRow;
     public float BottomRowZ => BottomRow.position.z;
+    [SerializeField] private Transform MiddleRow;
+    public float MiddleRowZ => MiddleRow.position.z;
 
     [Header("Deco Lines")]
     [SerializeField] private Transform[] LeftDecoLines;
@@ -63,6 +65,11 @@ public class RelavtiveLineHandler : MonoBehaviour
             Gizmos.DrawLine(new Vector3(-10, transform.position.y, Rows[i].position.z),
              new Vector3(10, transform.position.y, Rows[i].position.z));
         }
+
+        //Middle Row
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(new Vector3(-10, transform.position.y, MiddleRowZ),
+        new Vector3(10, transform.position.y, MiddleRowZ));
     }
 #endif
 

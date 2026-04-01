@@ -27,6 +27,7 @@ public class CombatManager : MonoBehaviour
     [Header("Entities")]
     [SerializeField] public Transform enemySpawnRoot;
     [SerializeField] public Transform bulletRoot;
+    [SerializeField] public Transform enemyBulletRoot;
 
     [Header("UI")]
     [SerializeField] public PlacementUI placementUIRoot;
@@ -261,7 +262,20 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 모든 유닛이 죽었는지 검사
+    /// </summary>
+    public void CheckGameOver(){
+        foreach(Slot slot in slots){
+            if(slot.unit != null){
+                return;
+            }
+        }
+        GameOver();
+    }
+
     public void GameOver(){
+        ClearBullets();
         LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY).Forget();
     }
 #endregion
@@ -393,6 +407,15 @@ public class CombatManager : MonoBehaviour
         SkillIconRoot.SetActive(true);
     }
 
+    public void ClearBullets(){
+        foreach(Transform child in bulletRoot){
+            Destroy(child.gameObject);
+        }
+        foreach(Transform child in enemyBulletRoot){
+            Destroy(child.gameObject);
+        }
+    }
+
     public void EndCombatPhase(){
         phase = Phase.None;
         if(enemySpawnLoop != null){
@@ -406,9 +429,7 @@ public class CombatManager : MonoBehaviour
             enemy.OnDeath();
         }
         enemiesList.Clear();
-        foreach(Transform child in bulletRoot){
-            Destroy(child.gameObject);
-        }
+        ClearBullets();
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatEnd();
@@ -447,7 +468,7 @@ public class CombatManager : MonoBehaviour
         EnemyBehavior enemy = Instantiate(enemyType.GetEnemyModel().enemyBehavior, enemySpawnRoot);
         enemy.transform.position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), 0, RelavtiveLineHandler.instance.TopRowZ);
         enemiesList.Add(enemy);
-        enemy.OnSummon();
+        enemy.OnSummon(column);
     }
 
     public void RemoveEnemy(EnemyBehavior enemy){

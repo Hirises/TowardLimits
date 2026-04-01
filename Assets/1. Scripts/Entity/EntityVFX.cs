@@ -29,6 +29,9 @@ public class EntityVFX
     }
 
     public void InvokeDamageEffect(){
+        if(entity == null){
+            return;
+        }
         if(damageEffectTween != null){
             damageEffectTween.Kill();
         }

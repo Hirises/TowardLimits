@@ -5,7 +5,8 @@ using UnityEngine;
 /// </summary>
 public class Billboard : MonoBehaviour
 {
-    private void Awake(){
-        transform.LookAt(Camera.main.transform);
+    private void Start(){
+        transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, 
+            transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 }

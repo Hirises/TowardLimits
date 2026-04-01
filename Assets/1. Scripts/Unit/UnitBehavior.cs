@@ -77,6 +77,7 @@ public abstract class UnitBehavior : LivingEntity
         OnCombatEnd();
         OnDisplacement();
         Remove();
+        CombatManager.instance.CheckGameOver();
     }
 
     protected override void TakeDamage_Internal(int damage){
