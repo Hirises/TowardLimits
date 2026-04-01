@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 
 /// <summary>
@@ -49,5 +51,13 @@ public class GameManager : MonoBehaviour
             playerData.direction = direction;
         }
         Application.targetFrameRate = 60;
+    }
+
+    public void SetRandomStage(Polar direction){
+        playerData.direction = direction;
+        StageModel[] stageDatas = DataFetcher.stageData.Where(stage => stage.stageNumber.x <= playerData.stage 
+            && stage.stageNumber.y >= playerData.stage
+            && (stage.direction == playerData.direction || stage.direction == Polar.Both)).ToArray();
+        currentStage = stageDatas[Random.Range(0, stageDatas.Length)];
     }
 }

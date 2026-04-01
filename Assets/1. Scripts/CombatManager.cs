@@ -180,6 +180,9 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     public void SetupGame(){
         placementUIRoot.Hide();
+        if(GameManager.instance.currentStage == null){
+            GameManager.instance.SetRandomStage(GameManager.instance.playerData.direction);
+        }
         currentStage = GameManager.instance.currentStage;
         currentWave = -1;
         GameManager.instance.playerData.DT = 999;

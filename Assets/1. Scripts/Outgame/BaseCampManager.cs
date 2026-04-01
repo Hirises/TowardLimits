@@ -45,11 +45,7 @@ public class BaseCampManager : MonoBehaviour
     }
 
     public void StartGame(Polar direction){
-        GameManager.instance.playerData.direction = direction;
-        StageModel[] stageDatas = DataFetcher.stageData.Where(stage => stage.stageNumber.x <= GameManager.instance.playerData.stage 
-            && stage.stageNumber.y >= GameManager.instance.playerData.stage
-            && (stage.direction == direction || stage.direction == Polar.Both)).ToArray();
-        GameManager.instance.currentStage = stageDatas[Random.Range(0, stageDatas.Length)];
+        GameManager.instance.SetRandomStage(direction);
         LoadingScene.instance.ShowAndLoad("Game", GameManager.instance.MIN_LOADING_DELAY).Forget();
     }
 }
