@@ -30,7 +30,7 @@ public class WaveChart : ScriptableObject
         string json = textAsset.text;
         JsonUtility.FromJsonOverwrite(json, this);
         foreach(WaveChartData data in enemyList){
-            Debug.Log($"WaveChartData: {data.enemyType} at {data.lane} at {data.startTime}");
+            Debug.Log($"WaveChartData: {data.enemyType_enum} at {data.lane} at {data.startTime}");
         }
         EditorUtility.SetDirty(this);
         AssetDatabase.SaveAssets();

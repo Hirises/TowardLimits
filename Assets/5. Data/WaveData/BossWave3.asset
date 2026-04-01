@@ -22,47 +22,55 @@ MonoBehaviour:
     startTime: 0
     count: 15
     interval: 0.4
-    enemyType: 0
+    enemyType_enum: 2
+    enemyType: EIRYellow
   - lane: 1
     emitOnce: 0
     startTime: 0
     count: 10
     interval: 0.4
-    enemyType: 0
+    enemyType_enum: 0
+    enemyType: EIRNormal
   - lane: 1
     emitOnce: 0
     startTime: 0.5
     count: 8
     interval: 0.5
-    enemyType: 0
+    enemyType_enum: 3
+    enemyType: EIRPurple
   - lane: 2
     emitOnce: 0
     startTime: 0
     count: 18
     interval: 0.4
-    enemyType: 0
+    enemyType_enum: 0
+    enemyType: EIRNormal
   - lane: 3
     emitOnce: 0
     startTime: 0
     count: 10
     interval: 0.4
-    enemyType: 0
+    enemyType_enum: 0
+    enemyType: EIRNormal
   - lane: 3
     emitOnce: 0
     startTime: 0.5
     count: 8
     interval: 0.5
-    enemyType: 0
+    enemyType_enum: 3
+    enemyType: EIRPurple
   - lane: 4
     emitOnce: 0
     startTime: 0
     count: 15
     interval: 0.4
-    enemyType: 0
+    enemyType_enum: 2
+    enemyType: EIRYellow
   - lane: 2
     emitOnce: 1
     startTime: 10
     count: 1
     interval: 1
-    enemyType: 0
+    enemyType_enum: 4
+    enemyType: PolarBear
   filePath: BossWave3

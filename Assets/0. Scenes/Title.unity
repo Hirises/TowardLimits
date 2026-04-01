@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4231672551278180047, guid: fb4cc2d75ff62dd419a8bfb317a1fc18, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 2047
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -326,7 +330,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2047
 --- !u!114 &99596730
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class WaveModel
 {
@@ -37,11 +38,11 @@ public class WaveModel
         float maxStartTime = 0;
         foreach(WaveChartData data in enemyList){
             if(data.emitOnce){
-                summonList.Add((data.startTime, data.lane, data.enemyType));
+                summonList.Add((data.startTime, data.lane, data.enemyType_enum));
                 maxStartTime = Mathf.Max(maxStartTime, data.startTime);
             }else{
                 for(int i = 0; i < data.count; i++){
-                    summonList.Add((data.startTime + i * data.interval, data.lane, data.enemyType));
+                    summonList.Add((data.startTime + i * data.interval, data.lane, data.enemyType_enum));
                 }
                 maxStartTime = Mathf.Max(maxStartTime, data.startTime + data.count * data.interval);
             }
@@ -64,11 +65,25 @@ public class WaveModel
 }
 
 [System.Serializable]
-public class WaveChartData{
+public class WaveChartData : ISerializationCallbackReceiver 
+{
     public int lane;
     public bool emitOnce;
     public float startTime;
     public int count;
     public float interval;
-    public EnemyType enemyType;
+    public EnemyType enemyType_enum;
+    [HideInInspector] public string enemyType;
+
+    public void OnAfterDeserialize()
+    {
+        if(Enum.TryParse<EnemyType>(enemyType, out EnemyType enemyType_enum)){
+            this.enemyType_enum = enemyType_enum;
+        }
+    }
+
+    public void OnBeforeSerialize()
+    {
+        enemyType = enemyType_enum.ToString();
+    }
 }
