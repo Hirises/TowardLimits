@@ -2,7 +2,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// 에디터용 스크립트
+/// 라인 관리자
+/// 에디터 상에서 다양한 라인을 시각적으로 확인하기 위해 사용함
 /// </summary>
 [ExecuteInEditMode]
 public class RelavtiveLineHandler : MonoBehaviour
@@ -49,7 +50,7 @@ public class RelavtiveLineHandler : MonoBehaviour
     private void Update(){
         for(int i = 0; i < Columns.Length; i++){
             for(int j = 0; j < Rows.Length; j++){
-                combatManager.GetSlot(j, i).transform.position = new Vector3(Columns[i].position.x, 0.01f, Rows[j].position.z);
+                combatManager.GetSlotAt(j, i).transform.position = new Vector3(Columns[i].position.x, 0.01f, Rows[j].position.z);
             }
         }
     }

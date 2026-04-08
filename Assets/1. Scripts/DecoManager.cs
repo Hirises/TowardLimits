@@ -4,6 +4,9 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// 이것저것 디자인적 요소들 관리하기 위한 클래스
+/// </summary>
 public class DecoManager : MonoBehaviour
 {
     [SerializeField] private Iceberg icebergPrefab;

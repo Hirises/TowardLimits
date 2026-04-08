@@ -386,6 +386,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void InsufficientDT(){
+        //나중에 시각적 VFX 보여줘서 'DT가 부족해서 못 옮기고 있다'라는 점을 명확히 보여주기
         Debug.Log("Insufficient DT");
     }
 #endregion
@@ -615,20 +616,20 @@ public class CombatManager : MonoBehaviour
             return;
         }
         skillCoolTime = ResourceHolder.Instance.skillCoolTime;
-        PerformSkill(line);
+        ForcePerformSkill(line);
         SkillIconRoot.SetActive(false);
     }
 
-    public void PerformSkill(int line){
+    public void ForcePerformSkill(int line){
         for(int i = 0; i < girdSize.x; i++){
-            Slot slot = GetSlot(i, line);
+            Slot slot = GetSlotAt(i, line);
             if(slot.unit != null){
                 slot.unit.PerformSkill();
             }
         }
     }
 
-    public Slot GetSlot(int row, int column){
+    public Slot GetSlotAt(int row, int column){
         if(row < 0 || row >= girdSize.x || column < 0 || column >= girdSize.y){
             return null;
         }

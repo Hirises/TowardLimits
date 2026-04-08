@@ -2,6 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+/// <summary>
+/// 유닛을 배치 가능한 슬롯
+/// </summary>
 public class Slot : MonoBehaviour
 {
     [SerializeField] public Vector2Int position;
@@ -10,6 +13,8 @@ public class Slot : MonoBehaviour
     [SerializeField] public GameObject UnitPoint;
     [ReadOnly] public UnitBehavior unit;
 
+    [Header("Buff")]
+    //버프 값 (유닛 스텟에 합연산으로 계산)
     public int DMG_buff = 0;
     public float ATKSPD_buff = 0;
     public float RANGE_buff = 0;
@@ -30,15 +35,15 @@ public class Slot : MonoBehaviour
     /// <param name="unit"></param>
     internal void SetUnit_Internal([MaybeNull] UnitBehavior unit){
         this.unit = unit;
-        UpdateBaseActiveState();
+        UpdateSprite();
     }
 
     public void ShowBase(bool show){
         showBase = show;
-        UpdateBaseActiveState();
+        UpdateSprite();
     }
 
-    private void UpdateBaseActiveState(){
+    private void UpdateSprite(){
         bool isEmpty = unit == null;
         slotOccupied.SetActive(!isEmpty && showBase);
         slotEmpty.SetActive(isEmpty && showBase);

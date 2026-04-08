@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
+    //해당 방향 스테이지 중 랜덤으로 선택
     public void SetRandomStage(Polar direction){
         playerData.direction = direction;
         StageModel[] stageDatas = DataFetcher.stageData.Where(stage => stage.stageNumber.x <= playerData.stage 

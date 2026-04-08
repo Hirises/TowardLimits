@@ -1,6 +1,9 @@
 using DG.Tweening;
 using UnityEngine;
 
+/// <summary>
+/// 엔티티의 범용 VFX 관리용 클래스
+/// </summary>
 public class EntityVFX
 {
     private LivingEntity entity;

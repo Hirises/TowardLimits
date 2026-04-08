@@ -11,14 +11,14 @@ public class UnitC : UnitBehavior
     protected override void OnPlacement_Internal()
     {
         ApplyBuff(slot);
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x + 1, slot.position.y));
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x - 1, slot.position.y));
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x, slot.position.y + 1));
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x, slot.position.y - 1));
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x + 1, slot.position.y + 1));
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x - 1, slot.position.y + 1));
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x + 1, slot.position.y - 1));
-        ApplyBuff(CombatManager.instance.GetSlot(slot.position.x - 1, slot.position.y - 1));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y + 1));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y - 1));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y + 1));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y + 1));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y - 1));
+        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y - 1));
     }
 
     private void ApplyBuff(Slot slot){
@@ -67,13 +67,13 @@ public class UnitC : UnitBehavior
     protected override void OnDisplacement_Internal()
     {
         RemoveBuff(slot);
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x + 1, slot.position.y));
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x - 1, slot.position.y));
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x, slot.position.y + 1));
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x, slot.position.y - 1));
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x + 1, slot.position.y + 1));
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x - 1, slot.position.y + 1));
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x + 1, slot.position.y - 1));
-        RemoveBuff(CombatManager.instance.GetSlot(slot.position.x - 1, slot.position.y - 1));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y + 1));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y - 1));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y + 1));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y + 1));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y - 1));
+        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y - 1));
     }
 }

@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// 살아있는 Entity
+/// </summary>
 public abstract class LivingEntity : MonoBehaviour, IDamageable
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;

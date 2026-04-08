@@ -5,9 +5,11 @@ using UnityEngine;
 
 /// <summary>
 /// 인게임 데이터 파싱 클래스
+/// 왜 이런 짓을 했냐고 물으신다면 빌드 외부에서 데이터를 수정하기 위함압니다.
 /// </summary>
 public static class DataFetcher
 {
+    //외부 경로들
     private const string COMMON_DATA_PATH = "OverrideData/common_settings.json";
     private const string STAGE_DATA_PATH = "OverrideData/Stage";
     private const string UNIT_DATA_PATH = "OverrideData/Unit";
@@ -18,6 +20,7 @@ public static class DataFetcher
 
     private static bool isInitialized = false;
 
+    //캐싱
     public static StageModel[] stageData;
     public static WaveModel[] waveData;
     public static Dictionary<UnitType, UnitModel> unitData;
@@ -47,6 +50,9 @@ public static class DataFetcher
         
         isInitialized = true;
     }
+
+
+    //외부 값이 있는지 검사해서 덮어쓰기, 없으면 내부 값을 사용
     
     public static void FetchCommonSettings(){
         #if OVERRIDE_DATA
