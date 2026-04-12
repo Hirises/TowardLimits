@@ -284,8 +284,8 @@ public class CombatManager : MonoBehaviour
     public void StartPlacementPhase(){
         EndCombatPhase();
         phase = Phase.Placement;
-        currentWaveChart = ChooseRandomWaveChart(1, Polar.Both, currentWave == currentStage.waveCount - 1);
-        currentWaveChart?.Load();
+        currentWaveChart = ChooseRandomWaveChart(currentWave, GameManager.instance.playerData.direction, currentWave == currentStage.waveCount - 1);
+        currentWaveChart.Load();
         placementUIRoot.Show_Placement();
         
     }
@@ -444,10 +444,10 @@ public class CombatManager : MonoBehaviour
     public WaveModel ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
         int stage = GameManager.instance.playerData.stage;
         WaveModel[] waveChart = DataFetcher.waveData.Where(w => w.difficulty.x <= difficulty && (w.difficulty.y < 0 || difficulty <= w.difficulty.y)  
-            && (w.polar == polar || w.polar == Polar.Both) && w.forFinalBoss == forFinalBoss
+            && (w.polar == polar || w.polar == Polar.Both || polar == Polar.Both) && w.forFinalBoss == forFinalBoss
             && w.stageRange.x <= stage && (w.stageRange.y < 0 || stage <= w.stageRange.y)).ToArray();
         if(waveChart.Length == 0){
-            return null;
+            throw new Exception($"No wave chart found for difficulty: {difficulty}, polar: {polar}, forFinalBoss: {forFinalBoss}, stage: {stage}");
         }
         return waveChart[UnityEngine.Random.Range(0, waveChart.Length)];
     }
