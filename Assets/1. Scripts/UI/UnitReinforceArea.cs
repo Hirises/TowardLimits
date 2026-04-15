@@ -17,6 +17,9 @@ public class UnitReinforceArea : MonoBehaviour
         endDrag = () => {
             icon.SetAlpha(1f);
             if(RectTransformUtility.RectangleContainsScreenPoint(area, Input.mousePosition)){
+                if(status.unitType != UnitType.UnitC){
+                    return;
+                }
                 GameManager.instance.playerData.units.Remove(status);
                 unitInfoPopup.FixedUnit.level++;
                 inventoryUI.UpdateUnit(GameManager.instance.playerData.units);

@@ -1632,6 +1632,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
+      propertyPath: 'unitlist.Array.data[4]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6394949833098057863, guid: 6130b3cf2308c0145aa3c2a066ece852, type: 3}
       propertyPath: 'unitlist.Array.data[5]'
       value: 5
       objectReference: {fileID: 0}
