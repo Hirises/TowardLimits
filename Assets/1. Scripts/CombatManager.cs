@@ -342,7 +342,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartDrag(UnitBehavior unit){
-        if(phase != Phase.Placement){
+        if(phase != Phase.Placement && phase != Phase.Combat){
             return;
         }
         endDrag = (slot) => {
@@ -356,7 +356,7 @@ public class CombatManager : MonoBehaviour
                 }else{
                     InsufficientDT();
                 }
-            }else if(placementUIRoot.IsInInventoryArea(Input.mousePosition)){
+            }else if(phase == Phase.Placement && placementUIRoot.IsInInventoryArea(Input.mousePosition)){
                 if(GameManager.instance.playerData.DT > 0){
                     unit.OnDisplacement();
                     GameManager.instance.playerData.units.Add(unit.status);
@@ -398,7 +398,7 @@ public class CombatManager : MonoBehaviour
             if(slot.unit != null){
                 slot.unit.OnCombatStart();
             }
-            slot.ShowBase(false);
+            slot.ShowBase(true);
         }
         phase = Phase.Combat;
         isSummonEnded = false;
