@@ -6,4 +6,5 @@ using UnityEngine;
 public class CommonSettingsModel
 {
     [SerializeField] public List<UnitType> initalUnitlist;
+    [SerializeField] public int skillCooldown;
 }

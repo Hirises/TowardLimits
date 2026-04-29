@@ -437,7 +437,7 @@ public class CombatManager : MonoBehaviour
             }
             slot.ShowBase(true);
         }
-        skillCoolTime = ResourceHolder.Instance.skillCoolTime;
+        skillCoolTime = GameManager.instance.commonSettings.skillCooldown;
         SkillIconRoot.SetActive(false);
     }
 
@@ -615,7 +615,7 @@ public class CombatManager : MonoBehaviour
         if(skillCoolTime > 0){
             return;
         }
-        skillCoolTime = ResourceHolder.Instance.skillCoolTime;
+        skillCoolTime = GameManager.instance.commonSettings.skillCooldown;
         ForcePerformSkill(line);
         SkillIconRoot.SetActive(false);
     }
