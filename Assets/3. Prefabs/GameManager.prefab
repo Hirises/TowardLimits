@@ -48,6 +48,7 @@ MonoBehaviour:
   commonSettings:
     initalUnitlist: 020000000200000002000000
     skillCooldown: 10
+    backgroundScrollSpeed: 5
   DEBUG_MODE: 1
   SKIP_INTENTIONAL_DELAY: 0
   SKIP_CUTSCENE: 0

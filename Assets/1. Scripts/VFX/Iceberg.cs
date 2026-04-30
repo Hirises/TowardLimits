@@ -7,13 +7,12 @@ public class Iceberg : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] sprites;
-    [SerializeField] private Vector2 speedRange;
 
     private float speed;
 
     private void Awake(){
         spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
-        speed = Random.Range(speedRange.x, speedRange.y);
+        speed = GameManager.instance.commonSettings.backgroundScrollSpeed;
         spriteRenderer.flipX = Random.Range(0, 2) == 0;
     }
 

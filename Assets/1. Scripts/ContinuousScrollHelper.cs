@@ -63,7 +63,8 @@ public class ContinuousScrollHelper : MonoBehaviour
     private void OnValidate()
     {
         if (Application.isPlaying)
-            ApplySerializedSettings(forceRespawnAllTiles: false);
+            return;
+            // ApplySerializedSettings(forceRespawnAllTiles: false);
         else
             ScheduleEditorRebuild();
     }
@@ -104,6 +105,8 @@ public class ContinuousScrollHelper : MonoBehaviour
 
     private void ApplySerializedSettings(bool forceRespawnAllTiles)
     {
+        DestroyOrphanTileChildrenNotTracked();
+
         if (!TryComputeGridMetrics(out _stepLocalX, out _stepLocalY, out _zeroCenterLocal, out _tileFootprintHalfLocal))
         {
             _haveMetricBaseline = false;
@@ -139,6 +142,8 @@ public class ContinuousScrollHelper : MonoBehaviour
 
     private void RefreshTiles()
     {
+        DestroyOrphanTileChildrenNotTracked();
+
         if (_stepLocalX.sqrMagnitude <= Mathf.Epsilon || _stepLocalY.sqrMagnitude <= Mathf.Epsilon)
             return;
 
@@ -407,9 +412,47 @@ public class ContinuousScrollHelper : MonoBehaviour
 
     private void ClearTiles()
     {
+        DestroyOrphanTileChildrenNotTracked();
+
         foreach (var kv in _tiles)
             DestroySafe(kv.Value);
         _tiles.Clear();
+    }
+
+    /// <summary>
+    /// 리컴파일 등으로 <see cref="_tiles"/>가 비워져도 씬에 남은 타일 클론을 제거합니다.
+    /// 직계 자식 중 <see cref="baseSpriteObject"/>와 현재 딕셔너리에 있는 오브젝트만 둡니다.
+    /// </summary>
+    private void DestroyOrphanTileChildrenNotTracked()
+    {
+        var staleKeys = new List<Vector2Int>();
+        foreach (var kv in _tiles)
+        {
+            if (kv.Value == null)
+                staleKeys.Add(kv.Key);
+        }
+
+        foreach (Vector2Int k in staleKeys)
+            _tiles.Remove(k);
+
+        var keep = new HashSet<GameObject>();
+        if (baseSpriteObject != null)
+            keep.Add(baseSpriteObject);
+
+        foreach (var kv in _tiles)
+        {
+            if (kv.Value != null)
+                keep.Add(kv.Value);
+        }
+
+        Transform self = transform;
+        for (int i = self.childCount - 1; i >= 0; i--)
+        {
+            GameObject child = self.GetChild(i).gameObject;
+            if (keep.Contains(child))
+                continue;
+            DestroySafe(child);
+        }
     }
 
     private static void DestroySafe(Object obj)

@@ -7,4 +7,5 @@ public class CommonSettingsModel
 {
     [SerializeField] public List<UnitType> initalUnitlist;
     [SerializeField] public float skillCooldown;
+    [SerializeField] public float backgroundScrollSpeed;
 }

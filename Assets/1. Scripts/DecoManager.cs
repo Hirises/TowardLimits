@@ -11,14 +11,19 @@ public class DecoManager : MonoBehaviour
 {
     [SerializeField] private Iceberg icebergPrefab;
     [SerializeField] private Vector2 icebergSpawnInterval;
+    [SerializeField] private ContinuousScrollHelper oceanScrollHelper;
+    [SerializeField] private ContinuousScrollHelper groundScrollHelper;
     [SerializeField] private int prewarmCount;
 
     private CancellationTokenSource icebergSpawnLoop;
+    private CancellationTokenSource backgroundScrollLoop;
+    private float backgroundScrollSpeed;
 
     private void Start()
     {
         CombatManager.instance.onPhaseChange += OnPhaseChange;
         Prewarm();
+        backgroundScrollSpeed = -1 * GameManager.instance.commonSettings.backgroundScrollSpeed;
     }
 
     private void OnDestroy(){
@@ -29,11 +34,18 @@ public class DecoManager : MonoBehaviour
         if(phase == CombatManager.Phase.Combat){
             icebergSpawnLoop = new CancellationTokenSource();
             IcebergSpawnLoop(icebergSpawnLoop.Token).Forget();
+            backgroundScrollLoop = new CancellationTokenSource();
+            BackgroundScrollLoop(backgroundScrollLoop.Token).Forget();
         }else{
             if(icebergSpawnLoop != null){
                 icebergSpawnLoop.Cancel();
                 icebergSpawnLoop.Dispose();
                 icebergSpawnLoop = null;
+            }
+            if(backgroundScrollLoop != null){
+                backgroundScrollLoop.Cancel();
+                backgroundScrollLoop.Dispose();
+                backgroundScrollLoop = null;
             }
         }
     }
@@ -52,6 +64,14 @@ public class DecoManager : MonoBehaviour
             Iceberg iceberg = GameObject.Instantiate(icebergPrefab);
             iceberg.transform.SetParent(RelavtiveLineHandler.instance.RandomDecoLine());
             iceberg.transform.localPosition = new Vector3(0, 0, RelavtiveLineHandler.instance.TopRowZ);
+        }
+    }
+
+    private async UniTask BackgroundScrollLoop(CancellationToken ct){
+        while(CombatManager.instance.phase == CombatManager.Phase.Combat){
+            await UniTask.DelayFrame(1, cancellationToken: ct);
+            oceanScrollHelper.Scroll(new Vector2(0, backgroundScrollSpeed * Time.deltaTime));
+            groundScrollHelper.Scroll(new Vector2(0, backgroundScrollSpeed * Time.deltaTime));
         }
     }
 }
