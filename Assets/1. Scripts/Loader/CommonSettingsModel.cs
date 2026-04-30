@@ -6,6 +6,8 @@ using UnityEngine;
 public class CommonSettingsModel
 {
     [SerializeField] public List<UnitType> initalUnitlist;
-    [SerializeField] public float skillCooldown;
+    [SerializeField] public float skillCost;
+    [SerializeField] public float skillGagePerSecond;
+    [SerializeField] public float maxSkillGage;
     [SerializeField] public float backgroundScrollSpeed;
 }

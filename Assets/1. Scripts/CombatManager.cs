@@ -38,7 +38,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public RectTransform purchaseArea;
     [SerializeField] public TMP_Text purchaseTextUI;
     [SerializeField] public Image Whiteout;
-    [SerializeField] public GameObject SkillIconRoot;
+    [SerializeField] public SkillGage skillGage;
 
     [ReadOnly] private StageModel currentStage;
     [ReadOnly] public WaveModel currentWaveChart;
@@ -48,7 +48,6 @@ public class CombatManager : MonoBehaviour
     private CancellationTokenSource enemySpawnLoop;
     private bool isDragging = false;
     private Action<Slot> endDrag;
-    private float skillCoolTime = 0;
     public event Action<Phase> onPhaseChange;
     [ReadOnly] private Phase _phase;
     public Phase phase {
@@ -93,12 +92,7 @@ public class CombatManager : MonoBehaviour
             float ratio = (Time.time - waveStartTime) / currentWaveChart.duration;
             ratio = Mathf.Clamp01(ratio);
             travelMap.UpdatePlayerPosition(currentWave, ratio);
-            if(skillCoolTime > 0) {
-                skillCoolTime -= Time.deltaTime;
-            }
-            if(skillCoolTime <= 0){
-                SkillIconRoot.SetActive(true);
-            }
+            skillGage.UpdateGage();
         }else if(phase == Phase.Purchase){
             if(Input.GetKeyDown(KeyCode.Space)){
                 SkipPlacementPhase();
@@ -404,8 +398,8 @@ public class CombatManager : MonoBehaviour
         isSummonEnded = false;
         enemySpawnLoop = new CancellationTokenSource();
         WaveChartSpawnLoop(currentWaveChart, enemySpawnLoop.Token).Forget();
-        skillCoolTime = 0;
-        SkillIconRoot.SetActive(true);
+        skillGage.SetGage(0);
+        skillGage.Show();
     }
 
     public void ClearBullets(){
@@ -437,8 +431,7 @@ public class CombatManager : MonoBehaviour
             }
             slot.ShowBase(true);
         }
-        skillCoolTime = GameManager.instance.commonSettings.skillCooldown;
-        SkillIconRoot.SetActive(false);
+        skillGage.Hide();
     }
 
     public WaveModel ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
@@ -610,16 +603,7 @@ public class CombatManager : MonoBehaviour
         return RectTransformUtility.RectangleContainsScreenPoint(purchaseArea, screenPosition);
     }
 #endregion
-
-    public void TryPerformSkill(int line){
-        if(skillCoolTime > 0){
-            return;
-        }
-        skillCoolTime = GameManager.instance.commonSettings.skillCooldown;
-        ForcePerformSkill(line);
-        SkillIconRoot.SetActive(false);
-    }
-
+    
     public void ForcePerformSkill(int line){
         for(int i = 0; i < girdSize.x; i++){
             Slot slot = GetSlotAt(i, line);

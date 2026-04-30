@@ -58,7 +58,8 @@ public class GameManager : MonoBehaviour
         playerData.direction = direction;
         StageModel[] stageDatas = DataFetcher.stageData.Where(stage => stage.stageNumber.x <= playerData.stage 
             && stage.stageNumber.y >= playerData.stage
-            && (stage.direction == playerData.direction || stage.direction == Polar.Both)).ToArray();
+            && (stage.direction == playerData.direction || stage.direction == Polar.Both || playerData.direction == Polar.Both))
+        .ToArray();
         currentStage = stageDatas[Random.Range(0, stageDatas.Length)];
     }
 }
