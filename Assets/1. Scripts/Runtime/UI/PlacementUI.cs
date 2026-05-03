@@ -14,15 +14,24 @@ public class PlacementUI : MonoBehaviour
 
     public void Show_Placement(){
         gameObject.SetActive(true);
+        SetPlacementControlsVisible(true);
         inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Placement, null);
         UpdateDT();
-        GenerateWarningMark();
+        GenerateWarningMark(CombatManager.instance.currentWaveChart);
     }
 
     public void Show_Purchase(){
         gameObject.SetActive(true);
+        SetPlacementControlsVisible(true);
         inventory.Setup(GameManager.instance.playerData.units, OnStartDrag_Purchase, null);
         UpdateDT();
+    }
+
+    public void ShowWarningMark(WaveModel waveChart){
+        gameObject.SetActive(true);
+        SetPlacementControlsVisible(false);
+        ClearWarningMark();
+        GenerateWarningMark(waveChart);
     }
 
     public void Hide(){
@@ -31,9 +40,9 @@ public class PlacementUI : MonoBehaviour
         ClearWarningMark();
     }
 
-    public void GenerateWarningMark(){
+    public void GenerateWarningMark(WaveModel waveChart){
         for(int column = 0; column < CombatManager.instance.girdSize.y; column++){
-            foreach(EnemyType enemyType in CombatManager.instance.currentWaveChart.commonEnemyTypes[column]){
+            foreach(EnemyType enemyType in waveChart.commonEnemyTypes[column]){
                 if(enemyType == EnemyType.PolarBear){
                     Image warningMark = Instantiate(BossWarningMarkPrefab, WarningMarkRoot[column].transform);
                     warningMark.color = enemyType.GetEnemyModel().color;
@@ -42,6 +51,13 @@ public class PlacementUI : MonoBehaviour
                     warningMark.color = enemyType.GetEnemyModel().color;
                 }
             }
+        }
+    }
+
+    private void SetPlacementControlsVisible(bool isVisible){
+        inventory.gameObject.SetActive(isVisible);
+        if(DT_Text != null){
+            DT_Text.transform.parent.gameObject.SetActive(isVisible);
         }
     }
 

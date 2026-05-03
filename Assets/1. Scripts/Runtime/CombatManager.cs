@@ -40,9 +40,13 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Image Whiteout;
     [SerializeField] public SkillGage skillGage;
 
+    [Header("다음 웨이브 시작 전 경고 표시 시간")]
+    [SerializeField] private float nextWaveWarningLeadTime = 5f;
+
     [ReadOnly] private StageModel currentStage;
     [ReadOnly] public WaveModel currentWaveChart;
     [ReadOnly] private int currentWave = 0;
+    [ReadOnly] private WaveModel preparedNextWaveChart;
     private float waveStartTime = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private CancellationTokenSource enemySpawnLoop;
@@ -60,6 +64,7 @@ public class CombatManager : MonoBehaviour
         }
     }
     private bool isSummonEnded = false;
+    private bool isNextWaveWarningShown = false;
 
     public enum Phase {
         None,       //초기 상태
@@ -86,13 +91,19 @@ public class CombatManager : MonoBehaviour
             }
             travelMap.UpdatePlayerPosition(currentWave, 0);
         }else if(phase == Phase.Combat){
-            if(isSummonEnded && enemiesList.Count == 0){
-                NextWave();
-            }
-            float ratio = (Time.time - waveStartTime) / currentWaveChart.duration;
+            float elapsedTime = Time.time - waveStartTime;
+            float ratio = elapsedTime / currentWaveChart.duration;
             ratio = Mathf.Clamp01(ratio);
             travelMap.UpdatePlayerPosition(currentWave, ratio);
             skillGage.UpdateGage();
+            if(!isNextWaveWarningShown && currentWave + 1 < currentStage.waveCount && currentWaveChart.duration - elapsedTime <= nextWaveWarningLeadTime){
+                ShowNextWaveWarningMark();
+            }
+            if(IsFinalWave() && isSummonEnded && enemiesList.Count == 0){
+                NextCombatWave();
+            }else if(ratio >= 1f){
+                NextCombatWave();
+            }
         }else if(phase == Phase.Purchase){
             if(Input.GetKeyDown(KeyCode.Space)){
                 SkipPlacementPhase();
@@ -138,6 +149,7 @@ public class CombatManager : MonoBehaviour
     /// 게임을 종료하고 자원을 반환합니다. phase가 none일때 호출해야합니다.
     /// </summary>
     public void EndGame(){
+        ClearPreparedNextWave();
         if(enemySpawnLoop != null){
             enemySpawnLoop.Cancel();
             enemySpawnLoop.Dispose();
@@ -216,6 +228,62 @@ public class CombatManager : MonoBehaviour
                 CutsceneManager.instance.PlayCutScene("Combat2");
             }
         }
+    }
+
+    private void NextCombatWave(){
+        bool hasPreparedNextWave = preparedNextWaveChart != null;
+        EndCombatPhase(hasPreparedNextWave);
+        isSummonEnded = false;
+        if(currentWaveChart != null && currentWaveChart != preparedNextWaveChart){
+            currentWaveChart.Unload();
+        }
+        currentWave++;
+        if(currentWave >= currentStage.waveCount){
+            PurchasePhaseAnimation().Forget();
+            return;
+        }
+        if(currentWave == 0){
+            GameManager.instance.playerData.DT = 999;
+        }else if(currentWave == 1){
+            GameManager.instance.playerData.DT = currentStage.DT;
+        }
+        if(preparedNextWaveChart != null){
+            currentWaveChart = preparedNextWaveChart;
+            preparedNextWaveChart = null;
+        }else{
+            currentWaveChart = ChooseRandomWaveChart(currentWave, GameManager.instance.playerData.direction, currentWave == currentStage.waveCount - 1);
+            currentWaveChart.Load();
+        }
+        isNextWaveWarningShown = false;
+        StartCombatPhase();
+
+        if(GameManager.instance.playerData.stage == 0){
+            if(currentWave == 0){
+                CutsceneManager.instance.PlayCutScene("Combat1");
+            }else if(currentWave == 1){
+                CutsceneManager.instance.PlayCutScene("Combat2");
+            }
+        }
+    }
+
+    private bool IsFinalWave(){
+        return currentWave == currentStage.waveCount - 1;
+    }
+
+    private void ShowNextWaveWarningMark(){
+        isNextWaveWarningShown = true;
+        preparedNextWaveChart = ChooseRandomWaveChart(currentWave + 1, GameManager.instance.playerData.direction, currentWave + 1 == currentStage.waveCount - 1);
+        preparedNextWaveChart.Load();
+        placementUIRoot.ShowWarningMark(preparedNextWaveChart);
+    }
+
+    private void ClearPreparedNextWave(){
+        if(preparedNextWaveChart != null){
+            preparedNextWaveChart.Unload();
+            preparedNextWaveChart = null;
+        }
+        isNextWaveWarningShown = false;
+        placementUIRoot.Hide();
     }
 
     public async UniTask PurchasePhaseAnimation(){
@@ -411,7 +479,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void EndCombatPhase(){
+    public void EndCombatPhase(bool preservePreparedNextWave = false){
         phase = Phase.None;
         if(enemySpawnLoop != null){
             enemySpawnLoop.Cancel();
@@ -432,6 +500,9 @@ public class CombatManager : MonoBehaviour
             slot.ShowBase(true);
         }
         skillGage.Hide();
+        if(!preservePreparedNextWave){
+            ClearPreparedNextWave();
+        }
     }
 
     public WaveModel ChooseRandomWaveChart(int difficulty, Polar polar, bool forFinalBoss){
