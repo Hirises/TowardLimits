@@ -67,4 +67,9 @@ public class CombatUI : MonoBehaviour
     {
         GameManager.instance.SetGameSpeed(isOn ? 2f : 1f);
     }
+
+    public float GetGameSpeed()
+    {
+        return gameSpeedToggle.isOn ? 2f : 1f;
+    }
 }

@@ -318,6 +318,7 @@ public class CombatManager : MonoBehaviour
     public void StageClear(){
         GameManager.instance.playerData.stage++;
         GameManager.instance.playerData.Prove += currentStage.prove;
+        GameManager.instance.SetGameSpeed(1f);
         if(GameManager.instance.playerData.Prove >= 100){
             LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY).Forget();
         }else{
@@ -339,6 +340,7 @@ public class CombatManager : MonoBehaviour
 
     public void GameOver(){
         ClearBullets();
+        GameManager.instance.SetGameSpeed(1f);
         LoadingScene.instance.ShowAndLoad("Clear", GameManager.instance.MIN_LOADING_DELAY).Forget();
     }
 #endregion
@@ -435,6 +437,7 @@ public class CombatManager : MonoBehaviour
         unit.StartDrag();
         Debug.Log($"StartDrag: {unit.unitType}");
         isDragging = true;
+        GameManager.instance.SetGameSpeed(0.5f);
     }
 
     public void EndDrag(){
@@ -446,6 +449,7 @@ public class CombatManager : MonoBehaviour
         isDragging = false;
         endDrag = null;
         Debug.Log($"EndDrag {slot}");
+        GameManager.instance.SetGameSpeed(combatUIRoot.GetGameSpeed());
     }
 
     public void InsufficientDT(){
