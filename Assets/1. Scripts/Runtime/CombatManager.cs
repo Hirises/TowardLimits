@@ -31,6 +31,7 @@ public class CombatManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] public PlacementUI placementUIRoot;
+    [SerializeField] public CombatUI combatUIRoot;
     [SerializeField] public TravelMap travelMap;
     [SerializeField] [TextArea] public string persuadeText;
     [SerializeField] public TMP_Text persuadeTextUI;
@@ -274,7 +275,7 @@ public class CombatManager : MonoBehaviour
         isNextWaveWarningShown = true;
         preparedNextWaveChart = ChooseRandomWaveChart(currentWave + 1, GameManager.instance.playerData.direction, currentWave + 1 == currentStage.waveCount - 1);
         preparedNextWaveChart.Load();
-        placementUIRoot.ShowWarningMark(preparedNextWaveChart);
+        combatUIRoot.ShowWarningMark(preparedNextWaveChart);
     }
 
     private void ClearPreparedNextWave(){
@@ -300,7 +301,7 @@ public class CombatManager : MonoBehaviour
         if(GameManager.instance.playerData.stage == 0){
             CutsceneManager.instance.PlayCutScene("Combat3");
             GameManager.instance.playerData.DT = 5;
-            placementUIRoot.UpdateDT();
+            combatUIRoot.UpdateDT();
         }
     }
 
@@ -349,7 +350,7 @@ public class CombatManager : MonoBehaviour
         currentWaveChart = ChooseRandomWaveChart(currentWave, GameManager.instance.playerData.direction, currentWave == currentStage.waveCount - 1);
         currentWaveChart.Load();
         placementUIRoot.Show_Placement();
-        
+        combatUIRoot.Show_Placement();
     }
 
     public void EndPlacementPhase(){
@@ -393,7 +394,7 @@ public class CombatManager : MonoBehaviour
                     UnitBehavior unit = SummonUnit(status);
                     unit.OnPlacement(slot);
                     GameManager.instance.playerData.DT--;
-                    placementUIRoot.UpdateDT();
+                    combatUIRoot.UpdateDT();
                 }else{
                     InsufficientDT();
                 }
@@ -414,7 +415,7 @@ public class CombatManager : MonoBehaviour
                     unit.OnDisplacement();
                     unit.OnPlacement(slot);
                     GameManager.instance.playerData.DT--;
-                    placementUIRoot.UpdateDT();
+                    combatUIRoot.UpdateDT();
                 }else{
                     InsufficientDT();
                 }
@@ -425,7 +426,7 @@ public class CombatManager : MonoBehaviour
                     unit.Remove();
                     placementUIRoot.UpdateUnit();
                     GameManager.instance.playerData.DT--;
-                    placementUIRoot.UpdateDT();
+                    combatUIRoot.UpdateDT();
                 } else{
                     InsufficientDT();
                 }
@@ -468,6 +469,7 @@ public class CombatManager : MonoBehaviour
         WaveChartSpawnLoop(currentWaveChart, enemySpawnLoop.Token).Forget();
         skillGage.SetGage(0);
         skillGage.Show();
+        combatUIRoot.Show_Combat();
     }
 
     public void ClearBullets(){
@@ -578,6 +580,7 @@ public class CombatManager : MonoBehaviour
             purchaseTextUI.text = "Drag Here to Derivative";
         }
         purchaseRoot.gameObject.SetActive(true);
+        combatUIRoot.Show_Purchase();
     }
 
     public void EndPurchasePhase(){
@@ -608,7 +611,7 @@ public class CombatManager : MonoBehaviour
                         Derivative(status);
                     }
                     GameManager.instance.playerData.DT--;
-                    placementUIRoot.UpdateDT();
+                    combatUIRoot.UpdateDT();
                     placementUIRoot.UpdateUnit();
                 }else{
                     InsufficientDT();

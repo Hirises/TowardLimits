@@ -62,4 +62,9 @@ public class GameManager : MonoBehaviour
         .ToArray();
         currentStage = stageDatas[Random.Range(0, stageDatas.Length)];
     }
+
+    public void SetGameSpeed(float speed)
+    {
+        Time.timeScale = speed;
+    }
 }
