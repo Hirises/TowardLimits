@@ -64,6 +64,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 897302256310821516}
   m_SourcePrefab: {fileID: 100100000, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
+--- !u!1 &2999908646036707163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8510486921540397702, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
+  m_PrefabInstance: {fileID: 6897970670892875229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3900280363070824619 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7609420446578335094, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}
@@ -82,6 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 8468542393031747098}
+  pivot: {fileID: 2999908646036707163}
   slot: {fileID: 0}
 --- !u!212 &8468542393031747098 stripped
 SpriteRenderer:

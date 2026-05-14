@@ -81,6 +81,11 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3043533634467240903, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
   m_PrefabInstance: {fileID: 4240247319230058603}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5531318348509838061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8510486921540397702, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
+  m_PrefabInstance: {fileID: 4240247319230058603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5999487314351869213 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7609420446578335094, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
@@ -99,4 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1217291105286818732}
+  pivot: {fileID: 5531318348509838061}
+  bulletPrefab: {fileID: 0}
+  bulletSpawnPoint: {fileID: 0}
   health: 0

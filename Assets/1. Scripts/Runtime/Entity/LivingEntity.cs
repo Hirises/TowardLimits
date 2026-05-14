@@ -7,7 +7,9 @@ using UnityEngine;
 public abstract class LivingEntity : MonoBehaviour, IDamageable
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
+        [SerializeField] protected GameObject pivot;
     public SpriteRenderer SpriteRenderer => spriteRenderer;
+    public GameObject Pivot => pivot;
     public Action<int> onBeforeTakeDamage;
     public Action<int> onBeforeHeal;
     

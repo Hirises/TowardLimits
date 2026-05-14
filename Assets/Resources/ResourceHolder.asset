@@ -51,3 +51,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2353501e0edc1654bb8bcc26f7765f66, type: 2}
   damageVFXPrefab: {fileID: 8059752359908663914, guid: 5a436e7b1516bea4ebb412237874f2a1, type: 3}
   healVFXPrefab: {fileID: 1932080420217289972, guid: 27acce3867bea61499ddbf47c1ef7a7b, type: 3}
+  skillActiveVFXPrefab: {fileID: 1481001423132341674, guid: 732b900610e5b624caf877467fd0dd15, type: 3}

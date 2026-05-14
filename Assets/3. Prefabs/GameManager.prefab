@@ -49,8 +49,10 @@ MonoBehaviour:
     initalUnitlist: 020000000200000002000000
     skillCost: 40
     skillGagePerSecond: 10
+    startSkillGage: 100
     maxSkillGage: 100
     backgroundScrollSpeed: 5
+    regularHealRatio: 0
   DEBUG_MODE: 1
   SKIP_INTENTIONAL_DELAY: 0
   SKIP_CUTSCENE: 0

@@ -28,4 +28,5 @@ public class ResourceHolder : ScriptableObject
     [Header("VFX")]
     public DamageVFX damageVFXPrefab;
     public HealVFX healVFXPrefab;
+    public GameObject skillActiveVFXPrefab;
 }

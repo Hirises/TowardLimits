@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
+using System;
 
 public abstract class UnitBehavior : LivingEntity
 {
@@ -9,7 +10,9 @@ public abstract class UnitBehavior : LivingEntity
     [ReadOnly] public UnitStatus status;
     [ReadOnly] public Slot slot;
 
-    private EntityVFX vfx;
+    public event Action onSkillPerform;
+
+    private UnitVFX vfx;
 
     /// <summary>
     /// 유닛 생성시 (항상 전투가 종료된 상태라고 가정)
@@ -19,7 +22,7 @@ public abstract class UnitBehavior : LivingEntity
         this.status = data;
         spriteRenderer.color = Color.white;
 
-        vfx = new EntityVFX(this);
+        vfx = new UnitVFX(this);
     }
 
     /// <summary>
@@ -94,6 +97,7 @@ public abstract class UnitBehavior : LivingEntity
     }
 
     public void PerformSkill(){
+        onSkillPerform?.Invoke();
         PerformSkill_Internal();
     }
     protected abstract void PerformSkill_Internal();
