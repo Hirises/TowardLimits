@@ -86,7 +86,11 @@ public abstract class UnitBehavior : LivingEntity
             OnDeath();
             return;
         }
-        vfx.InvokeDamageEffect();
+    }
+
+    protected override void Heal_Internal(int amount){
+        status.currentHealth += amount;
+        if(status.currentHealth > status.model.maxHealth) status.currentHealth = status.model.maxHealth;
     }
 
     public void PerformSkill(){

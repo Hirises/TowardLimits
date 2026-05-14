@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -29,5 +30,17 @@ public class UnitStatus
     public static UnitStatus FromType(UnitType unitType){
         UnitModel model = DataFetcher.GetUnitModel(unitType);
         return new UnitStatus(model);
+    }
+
+    /// <summary>
+    /// 원정에서 복귀했을때 체력 채워줌
+    /// </summary>
+    public void RegularHeal(){
+        Heal(Mathf.RoundToInt(GameManager.instance.commonSettings.regularHealRatio * maxHealth));
+    }
+
+    public void Heal(int amount){
+        currentHealth += amount;
+        if(currentHealth > maxHealth) currentHealth = maxHealth;
     }
 }

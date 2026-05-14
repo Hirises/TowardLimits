@@ -11,4 +11,5 @@ public class CommonSettingsModel
     [SerializeField] public float startSkillGage;
     [SerializeField] public float maxSkillGage;
     [SerializeField] public float backgroundScrollSpeed;
+    [SerializeField] public float regularHealRatio;
 }

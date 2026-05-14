@@ -159,9 +159,11 @@ public class CombatManager : MonoBehaviour
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 UnitBehavior unit = slot.unit;
+                UnitStatus status = unit.status;
                 GameManager.instance.playerData.units.Add(unit.status);
                 unit.OnDisplacement();
                 unit.Remove();
+                status.RegularHeal(); 
             }
             slot.ShowBase(false);
             slot.ResetBuff();

@@ -46,6 +46,10 @@ public abstract class EnemyBehavior : LivingEntity
             OnDeath();
             return;
         }
-        vfx.InvokeDamageEffect();
+    }
+
+    protected override void Heal_Internal(int amount){
+        health += amount;
+        if(health > data.GetHealth()) health = data.GetHealth();
     }
 }
