@@ -16,8 +16,8 @@ public class SkillGage : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SetGage(float vale){
-        gage = Mathf.Clamp(vale, 0, GameManager.instance.commonSettings.maxSkillGage);
+    public void SetGage(float value){
+        gage = Mathf.Clamp(value, 0, GameManager.instance.commonSettings.maxSkillGage);
         fillImage.fillAmount = gage / GameManager.instance.commonSettings.maxSkillGage;
 
         if(gage >= GameManager.instance.commonSettings.skillCost){

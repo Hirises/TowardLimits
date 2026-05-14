@@ -471,7 +471,7 @@ public class CombatManager : MonoBehaviour
         isSummonEnded = false;
         enemySpawnLoop = new CancellationTokenSource();
         WaveChartSpawnLoop(currentWaveChart, enemySpawnLoop.Token).Forget();
-        skillGage.SetGage(0);
+        skillGage.SetGage(GameManager.instance.commonSettings.startSkillGage);
         skillGage.Show();
         combatUIRoot.Show_Combat();
     }
