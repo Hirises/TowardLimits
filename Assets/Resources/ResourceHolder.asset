@@ -52,3 +52,5 @@ MonoBehaviour:
   damageVFXPrefab: {fileID: 8059752359908663914, guid: 5a436e7b1516bea4ebb412237874f2a1, type: 3}
   healVFXPrefab: {fileID: 1932080420217289972, guid: 27acce3867bea61499ddbf47c1ef7a7b, type: 3}
   skillActiveVFXPrefab: {fileID: 1481001423132341674, guid: 732b900610e5b624caf877467fd0dd15, type: 3}
+  skillLoopVFXPrefab: {fileID: 8046353307555982231, guid: fa899ee389163714783c13a58c006043, type: 3}
+  attackSkillCountVFXPrefab: {fileID: 918441658557698083, guid: 4f74b633998276441bcefc2896f81ef0, type: 3}

@@ -8,6 +8,8 @@ using UnityEngine;
 public class UnitVFX : EntityVFX {
     private UnitBehavior unit;
 
+    private GameObject skillLoopVFXInstance;
+
     public UnitVFX(UnitBehavior unit) : base(unit){
         this.unit = unit;
         unit.onSkillPerform += ShowSkillActiveVFX;
@@ -24,5 +26,28 @@ public class UnitVFX : EntityVFX {
     public void ShowSkillActiveVFX(){
         var inst = GameObject.Instantiate(ResourceHolder.Instance.skillActiveVFXPrefab, unit.Pivot.transform);
         GameObject.Destroy(inst, 1f);
+    }
+
+    public void StartSkillLoopVFX()
+    {
+        StopSkillLoopVFX(); // 기존 이펙트 제거
+        skillLoopVFXInstance = GameObject.Instantiate(ResourceHolder.Instance.skillLoopVFXPrefab, unit.Pivot.transform);
+    }
+
+    public void StopSkillLoopVFX()
+    {
+        if (skillLoopVFXInstance != null)
+        {
+            GameObject.Destroy(skillLoopVFXInstance);
+            skillLoopVFXInstance = null;
+        }
+    }
+
+    public void ShowAttackSkillCount(int count)
+    {        
+        var inst = GameObject.Instantiate(ResourceHolder.Instance.attackSkillCountVFXPrefab, unit.transform.position, Quaternion.identity);
+        inst.transform.position = unit.transform.position;
+        inst.Show(count);
+        //얘는 알아서 Destroy 함
     }
 }

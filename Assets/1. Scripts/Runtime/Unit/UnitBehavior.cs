@@ -12,7 +12,7 @@ public abstract class UnitBehavior : LivingEntity
 
     public event Action onSkillPerform;
 
-    private UnitVFX vfx;
+    protected UnitVFX vfx;
 
     /// <summary>
     /// 유닛 생성시 (항상 전투가 종료된 상태라고 가정)

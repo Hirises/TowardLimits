@@ -8,7 +8,7 @@ public class UnitX3 : DefaultUnitBehavior
     public override UnitType unitType => UnitType.UnitX3;
 
     protected override UniTask SkillLoop(CancellationToken ct){
-        ShootBullet(slot.position.y, 3);
+        ShootBullet(slot.position.y, 3, 2);
         return UniTask.CompletedTask;
     }
 }

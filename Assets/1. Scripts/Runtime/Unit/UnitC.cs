@@ -52,9 +52,11 @@ public class UnitC : UnitBehavior
     }
 
     private async UniTask SkillLoop(CancellationToken ct){
+        vfx.StartSkillLoopVFX();
         ApplyBuff();
-        await UniTask.Delay(TimeSpan.FromSeconds(5f), cancellationToken: ct);
+        await UniTask.Delay(TimeSpan.FromSeconds(status.model.buffDuration), cancellationToken: ct);
         RemoveBuff();
+        vfx.StopSkillLoopVFX();
     }
 
     protected override void OnCombatStart_Internal()

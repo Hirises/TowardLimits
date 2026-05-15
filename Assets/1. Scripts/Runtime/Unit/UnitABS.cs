@@ -14,9 +14,17 @@ public class UnitABS : DefaultUnitBehavior
     }
 
     protected override async UniTask SkillLoop(CancellationToken ct){
-        for(int i = 0; i < 5; i++){
-            OnShoot();
-            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: ct);
+        //계수만큼 추가 발사 & 회복
+        vfx.StartSkillLoopVFX();
+        for(int i = 0; i < 3; i++)
+        {
+            CombatManager.instance.GetSlotAt(slot.position.x + i, slot.position.y)?.unit?.Heal(status.model.healAmount);
         }
+        for(int i = 0; i < status.level; i++){
+            vfx.ShowAttackSkillCount(i + 1);
+            OnShoot();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
+        }
+        vfx.StopSkillLoopVFX();
     }
 }

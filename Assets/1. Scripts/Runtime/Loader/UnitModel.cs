@@ -31,12 +31,16 @@ public class UnitModel : ICloneable
     [Header("UnitC")]
     public float ATKSPD_buff = 0;
     public int DMG_buff = 0;
+    public float buffDuration = 3;
 
     [Header("UnitX2")]
     public float damageRatio = 0.5f;
 
     [Header("UnitX3")]
     public int attackCount = 3;
+
+    [Header("UnitABS")]
+    public int healAmount = 10;
 
     public object Clone()
     {
