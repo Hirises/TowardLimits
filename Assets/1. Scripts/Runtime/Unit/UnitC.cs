@@ -10,18 +10,27 @@ public class UnitC : UnitBehavior
 
     protected override void OnPlacement_Internal()
     {
-        ApplyBuff(slot);
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y));
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y));
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y + 1));
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y - 1));
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y + 1));
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y + 1));
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y - 1));
-        ApplyBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y - 1));
+        ApplyBuff();
     }
 
-    private void ApplyBuff(Slot slot){
+    private void ApplyBuff()
+    {
+        for(int x = -1; x <= 1; x++){
+            for(int y = -1; y <= 1; y++){
+                ApplyBuffAt(CombatManager.instance.GetSlotAt(slot.position.x + x, slot.position.y + y));
+            }
+        }
+    }
+
+    private void RemoveBuff(){
+        for(int x = -1; x <= 1; x++){
+            for(int y = -1; y <= 1; y++){
+                RemoveBuffAt(CombatManager.instance.GetSlotAt(slot.position.x + x, slot.position.y + y));
+            }
+        }
+    }
+
+    private void ApplyBuffAt(Slot slot){
         if(slot == null){
             return;
         }
@@ -29,7 +38,7 @@ public class UnitC : UnitBehavior
         slot.ATKSPD_buff += status.model.ATKSPD_buff;
     }
 
-    private void RemoveBuff(Slot slot){
+    private void RemoveBuffAt(Slot slot){
         if(slot == null){
             return;
         }
@@ -43,9 +52,9 @@ public class UnitC : UnitBehavior
     }
 
     private async UniTask SkillLoop(CancellationToken ct){
-        OnPlacement_Internal();
+        ApplyBuff();
         await UniTask.Delay(TimeSpan.FromSeconds(5f), cancellationToken: ct);
-        OnDisplacement_Internal();
+        RemoveBuff();
     }
 
     protected override void OnCombatStart_Internal()
@@ -66,14 +75,6 @@ public class UnitC : UnitBehavior
 
     protected override void OnDisplacement_Internal()
     {
-        RemoveBuff(slot);
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y));
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y));
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y + 1));
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x, slot.position.y - 1));
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y + 1));
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y + 1));
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x + 1, slot.position.y - 1));
-        RemoveBuff(CombatManager.instance.GetSlotAt(slot.position.x - 1, slot.position.y - 1));
+        RemoveBuff();
     }
 }
