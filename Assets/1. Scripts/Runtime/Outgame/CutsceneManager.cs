@@ -20,6 +20,7 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator<CutSceneAction> currentAction;
     public bool isPlaying = false;
+    private float originGameSpeed;
 
     private void Awake(){
         if(instance != null){
@@ -42,6 +43,8 @@ public class CutsceneManager : MonoBehaviour
         currentAction = cutSceneData.GetEnumerator();
         cutsceneRoot.SetActive(true);
         isPlaying = true;
+        originGameSpeed = Time.timeScale;
+        GameManager.instance.SetGameSpeed(0f);
 
         if(GameManager.instance.SKIP_CUTSCENE){
             while(isPlaying){
@@ -65,6 +68,7 @@ public class CutsceneManager : MonoBehaviour
         if(currentAction.MoveNext()){
             Run(currentAction.Current);
         }else{
+            GameManager.instance.SetGameSpeed(originGameSpeed);
             currentAction = null;
             cutsceneRoot.SetActive(false);
             isPlaying = false;
