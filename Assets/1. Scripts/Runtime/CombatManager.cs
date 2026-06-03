@@ -233,7 +233,8 @@ public class CombatManager : MonoBehaviour
 
     private void NextCombatWave(){
         bool hasPreparedNextWave = preparedNextWaveChart != null;
-        EndCombatPhase(hasPreparedNextWave);
+        bool isLastWave = currentWave + 1 == currentStage.waveCount;
+        EndCombatPhase(hasPreparedNextWave, isLastWave);
         isSummonEnded = false;
         if(currentWaveChart != null && currentWaveChart != preparedNextWaveChart){
             currentWaveChart.Unload();
@@ -256,7 +257,7 @@ public class CombatManager : MonoBehaviour
             currentWaveChart.Load();
         }
         isNextWaveWarningShown = false;
-        StartCombatPhase();
+        StartCombatPhase(currentWave == 1);
 
         if(GameManager.instance.playerData.stage == 0){
             if(currentWave == 0){
@@ -460,7 +461,7 @@ public class CombatManager : MonoBehaviour
 #endregion
 
 #region Combat Phase
-    public void StartCombatPhase(){
+    public void StartCombatPhase(bool isFirstWave = false){
         EndPlacementPhase();
         foreach(Slot slot in slots){
             if(slot.unit != null){
@@ -472,7 +473,9 @@ public class CombatManager : MonoBehaviour
         isSummonEnded = false;
         enemySpawnLoop = new CancellationTokenSource();
         WaveChartSpawnLoop(currentWaveChart, enemySpawnLoop.Token).Forget();
-        skillGage.SetGage(GameManager.instance.commonSettings.startSkillGage);
+        if(isFirstWave){
+            skillGage.SetGage(GameManager.instance.commonSettings.startSkillGage);
+        }
         skillGage.Show();
         combatUIRoot.Show_Combat();
     }
@@ -486,7 +489,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void EndCombatPhase(bool preservePreparedNextWave = false){
+    public void EndCombatPhase(bool preservePreparedNextWave = false, bool isLastWave = false){
         phase = Phase.None;
         if(enemySpawnLoop != null){
             enemySpawnLoop.Cancel();
@@ -499,7 +502,9 @@ public class CombatManager : MonoBehaviour
             enemy.OnDeath();
         }
         enemiesList.Clear();
-        ClearBullets();
+        if(isLastWave){
+            ClearBullets();
+        }
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatEnd();
