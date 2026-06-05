@@ -9,9 +9,9 @@ public class SkillGage : MonoBehaviour
     [SerializeField] private Animator[] skillButtons;
 
     private float gage;
-    private bool preivous = false;
 
     public void Show(){
+        SetGage(gage);
         gameObject.SetActive(true);
     }
 
@@ -23,26 +23,9 @@ public class SkillGage : MonoBehaviour
         gage = Mathf.Clamp(value, 0, GameManager.instance.commonSettings.maxSkillGage);
         fillImage.fillAmount = gage / GameManager.instance.commonSettings.maxSkillGage;
 
-        if(preivous == false && gage >= GameManager.instance.commonSettings.skillCost){ 
-            foreach(var btn in skillButtons)
-            {
-                btn.ResetTrigger("Pressed");
-                btn.ResetTrigger("Selected");
-                btn.ResetTrigger("Highlighted");
-                btn.gameObject.SetActive(true);
-            }
-            preivous = true;
-        }
-        if(preivous == true && gage < GameManager.instance.commonSettings.skillCost){
-            foreach(var btn in skillButtons)
-            {
-                if(EventSystem.current.currentSelectedGameObject == btn.gameObject)
-                {
-                    EventSystem.current.SetSelectedGameObject(null);
-                }
-                btn.gameObject.SetActive(false);
-            }
-            preivous = false;
+        foreach(var btn in skillButtons)
+        {
+            btn.gameObject.SetActive(gage >= GameManager.instance.commonSettings.skillCost);
         }
     }
 
