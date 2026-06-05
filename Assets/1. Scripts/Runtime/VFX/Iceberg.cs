@@ -17,11 +17,11 @@ public class Iceberg : MonoBehaviour
     }
 
     private void Update(){
+        if(RelavtiveLineHandler.instance == null ||transform.position.z <= RelavtiveLineHandler.instance.BottomRowZ){
+            Destroy(gameObject);
+        }
         if(CombatManager.instance.phase == CombatManager.Phase.Combat){
             transform.position -= Vector3.forward * speed * Time.deltaTime;
-        }
-        if(transform.position.z <= RelavtiveLineHandler.instance.BottomRowZ){
-            Destroy(gameObject);
         }
     }
 }

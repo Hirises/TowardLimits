@@ -28,6 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b18c69e278bb694fa1c62efd9b7fdc0, type: 2}
   - {fileID: 11400000, guid: 04acb89e4c313e14c9cb01cd1f31ad7f, type: 2}
   - {fileID: 11400000, guid: 0a142697c4936284a8e656f42504cfe5, type: 2}
+  - {fileID: 11400000, guid: 2952d6c429a6ba44ca3455de7071f920, type: 2}
   waveCharts:
   - {fileID: 11400000, guid: bf260e23b37714046890b58ccdef1d33, type: 2}
   - {fileID: 11400000, guid: c9c5fc49ccacdaa4994073f22dc1c05f, type: 2}
