@@ -219,8 +219,6 @@ public class CombatManager : MonoBehaviour
         }
         if(currentWave == 0){
             GameManager.instance.playerData.DT = 999;
-        }else if(currentWave == 1){
-            GameManager.instance.playerData.DT = currentStage.DT;
         }
         StartPlacementPhase();
 
@@ -246,8 +244,6 @@ public class CombatManager : MonoBehaviour
         }
         if(currentWave == 0){
             GameManager.instance.playerData.DT = 999;
-        }else if(currentWave == 1){
-            GameManager.instance.playerData.DT = currentStage.DT;
         }
         if(preparedNextWaveChart != null){
             currentWaveChart = preparedNextWaveChart;
@@ -463,6 +459,10 @@ public class CombatManager : MonoBehaviour
 #region Combat Phase
     public void StartCombatPhase(bool isFirstWave = false){
         EndPlacementPhase();
+        if(currentWave == 0){
+            GameManager.instance.playerData.DT = currentStage.DT;
+            combatUIRoot.UpdateDT();
+        }
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 slot.unit.OnCombatStart();
