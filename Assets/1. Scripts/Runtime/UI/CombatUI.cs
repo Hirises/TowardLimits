@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class CombatUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text DT_Text;
+    [SerializeField] private GameObject DT_Infinity;
     [SerializeField] private Button startButton;
     [SerializeField] private Toggle gameSpeedToggle;
     [SerializeField] private GameObject[] WarningMarkRoot;
@@ -60,7 +61,18 @@ public class CombatUI : MonoBehaviour
     }
 
     public void UpdateDT(){
-        DT_Text.text = GameManager.instance.playerData.DT.ToString();
+        var DT = GameManager.instance.playerData.DT;
+        if (DT > 9000)
+        {
+            DT_Infinity.SetActive(true);
+            DT_Text.gameObject.SetActive(false);
+        }
+        else
+        {
+            DT_Infinity.SetActive(false);
+            DT_Text.gameObject.SetActive(true);
+            DT_Text.text = DT.ToString();
+        }
     }
 
     public void OnToggleGameSpeed(bool isOn)

@@ -195,7 +195,9 @@ public class CombatManager : MonoBehaviour
         }
         currentStage = GameManager.instance.currentStage;
         currentWave = -1;
-        GameManager.instance.playerData.DT = 999;
+        GameManager.instance.playerData.DT = 9999;
+        combatUIRoot.UpdateDT();
+
         travelMap.Initialize(currentStage.waveCount);
     }
 
@@ -218,7 +220,8 @@ public class CombatManager : MonoBehaviour
             return;
         }
         if(currentWave == 0){
-            GameManager.instance.playerData.DT = 999;
+            GameManager.instance.playerData.DT = 9999;
+            combatUIRoot.UpdateDT();
         }
         StartPlacementPhase();
 
@@ -243,7 +246,8 @@ public class CombatManager : MonoBehaviour
             return;
         }
         if(currentWave == 0){
-            GameManager.instance.playerData.DT = 999;
+            GameManager.instance.playerData.DT = 9999;
+            combatUIRoot.UpdateDT();
         }
         if(preparedNextWaveChart != null){
             currentWaveChart = preparedNextWaveChart;
