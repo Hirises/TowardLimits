@@ -41,7 +41,7 @@ public class LoadingScene : MonoBehaviour
             await SceneManager.LoadSceneAsync(sceneName).ToUniTask();
         }else{
             await UniTask.WhenAll(
-                UniTask.Delay(TimeSpan.FromSeconds(minDelay)),
+                UniTask.Delay(TimeSpan.FromSeconds(minDelay), true),
                 SceneManager.LoadSceneAsync(sceneName).ToUniTask()
             );
         }
