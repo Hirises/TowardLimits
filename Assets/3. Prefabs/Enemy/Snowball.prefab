@@ -19,22 +19,22 @@ PrefabInstance:
     - target: {fileID: 3043533634467240903, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 540d77b37280e9d4286b631c361faf69, type: 3}
+      objectReference: {fileID: 21300000, guid: 605b8f9024669454b80965e1cb3decbb, type: 3}
     - target: {fileID: 3043533634467240903, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5139167175709521063, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5139167175709521063, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5139167175709521063, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 9
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5139167175709521063, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
       propertyPath: m_ConstrainProportionsScale
