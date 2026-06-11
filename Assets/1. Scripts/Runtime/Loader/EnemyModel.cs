@@ -12,6 +12,8 @@ public class EnemyModel : ICloneable
 
     [Header("Stats")]
     [SerializeField] public int health;
+    [SerializeField] public int zeroDEF;
+    [SerializeField] public int infDEF;
     [SerializeField] public bool rangeAttack;
     [SerializeField] public float attackSpeed;
     [SerializeField] public int damage;

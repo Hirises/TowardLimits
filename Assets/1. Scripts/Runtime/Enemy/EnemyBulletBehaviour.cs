@@ -26,6 +26,6 @@ public class EnemyBulletBehaviour : MonoBehaviour
     }
 
     public virtual void OnHitUnit(UnitBehavior unit){
-        unit.TakeDamage(damage);
+        unit.TakeDamage(damage, DamageType.None);
     }
 }

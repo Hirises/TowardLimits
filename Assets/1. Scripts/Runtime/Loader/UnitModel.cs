@@ -19,6 +19,9 @@ public class UnitModel : ICloneable
 
     [Header("Stats")]
     public int maxHealth = 100;
+    public int zeroDEF = 0;
+    public int infDEF = 0;
+    public DamageType attackType = DamageType.None;
     public int attack = 10;
     public float attackSpeed = 1;
     public int attackRange = 100;

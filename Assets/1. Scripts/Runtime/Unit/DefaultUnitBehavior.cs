@@ -37,7 +37,13 @@ public abstract class DefaultUnitBehavior : UnitBehavior
         Vector3 position = new Vector3(RelavtiveLineHandler.instance.ColumnX(column), bulletSpawnPoint.position.y, bulletSpawnPoint.position.z);
         BulletBehavior bullet = Instantiate(bulletPrefab, position, Quaternion.identity, CombatManager.instance.bulletRoot);
         bullet.transform.localScale *= scale;
-        bullet.Shoot(status.model.attackRange, status.model.bulletSpeed + slot.BULLETSPD_buff, damage);
+        var bulletData = new BulletData()
+        {
+            distance = status.model.attackRange,
+            speed = status.model.bulletSpeed + slot.BULLETSPD_buff,
+            damage = damage
+        };
+        bullet.Shoot(bulletData);
     }
 
     public override void OnCombatEnd(){

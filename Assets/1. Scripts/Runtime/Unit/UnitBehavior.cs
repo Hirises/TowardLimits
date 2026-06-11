@@ -83,17 +83,26 @@ public abstract class UnitBehavior : LivingEntity
         CombatManager.instance.CheckGameOver();
     }
 
-    protected override void TakeDamage_Internal(int damage){
-        status.currentHealth -= damage;
+    protected override int TakeDamage_Internal(int damage, DamageType type){
+        int finalDamage = damage;
+        if(type == DamageType.Zero){
+            finalDamage = Mathf.RoundToInt(damage * (100f / (100 + status.model.zeroDEF)));
+        }
+        else if(type == DamageType.Infinite){
+            finalDamage = Mathf.RoundToInt(damage * (100f / (100 + status.model.infDEF)));
+        }
+        status.currentHealth -= finalDamage;
         if(status.currentHealth <= 0){
             OnDeath();
-            return;
+            return finalDamage;
         }
+        return finalDamage;
     }
 
-    protected override void Heal_Internal(int amount){
+    protected override int Heal_Internal(int amount){
         status.currentHealth += amount;
         if(status.currentHealth > status.model.maxHealth) status.currentHealth = status.model.maxHealth;
+        return amount;
     }
 
     public void PerformSkill(){

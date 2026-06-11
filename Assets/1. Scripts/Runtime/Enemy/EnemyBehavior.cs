@@ -40,16 +40,25 @@ public abstract class EnemyBehavior : LivingEntity
 
     protected abstract void OnDeath_Internal();
 
-    protected override void TakeDamage_Internal(int damage){
-        health -= damage;
+    protected override int TakeDamage_Internal(int damage, DamageType type){
+        int finalDamage = damage;
+        if(type == DamageType.Zero){
+            finalDamage = Mathf.RoundToInt(damage * (100f / (100 + data.zeroDEF)));
+        }
+        else if(type == DamageType.Infinite){
+            finalDamage = Mathf.RoundToInt(damage * (100f / (100 + data.infDEF)));
+        }
+        health -= finalDamage;
         if(health <= 0){
             OnDeath();
-            return;
+            return finalDamage;
         }
+        return finalDamage;
     }
 
-    protected override void Heal_Internal(int amount){
+    protected override int Heal_Internal(int amount){
         health += amount;
         if(health > data.GetHealth()) health = data.GetHealth();
+        return amount;
     }
 }

@@ -7,23 +7,27 @@ using UnityEngine;
 public abstract class LivingEntity : MonoBehaviour, IDamageable
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
-        [SerializeField] protected GameObject pivot;
+    [SerializeField] protected GameObject pivot;
     public SpriteRenderer SpriteRenderer => spriteRenderer;
     public GameObject Pivot => pivot;
-    public Action<int> onBeforeTakeDamage;
+    public Action<int, DamageType> onBeforeTakeDamage;
+    public Action<int, DamageType> onAfterTakeDamage;
     public Action<int> onBeforeHeal;
+    public Action<int> onAfterHeal;
     
-    public void TakeDamage(int damage){
-        onBeforeTakeDamage?.Invoke(damage);
-        TakeDamage_Internal(damage);
+    public void TakeDamage(int damage, DamageType type){
+        onBeforeTakeDamage?.Invoke(damage, type);
+        int finalDamage = TakeDamage_Internal(damage, type);
+        onAfterTakeDamage?.Invoke(finalDamage, type);
     }
 
-    protected abstract void TakeDamage_Internal(int damage);
+    protected abstract int TakeDamage_Internal(int damage, DamageType type);
 
     public void Heal(int amount){
         onBeforeHeal?.Invoke(amount);
-        Heal_Internal(amount);
+        int finalAmount = Heal_Internal(amount);
+        onAfterHeal?.Invoke(finalAmount);
     }
 
-    protected abstract void Heal_Internal(int amount);
+    protected abstract int Heal_Internal(int amount);
 }

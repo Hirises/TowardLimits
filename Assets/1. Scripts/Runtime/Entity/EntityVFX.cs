@@ -11,8 +11,8 @@ public class EntityVFX
 
     public EntityVFX(LivingEntity entity){
         this.entity = entity;
-        entity.onBeforeTakeDamage += ShowDamageVFX;
-        entity.onBeforeHeal += ShowHealVFX;
+        entity.onAfterTakeDamage += ShowDamageVFX;
+        entity.onAfterHeal += ShowHealVFX;
     }
 
     public virtual void Dispose(){
@@ -21,13 +21,13 @@ public class EntityVFX
         }
         damageEffectTween = null;
         if(entity != null){
-            entity.onBeforeTakeDamage -= ShowDamageVFX;
-            entity.onBeforeHeal -= ShowHealVFX;
+            entity.onAfterTakeDamage -= ShowDamageVFX;
+            entity.onAfterHeal -= ShowHealVFX;
             entity = null;
         }
     }
 
-    private void ShowDamageVFX(int damage){
+    private void ShowDamageVFX(int damage, DamageType type){
         var inst = GameObject.Instantiate(ResourceHolder.Instance.damageVFXPrefab, entity.transform.position, Quaternion.identity);
         inst.transform.position = entity.transform.position;
         inst.Show(damage);

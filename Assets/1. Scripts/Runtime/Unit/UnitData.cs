@@ -12,6 +12,9 @@ public class UnitData : ScriptableObject
     public string unitDescription => unitModel.unitDescription;
     public Color unitColor => unitModel.unitColor;
     public int maxHealth => unitModel.maxHealth;
+    public int ZeroDEF => unitModel.zeroDEF;
+    public int InfDEF => unitModel.infDEF;
+    public DamageType attackType => unitModel.attackType;
     public int attack => unitModel.attack;
     public float attackSpeed => unitModel.attackSpeed;
     public int attackRange => unitModel.attackRange;

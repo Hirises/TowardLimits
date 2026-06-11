@@ -50,7 +50,7 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
     private void OnTriggerEnter(Collider other){
         if(other.gameObject.layer == LayerMask.NameToLayer("Unit")){
             UnitBehavior unit = other.gameObject.GetComponentInParent<UnitBehavior>();
-            unit.TakeDamage(data.GetDamage());
+            unit.TakeDamage(data.GetDamage(), DamageType.None);
             OnDeath();
         }
     }

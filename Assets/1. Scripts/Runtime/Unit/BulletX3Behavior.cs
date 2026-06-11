@@ -4,13 +4,13 @@ public class BulletX3Behavior : BulletBehavior
 {
     private int count;
     
-    public override void Shoot(float distance, float speed, int damage){
-        base.Shoot(distance, speed, damage);
+    public override void Shoot(BulletData data){
+        base.Shoot(data);
         count = DataFetcher.GetUnitModel(UnitType.UnitX3).attackCount;
     }
 
     public override void OnHitEnemy(EnemyBehavior enemy){
-        enemy.TakeDamage(damage);
+        enemy.TakeDamage(damage, DamageType.None);
         count--;
         if(count <= 0){
             Destroy(gameObject);

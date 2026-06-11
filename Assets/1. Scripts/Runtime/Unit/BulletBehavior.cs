@@ -6,11 +6,14 @@ public class BulletBehavior : MonoBehaviour
     protected float distance_target;
     protected float speed;
     protected int damage;
+    protected DamageType damageType;
 
-    public virtual void Shoot(float distance, float speed, int damage){
-        this.distance_target = transform.position.z + distance;
-        this.speed = speed;
-        this.damage = damage;
+
+    public virtual void Shoot(BulletData data){
+        this.distance_target = transform.position.z + data.distance;
+        this.speed = data.speed;
+        this.damage = data.damage;
+        this.damageType = data.damageType;
     }
 
     private void Update(){
@@ -27,7 +30,15 @@ public class BulletBehavior : MonoBehaviour
     }
 
     public virtual void OnHitEnemy(EnemyBehavior enemy){
-        enemy.TakeDamage(damage);
+        enemy.TakeDamage(damage, damageType);
         Destroy(gameObject);
     }
+}
+
+public struct BulletData
+{
+    public float distance;
+    public float speed;
+    public DamageType damageType;
+    public int damage;
 }
