@@ -19,11 +19,12 @@ MonoBehaviour:
       \uC606 \uB77C\uC778\uC5D0\uB9CC \uAC15\uB825\uD55C \uACF5\uACA9\uC744 \uAC00\uD55C\uB2E4."
     unitColor: {r: 0.645283, g: 0.6413063, b: 0.032872856, a: 1}
     fullFront: {fileID: 21300000, guid: e66d1e4b955d50a4f996861795f77c50, type: 3}
+    holdMotion: {fileID: 21300000, guid: 89e63521551539648bde13e167e98fd1, type: 3}
     chibiIcon: {fileID: 21300000, guid: d93b2bbdde8d84c4089aa7eeaf482a73, type: 3}
     unitBehavior: {fileID: 3201233055509378080, guid: 9444d944ee7af394cbd6fbedbb944a7f, type: 3}
     maxHealth: 100
-    ZeroDEF: 0
-    InfDEF: 0
+    zeroDEF: 0
+    infDEF: 0
     attackType: 2
     attack: 35
     attackSpeed: 4

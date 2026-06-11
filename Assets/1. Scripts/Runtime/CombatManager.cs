@@ -30,6 +30,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Transform enemyBulletRoot;
 
     [Header("UI")]
+    [SerializeField] public RectTransform mainCanvas;
     [SerializeField] public PlacementUI placementUIRoot;
     [SerializeField] public CombatUI combatUIRoot;
     [SerializeField] public TravelMap travelMap;
@@ -40,6 +41,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public TMP_Text purchaseTextUI;
     [SerializeField] public Image Whiteout;
     [SerializeField] public SkillGage skillGage;
+    [SerializeField] public Image HoldIcon;
 
     [Header("다음 웨이브 시작 전 경고 표시 시간")]
     [SerializeField] private float nextWaveWarningLeadTime = 5f;
@@ -113,6 +115,8 @@ public class CombatManager : MonoBehaviour
         }
 
         if(isDragging){
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(mainCanvas, Input.mousePosition, null, out var pos);
+            HoldIcon.rectTransform.anchoredPosition = pos;
             if(Input.GetMouseButtonUp(0)){
                 EndDrag();
             }
@@ -197,6 +201,7 @@ public class CombatManager : MonoBehaviour
         currentWave = -1;
         GameManager.instance.playerData.DT = 9999;
         combatUIRoot.UpdateDT();
+        HoldIcon.gameObject.SetActive(false);
 
         travelMap.Initialize(currentStage.waveCount);
     }
@@ -390,6 +395,7 @@ public class CombatManager : MonoBehaviour
         }
         icon.SetAlpha(0.5f);
         endDrag = (slot) => {
+            HoldIcon.gameObject.SetActive(false);
             icon.SetAlpha(1f);
             if(slot != null && slot.unit == null){
                 if(GameManager.instance.playerData.DT > 0){
@@ -406,6 +412,9 @@ public class CombatManager : MonoBehaviour
         };
         Debug.Log($"StartDrag: {status.unitType}");
         isDragging = true;
+        
+        HoldIcon.sprite = status.model.holdMotion;
+        HoldIcon.gameObject.SetActive(true);
     }
 
     public void StartDrag(UnitBehavior unit){
@@ -413,6 +422,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
         endDrag = (slot) => {
+            HoldIcon.gameObject.SetActive(false);
             unit.EndDrag();
             if(slot != null && slot.unit == null){
                 if(GameManager.instance.playerData.DT > 0){
@@ -440,6 +450,9 @@ public class CombatManager : MonoBehaviour
         Debug.Log($"StartDrag: {unit.unitType}");
         isDragging = true;
         GameManager.instance.SetGameSpeed(0.5f);
+        
+        HoldIcon.sprite = unit.status.model.holdMotion;
+        HoldIcon.gameObject.SetActive(true);
     }
 
     public void EndDrag(){
