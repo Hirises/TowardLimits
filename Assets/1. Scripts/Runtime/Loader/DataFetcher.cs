@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -51,14 +53,35 @@ public static class DataFetcher
         isInitialized = true;
     }
 
+    //enum을 이름으로 써도 되도록
+    private static string DesugarEnumName(string rawStr)
+    {
+        var builder = new StringBuilder(rawStr);
+        foreach(var unit in Enum.GetValues(typeof(UnitType)))
+        {
+            builder.Replace($"\'{unit}\'", ((int)unit).ToString());
+        }
+        foreach(var enemy in Enum.GetValues(typeof(EnemyType)))
+        {
+            builder.Replace($"\'{enemy}\'", ((int)enemy).ToString());
+        }
+        foreach(var dmgTyp in Enum.GetValues(typeof(DamageType)))
+        {
+            builder.Replace($"\'{dmgTyp}\'", ((int)dmgTyp).ToString());
+        }
+        foreach(var polar in Enum.GetValues(typeof(Polar)))
+        {
+            builder.Replace($"\'{polar}\'", ((int)polar).ToString());
+        }
+        return builder.ToString();
+    }
 
     //외부 값이 있는지 검사해서 덮어쓰기, 없으면 내부 값을 사용
-    
     public static void FetchCommonSettings(){
         #if OVERRIDE_DATA
         string filePath = Path.Combine(Application.persistentDataPath, COMMON_DATA_PATH);
         if(File.Exists(filePath)){
-            string json = File.ReadAllText(filePath);
+            string json = DesugarEnumName(File.ReadAllText(filePath));
             JsonUtility.FromJsonOverwrite(json, GameManager.instance.commonSettings);
         }
         #endif
@@ -76,7 +99,7 @@ public static class DataFetcher
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
                 if(Enum.TryParse<EnemyType>(Path.GetFileNameWithoutExtension(file), out EnemyType enemyType)){
                     Debug.Log($"Override EnemyData: {enemyType}");
-                    string json = File.ReadAllText(file);
+                    string json = DesugarEnumName(File.ReadAllText(file));
                     JsonUtility.FromJsonOverwrite(json, enemyModels[enemyType]);
                     enemyModels[enemyType].isOverriden = true;
                 }
@@ -100,7 +123,7 @@ public static class DataFetcher
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
                 if(Enum.TryParse<UnitType>(Path.GetFileNameWithoutExtension(file), out UnitType unitType)){
                     Debug.Log($"Override UnitData: {unitType}");
-                    string json = File.ReadAllText(file);
+                    string json = DesugarEnumName(File.ReadAllText(file));
                     JsonUtility.FromJsonOverwrite(json, unitModels[unitType]);
                     unitModels[unitType].isOverriden = true;
                 }
@@ -119,7 +142,7 @@ public static class DataFetcher
         if(Directory.Exists(filePath)){
             //override
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
-                string json = File.ReadAllText(file);
+                string json = DesugarEnumName(File.ReadAllText(file));
                 WaveModel waveModel = JsonUtility.FromJson<WaveModel>(json);
                 waveModels.Add(waveModel);
                 waveModel.isOverriden = true;
@@ -132,7 +155,7 @@ public static class DataFetcher
         if(Directory.Exists(filePath)){
             //override
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
-                string json = File.ReadAllText(file);
+                string json = DesugarEnumName(File.ReadAllText(file));
                 WaveModel waveModel = JsonUtility.FromJson<WaveModel>(json);
                 waveModels.Add(waveModel);
                 waveModel.isOverriden = true;
@@ -155,7 +178,7 @@ public static class DataFetcher
         if(Directory.Exists(filePath)){
             //override
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
-                string json = File.ReadAllText(file);
+                string json = DesugarEnumName(File.ReadAllText(file));
                 StageModel stageModel = JsonUtility.FromJson<StageModel>(json);
                 stageModels.Add(stageModel);
                 stageModel.isOverriden = true;
@@ -168,7 +191,7 @@ public static class DataFetcher
         if(Directory.Exists(filePath)){
             //override
             foreach(string file in Directory.EnumerateFiles(filePath, "*.json", SearchOption.TopDirectoryOnly)){
-                string json = File.ReadAllText(file);
+                string json = DesugarEnumName(File.ReadAllText(file));
                 StageModel stageModel = JsonUtility.FromJson<StageModel>(json);
                 stageModels.Add(stageModel);
                 stageModel.isOverriden = true;
