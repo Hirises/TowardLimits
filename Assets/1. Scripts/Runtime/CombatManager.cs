@@ -307,7 +307,6 @@ public class CombatManager : MonoBehaviour
         await DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 0), 0.5f).SetEase(Ease.InOutSine).ToUniTask();
         if(GameManager.instance.playerData.stage == 0){
             CutsceneManager.instance.PlayCutScene("Combat3");
-            GameManager.instance.playerData.DT = 5;
             combatUIRoot.UpdateDT();
         }
     }
@@ -595,6 +594,7 @@ public class CombatManager : MonoBehaviour
 #region Purchase Phase
     public void StartPurchasePhase(){
         phase = Phase.Purchase;
+        GameManager.instance.playerData.DT += 1;
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 UnitBehavior unit = slot.unit;
