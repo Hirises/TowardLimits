@@ -42,6 +42,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Image Whiteout;
     [SerializeField] public SkillGage skillGage;
     [SerializeField] public Image HoldIcon;
+    [SerializeField] public float slotSnapDistance = 2;
 
     [Header("다음 웨이브 시작 전 경고 표시 시간")]
     [SerializeField] private float nextWaveWarningLeadTime = 5f;
@@ -55,6 +56,7 @@ public class CombatManager : MonoBehaviour
     private CancellationTokenSource enemySpawnLoop;
     private bool isDragging = false;
     private Action<Slot> endDrag;
+    private Func<Slot, bool> condition;
     public event Action<Phase> onPhaseChange;
     [ReadOnly] private Phase _phase;
     public Phase phase {
@@ -129,7 +131,7 @@ public class CombatManager : MonoBehaviour
 
     private void TestKey(){
         if(Input.GetKeyDown(KeyCode.Q)){
-            Slot slot = RaycastSlot(Input.mousePosition);
+            Slot slot = RaycastSlot(Input.mousePosition, AllSlot);
             Debug.Log($"TestRaycast: {slot}");
         }
         if(phase == Phase.Combat && Input.GetKeyDown(KeyCode.Space)){
@@ -367,16 +369,33 @@ public class CombatManager : MonoBehaviour
         placementUIRoot.Hide();
     }
 
-    public Slot RaycastSlot(Vector3 screenPosition){
+    public Slot RaycastSlot(Vector3 screenPosition, Func<Slot, bool> condition){
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         RaycastHit hit;
         Slot slot = null;
-        if(Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Slot", "Unit"))){
+        if(Physics.Raycast(ray, out hit, 100, LayerMask.GetMask("Slot", "Unit", "Ground"))){
             if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Slot")){
-                slot = hit.collider.gameObject.GetComponentInParent<Slot>();
+                var inner_slot = hit.collider.gameObject.GetComponentInParent<Slot>();
+                if(condition(inner_slot)) return inner_slot;
             }else if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Unit")){
                 UnitBehavior unit = hit.collider.gameObject.GetComponentInParent<UnitBehavior>();
-                slot = unit.slot;
+                var inner_slot = unit.slot;
+                if(condition(inner_slot)) return inner_slot;
+            }
+
+            //가장 가까운 슬롯으로
+            Vector3 point = hit.point;
+            float minDistance = slotSnapDistance;
+            foreach(var s in slots)
+            {
+                if(!condition(s)) continue;
+                float distance = Vector3.Distance(s.transform.position, point);
+                if(distance < minDistance)
+                {
+                    slot = s;
+                    minDistance = distance;
+                    continue;
+                }
             }
         }
         return slot;
@@ -393,6 +412,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
         icon.SetAlpha(0.5f);
+        condition = EmptySlot;
         endDrag = (slot) => {
             HoldIcon.gameObject.SetActive(false);
             icon.SetAlpha(1f);
@@ -420,6 +440,7 @@ public class CombatManager : MonoBehaviour
         if(phase != Phase.Placement && phase != Phase.Combat){
             return;
         }
+        condition = EmptySlot;
         endDrag = (slot) => {
             HoldIcon.gameObject.SetActive(false);
             unit.EndDrag();
@@ -458,12 +479,27 @@ public class CombatManager : MonoBehaviour
         if(!isDragging){
             return;
         }
-        Slot slot = RaycastSlot(Input.mousePosition);
-            endDrag?.Invoke(slot);
+        if(condition == null) condition = AllSlot;
+        Canvas canvas = mainCanvas.GetComponent<Canvas>();
+        Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+        Vector3 offset = HoldIcon.rectTransform.rect.center * 0.25f;
+        Vector2 pos = RectTransformUtility.WorldToScreenPoint(cam, HoldIcon.rectTransform.position + offset);
+        Slot slot = RaycastSlot(pos, condition);
+        endDrag?.Invoke(slot);
         isDragging = false;
         endDrag = null;
-        Debug.Log($"EndDrag {slot}");
+        Debug.Log($"EndDrag {slot} / {Input.mousePosition} {pos}");
         GameManager.instance.SetGameSpeed(combatUIRoot.GetGameSpeed());
+    }
+
+    private bool AllSlot(Slot slot)
+    {
+        return true;
+    }
+
+    private bool EmptySlot(Slot slot)
+    {
+        return slot.isEmpty;
     }
 
     public void InsufficientDT(){

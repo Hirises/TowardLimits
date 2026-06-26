@@ -12,6 +12,7 @@ public class Slot : MonoBehaviour
     [SerializeField] public GameObject slotOccupied;
     [SerializeField] public GameObject UnitPoint;
     [ReadOnly] public UnitBehavior unit;
+    public bool isEmpty => unit == null;
 
     [Header("Buff")]
     //버프 값 (유닛 스텟에 합연산으로 계산)

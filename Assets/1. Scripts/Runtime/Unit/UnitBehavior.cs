@@ -116,7 +116,7 @@ public abstract class UnitBehavior : LivingEntity
     }
 
     public void StartDrag(){
-        spriteRenderer.color = new Color(1, 0, 0, 0.5f);
+        spriteRenderer.color = new Color(1, 1, 1, 0.5f);
     }
 
     public void EndDrag(){
