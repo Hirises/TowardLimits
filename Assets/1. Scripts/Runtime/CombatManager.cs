@@ -574,6 +574,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void Persuade(int value){
+        if(value == 0) return;
         GameManager.instance.playerData.Persuaded += value;
         persuadeTextUI.text = persuadeText.Replace("{0}", GameManager.instance.playerData.Persuaded.ToString());
         persuadeTextUI.gameObject.SetActive(true);
