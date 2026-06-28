@@ -10,6 +10,7 @@ public class PlayerData
     public int Prove;   //설득함!
     public Polar direction; //어디를 향하는가?
     public int stage;   //현재 스테이지 카운트
+    public List<UnitType> unlockedUnits; // 해금된 유닛 목록
 
     public PlayerData(){
         units = new List<UnitStatus>(GameManager.instance.commonSettings.initalUnitlist.Select(type => UnitStatus.FromType(type)));
@@ -18,5 +19,6 @@ public class PlayerData
         direction = Polar.North;
         stage = 0;
         Prove = 0;
+        unlockedUnits = new() { UnitType.UnitX };
     }
 }

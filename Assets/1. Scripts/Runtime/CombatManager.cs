@@ -305,6 +305,7 @@ public class CombatManager : MonoBehaviour
             .Append(RelavtiveLineHandler.instance.RowBase.transform.DOMoveZ(RelavtiveLineHandler.instance.TopRowZ, 3f).SetEase(Ease.InOutSine))
             .Insert(2, DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 1), 1f).SetEase(Ease.InOutSine))
             .ToUniTask();
+        UnlockUnits();
         StartPurchasePhase();
         RelavtiveLineHandler.instance.RowBase.transform.position = Vector3.zero;
         await DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 0), 0.5f).SetEase(Ease.InOutSine).ToUniTask();
@@ -322,6 +323,38 @@ public class CombatManager : MonoBehaviour
             EndGame();
             StageClear();
         }
+    }
+
+    public void UnlockUnits()
+    {
+        // 유닛 해금
+        // TODO: StageData로 옮기기
+        switch(GameManager.instance.playerData.stage){
+            case 0:
+                UnlockUnit(UnitType.UnitX2);
+                break;
+            case 1:
+                UnlockUnit(UnitType.UnitABS);
+                break;
+            case 2:
+                UnlockUnit(UnitType.UnitX3);
+                break;
+        }
+        // 1스테이지 클리어하면 절댓값 획득
+        if(GameManager.instance.playerData.stage == 1 && !GameManager.instance.playerData.units.Any(status => status.unitType == UnitType.UnitABS)){
+            GameManager.instance.playerData.units.Add(UnitStatus.FromType(UnitType.UnitABS));
+        }
+    }
+
+    private void UnlockUnit(UnitType unitType)
+    {
+        if(unitType == UnitType.None){
+            return;
+        }
+        if(GameManager.instance.playerData.unlockedUnits.Contains(unitType)){
+            return;
+        }
+        GameManager.instance.playerData.unlockedUnits.Add(unitType);
     }
 
     public void StageClear(){
@@ -679,7 +712,6 @@ public class CombatManager : MonoBehaviour
                     }else{
                         Derivative(status);
                     }
-                    GameManager.instance.playerData.DT--;
                     combatUIRoot.UpdateDT();
                     placementUIRoot.UpdateUnit();
                 }else{
@@ -693,12 +725,26 @@ public class CombatManager : MonoBehaviour
 
     public bool IsIntegrable(UnitStatus status){
         UnitModel data = status.unitType.GetUnitModel();
-        return data.integralTo.Length > 0;
+        return data.integralTo.Length > 0 && AreCalculusResultsUnlocked(data.integralTo);
     }
 
     public bool IsDerivative(UnitStatus status){
         UnitModel data = status.unitType.GetUnitModel();
-        return data.derivativeTo.Length > 0;
+        return data.derivativeTo.Length > 0 && AreCalculusResultsUnlocked(data.derivativeTo);
+    }
+
+    private bool AreCalculusResultsUnlocked(CalculusResultElement[] results){
+        List<UnitType> unlockedUnits = GameManager.instance.playerData.unlockedUnits;
+        foreach(var element in results){
+            if(element.unitType == UnitType.None){
+                continue;
+            }
+            if(unlockedUnits == null || !unlockedUnits.Contains(element.unitType)){
+                Debug.LogWarning($"{element.unitType}는 해금되지 않았습니다");
+                return false;
+            }
+        }
+        return true;
     }
 
     public void Integrate(UnitStatus status){
@@ -706,6 +752,7 @@ public class CombatManager : MonoBehaviour
         if(!IsIntegrable(status)){
             return;
         }
+        GameManager.instance.playerData.DT--;
         int index = GameManager.instance.playerData.units.IndexOf(status);
         if(index == -1){
             return;
@@ -726,6 +773,7 @@ public class CombatManager : MonoBehaviour
         if(!IsDerivative(status)){
             return;
         }
+        GameManager.instance.playerData.DT--;
         int index = GameManager.instance.playerData.units.IndexOf(status);
         if(index == -1){
             return;
