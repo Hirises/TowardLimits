@@ -70,6 +70,7 @@ public class CombatManager : MonoBehaviour
     }
     private bool isSummonEnded = false;
     private bool isNextWaveWarningShown = false;
+    private bool IsCutscenePlaying => CutsceneManager.instance != null && CutsceneManager.instance.isPlaying;
 
     public enum Phase {
         None,       //초기 상태
@@ -408,7 +409,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartDrag(UnitIcon icon, UnitStatus status){
-        if(phase != Phase.Placement){
+        if(IsCutscenePlaying || phase != Phase.Placement){
             return;
         }
         icon.SetAlpha(0.5f);
@@ -437,7 +438,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartDrag(UnitBehavior unit){
-        if(phase != Phase.Placement && phase != Phase.Combat){
+        if(IsCutscenePlaying || (phase != Phase.Placement && phase != Phase.Combat)){
             return;
         }
         condition = EmptySlot;
