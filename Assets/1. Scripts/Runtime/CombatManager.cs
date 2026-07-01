@@ -317,7 +317,7 @@ public class CombatManager : MonoBehaviour
 
     public void SkipPlacementPhase(){
         if(phase == Phase.Placement){
-            StartCombatPhase();
+            StartCombatPhase(currentWave == 1);
         }else if(phase == Phase.Purchase){
             ClearPhase();
             EndGame();
@@ -665,6 +665,7 @@ public class CombatManager : MonoBehaviour
     public void StartPurchasePhase(){
         phase = Phase.Purchase;
         GameManager.instance.playerData.DT += 1;
+        combatUIRoot.UpdateDT();
         foreach(Slot slot in slots){
             if(slot.unit != null){
                 UnitBehavior unit = slot.unit;
