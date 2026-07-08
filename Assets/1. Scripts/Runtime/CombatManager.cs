@@ -335,6 +335,7 @@ public class CombatManager : MonoBehaviour
                 break;
             case 1:
                 UnlockUnit(UnitType.UnitABS);
+                UnlockUnit(UnitType.UnitC);
                 break;
             case 2:
                 UnlockUnit(UnitType.UnitX3);
