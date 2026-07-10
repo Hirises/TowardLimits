@@ -679,9 +679,9 @@ public class CombatManager : MonoBehaviour
         placementUIRoot.UpdateUnit();
         placementUIRoot.Show_Purchase();
         if(GameManager.instance.playerData.direction == Polar.North){
-            purchaseTextUI.text = "Drag Here to Integrate";
+            purchaseTextUI.text = "Drop to Integrate";
         }else{
-            purchaseTextUI.text = "Drag Here to Derivative";
+            purchaseTextUI.text = "Drop to derive";
         }
         purchaseRoot.gameObject.SetActive(true);
         combatUIRoot.Show_Purchase();
