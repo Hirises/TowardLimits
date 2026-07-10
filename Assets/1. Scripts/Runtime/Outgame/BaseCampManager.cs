@@ -8,6 +8,7 @@ public class BaseCampManager : MonoBehaviour
 {
     public static BaseCampManager instance;
 
+    [SerializeField] private Canvas[] canvasList;
     [SerializeField] private Inventory inventoryUI;
     [SerializeField] private UnitReinforceArea unitReinforceArea;
     [SerializeField] private UnitInfoPopup unitInfoPopup;
@@ -34,6 +35,7 @@ public class BaseCampManager : MonoBehaviour
         persuadedText.text = $"{GameManager.instance.playerData.Persuaded}%";
         proveText.text = $"{GameManager.instance.playerData.Prove}%";
         inventoryUI.Setup(GameManager.instance.playerData.units, unitReinforceArea.StartDrag, unitInfoPopup.ToggleFix);
+        SetCanvasState(0);
     }
 
     public void TowardNorth(){
@@ -47,5 +49,13 @@ public class BaseCampManager : MonoBehaviour
     public void StartGame(Polar direction){
         GameManager.instance.SetRandomStage(direction);
         LoadingScene.instance.ShowAndLoad("Game", GameManager.instance.MIN_LOADING_DELAY).Forget();
+    }
+
+    public void SetCanvasState(int index)
+    {
+        for(int i = 0; i < canvasList.Length; i++)
+        {
+            canvasList[i].gameObject.SetActive(index == i);
+        }
     }
 }
