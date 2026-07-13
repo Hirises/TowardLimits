@@ -54,9 +54,6 @@ public class CombatManager : MonoBehaviour
     private float waveStartTime = 0;
     private List<EnemyBehavior> enemiesList = new List<EnemyBehavior>();
     private CancellationTokenSource enemySpawnLoop;
-    private bool isDragging = false;
-    private Action<Slot> endDrag;
-    private Func<Slot, bool> condition;
     public event Action<Phase> onPhaseChange;
     [ReadOnly] private Phase _phase;
     public Phase phase {
@@ -79,6 +76,20 @@ public class CombatManager : MonoBehaviour
         Purchase,   //구매 단계
     }
 
+#region Drag
+    private bool isDragging = false;
+    private DragMode currentDragMode = DragMode.None;
+    private UnitBehavior draggedUnit;
+    private UnitStatus draggedStatus;
+    private UnitIcon draggedIcon;
+
+    private enum DragMode {
+        None,
+        InventoryPlacement,
+        FieldPlacement,
+        Purchase,
+    }
+#endregion
 
 #region UnityLifeCycle
     private void Awake(){
@@ -117,13 +128,7 @@ public class CombatManager : MonoBehaviour
             travelMap.UpdatePlayerPosition(currentWave, 0);
         }
 
-        if(isDragging){
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(mainCanvas, Input.mousePosition, null, out var pos);
-            HoldIcon.rectTransform.anchoredPosition = pos;
-            if(Input.GetMouseButtonUp(0)){
-                EndDrag();
-            }
-        }
+        ProcessDrag();
 
         if(GameManager.instance.DEBUG_MODE){
             TestKey();
@@ -388,6 +393,188 @@ public class CombatManager : MonoBehaviour
     }
 #endregion
 
+
+#region Drag
+    public void StartDrag(UnitIcon icon, UnitStatus status){
+        if(IsCutscenePlaying || phase != Phase.Placement){
+            return;
+        }
+        currentDragMode = DragMode.InventoryPlacement;
+        draggedIcon = icon;
+        draggedStatus = status;
+        draggedUnit = null;
+        icon.SetAlpha(0.5f);
+        Debug.Log($"StartDrag: {status.unitType}");
+        isDragging = true;
+        
+        HoldIcon.sprite = status.model.holdMotion;
+        HoldIcon.gameObject.SetActive(true);
+    }
+
+    public void StartDrag(UnitBehavior unit){
+        if(IsCutscenePlaying || (phase != Phase.Placement && phase != Phase.Combat)){
+            return;
+        }
+        currentDragMode = DragMode.FieldPlacement;
+        draggedUnit = unit;
+        draggedStatus = unit.status;
+        draggedIcon = null;
+        unit.StartDrag();
+        Debug.Log($"StartDrag: {unit.unitType}");
+        isDragging = true;
+        GameManager.instance.SetGameSpeed(0.5f);
+        
+        HoldIcon.sprite = unit.status.model.holdMotion;
+        HoldIcon.gameObject.SetActive(true);
+    }
+
+    public void StartDrag_Purchase(UnitIcon icon, UnitStatus status){
+        if(phase != Phase.Purchase){
+            return;
+        }
+        currentDragMode = DragMode.Purchase;
+        draggedIcon = icon;
+        draggedStatus = status;
+        draggedUnit = null;
+        icon.SetAlpha(0.5f);
+        Debug.Log($"StartDrag: {status.unitType}");
+        isDragging = true;
+        HoldIcon.sprite = status.model.holdMotion;
+        HoldIcon.gameObject.SetActive(true);
+    }
+
+    private void ProcessDrag(){
+        if(!isDragging){
+            return;
+        }
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(mainCanvas, Input.mousePosition, null, out var pos);
+        HoldIcon.rectTransform.anchoredPosition = pos;
+        if(Input.GetMouseButtonUp(0)){
+            FinishDrag();
+        }
+    }
+
+    private void FinishDrag(){
+        if(!isDragging){
+            return;
+        }
+
+        Canvas canvas = mainCanvas.GetComponent<Canvas>();
+        Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+        Vector3 offset = HoldIcon.rectTransform.rect.center * 0.25f;
+        Vector2 pos = RectTransformUtility.WorldToScreenPoint(cam, HoldIcon.rectTransform.position + offset);
+        Slot slot = RaycastSlot(pos, GetDragSlotCondition());
+
+        switch(currentDragMode){
+            case DragMode.InventoryPlacement:
+                if(draggedIcon != null){
+                    draggedIcon.SetAlpha(1f);
+                }
+                if(slot != null && slot.unit == null){
+                    if(GameManager.instance.playerData.DT > 0){
+                        GameManager.instance.playerData.units.Remove(draggedStatus);
+                        placementUIRoot.UpdateUnit();
+                        UnitBehavior unit = SummonUnit(draggedStatus);
+                        unit.OnPlacement(slot);
+                        GameManager.instance.playerData.DT--;
+                        combatUIRoot.UpdateDT();
+                    }else{
+                        InsufficientDT();
+                    }
+                }
+                break;
+            case DragMode.FieldPlacement:
+                if(draggedUnit != null){
+                    draggedUnit.EndDrag();
+                    if(slot != null && slot.unit == null){
+                        if(GameManager.instance.playerData.DT > 0){
+                            draggedUnit.OnDisplacement();
+                            draggedUnit.OnPlacement(slot);
+                            GameManager.instance.playerData.DT--;
+                            combatUIRoot.UpdateDT();
+                        }else{
+                            InsufficientDT();
+                        }
+                    }else if(phase == Phase.Placement && placementUIRoot.IsInInventoryArea(Input.mousePosition)){
+                        if(GameManager.instance.playerData.DT > 0){
+                            draggedUnit.OnDisplacement();
+                            GameManager.instance.playerData.units.Add(draggedUnit.status);
+                            draggedUnit.Remove();
+                            placementUIRoot.UpdateUnit();
+                            GameManager.instance.playerData.DT--;
+                            combatUIRoot.UpdateDT();
+                        }else{
+                            InsufficientDT();
+                        }
+                    }
+                }
+                break;
+            case DragMode.Purchase:
+                if(draggedIcon != null){
+                    draggedIcon.SetAlpha(1f);
+                }
+                if(IsInPurchaseArea(Input.mousePosition)){
+                    if(GameManager.instance.playerData.direction == Polar.North && !IsIntegrable(draggedStatus)){
+                        break;
+                    }
+                    if(GameManager.instance.playerData.direction == Polar.South && !IsDerivative(draggedStatus)){
+                        break;
+                    }
+                    if(GameManager.instance.playerData.DT > 0){
+                        if(GameManager.instance.playerData.direction == Polar.North){
+                            Integrate(draggedStatus);
+                        }else{
+                            Derivative(draggedStatus);
+                        }
+                        combatUIRoot.UpdateDT();
+                        placementUIRoot.UpdateUnit();
+                    }else{
+                        InsufficientDT();
+                    }
+                }
+                break;
+        }
+
+        EndDrag();
+        Debug.Log($"EndDrag {slot} / {Input.mousePosition} {pos}");
+    }
+
+    public void EndDrag(){
+        if(!isDragging){
+            return;
+        }
+
+        if(draggedUnit != null){
+            draggedUnit.EndDrag();
+        }
+        if(draggedIcon != null){
+            draggedIcon.SetAlpha(1f);
+        }
+        HoldIcon.gameObject.SetActive(false);
+        isDragging = false;
+        currentDragMode = DragMode.None;
+        draggedUnit = null;
+        draggedStatus = null;
+        draggedIcon = null;
+        GameManager.instance.SetGameSpeed(combatUIRoot.GetGameSpeed());
+    }
+
+    private bool AllSlot(Slot slot)
+    {
+        return true;
+    }
+
+    private bool EmptySlot(Slot slot)
+    {
+        return slot.isEmpty;
+    }
+
+    public void InsufficientDT(){
+        //나중에 시각적 VFX 보여줘서 'DT가 부족해서 못 옮기고 있다'라는 점을 명확히 보여주기
+        Debug.Log("Insufficient DT");
+    }
+
 #region Placement Phase
     public void StartPlacementPhase(){
         EndCombatPhase();
@@ -440,106 +627,6 @@ public class CombatManager : MonoBehaviour
         UnitBehavior unit = Instantiate(status.model.unitBehavior, transform);
         unit.Initialize(status);
         return unit;
-    }
-
-    public void StartDrag(UnitIcon icon, UnitStatus status){
-        if(IsCutscenePlaying || phase != Phase.Placement){
-            return;
-        }
-        icon.SetAlpha(0.5f);
-        condition = EmptySlot;
-        endDrag = (slot) => {
-            HoldIcon.gameObject.SetActive(false);
-            icon.SetAlpha(1f);
-            if(slot != null && slot.unit == null){
-                if(GameManager.instance.playerData.DT > 0){
-                    GameManager.instance.playerData.units.Remove(status);
-                    placementUIRoot.UpdateUnit();
-                    UnitBehavior unit = SummonUnit(status);
-                    unit.OnPlacement(slot);
-                    GameManager.instance.playerData.DT--;
-                    combatUIRoot.UpdateDT();
-                }else{
-                    InsufficientDT();
-                }
-            }
-        };
-        Debug.Log($"StartDrag: {status.unitType}");
-        isDragging = true;
-        
-        HoldIcon.sprite = status.model.holdMotion;
-        HoldIcon.gameObject.SetActive(true);
-    }
-
-    public void StartDrag(UnitBehavior unit){
-        if(IsCutscenePlaying || (phase != Phase.Placement && phase != Phase.Combat)){
-            return;
-        }
-        condition = EmptySlot;
-        endDrag = (slot) => {
-            HoldIcon.gameObject.SetActive(false);
-            unit.EndDrag();
-            if(slot != null && slot.unit == null){
-                if(GameManager.instance.playerData.DT > 0){
-                    unit.OnDisplacement();
-                    unit.OnPlacement(slot);
-                    GameManager.instance.playerData.DT--;
-                    combatUIRoot.UpdateDT();
-                }else{
-                    InsufficientDT();
-                }
-            }else if(phase == Phase.Placement && placementUIRoot.IsInInventoryArea(Input.mousePosition)){
-                if(GameManager.instance.playerData.DT > 0){
-                    unit.OnDisplacement();
-                    GameManager.instance.playerData.units.Add(unit.status);
-                    unit.Remove();
-                    placementUIRoot.UpdateUnit();
-                    GameManager.instance.playerData.DT--;
-                    combatUIRoot.UpdateDT();
-                } else{
-                    InsufficientDT();
-                }
-            }
-        };
-        unit.StartDrag();
-        Debug.Log($"StartDrag: {unit.unitType}");
-        isDragging = true;
-        GameManager.instance.SetGameSpeed(0.5f);
-        
-        HoldIcon.sprite = unit.status.model.holdMotion;
-        HoldIcon.gameObject.SetActive(true);
-    }
-
-    public void EndDrag(){
-        if(!isDragging){
-            return;
-        }
-        if(condition == null) condition = AllSlot;
-        Canvas canvas = mainCanvas.GetComponent<Canvas>();
-        Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
-        Vector3 offset = HoldIcon.rectTransform.rect.center * 0.25f;
-        Vector2 pos = RectTransformUtility.WorldToScreenPoint(cam, HoldIcon.rectTransform.position + offset);
-        Slot slot = RaycastSlot(pos, condition);
-        endDrag?.Invoke(slot);
-        isDragging = false;
-        endDrag = null;
-        Debug.Log($"EndDrag {slot} / {Input.mousePosition} {pos}");
-        GameManager.instance.SetGameSpeed(combatUIRoot.GetGameSpeed());
-    }
-
-    private bool AllSlot(Slot slot)
-    {
-        return true;
-    }
-
-    private bool EmptySlot(Slot slot)
-    {
-        return slot.isEmpty;
-    }
-
-    public void InsufficientDT(){
-        //나중에 시각적 VFX 보여줘서 'DT가 부족해서 못 옮기고 있다'라는 점을 명확히 보여주기
-        Debug.Log("Insufficient DT");
     }
 #endregion
 
@@ -693,36 +780,8 @@ public class CombatManager : MonoBehaviour
         purchaseRoot.gameObject.SetActive(false);
     }
 
-    public void StartDrag_Purchase(UnitIcon icon, UnitStatus status){
-        if(phase != Phase.Purchase){
-            return;
-        }
-        icon.SetAlpha(0.5f);
-        endDrag = (slot) => {
-            icon.SetAlpha(1f);
-            if(IsInPurchaseArea(Input.mousePosition)){
-                if(GameManager.instance.playerData.direction == Polar.North && !IsIntegrable(status)){
-                    return;
-                }
-                if(GameManager.instance.playerData.direction == Polar.South && !IsDerivative(status)){
-                    return;
-                }
-
-                if(GameManager.instance.playerData.DT > 0){
-                    if(GameManager.instance.playerData.direction == Polar.North){
-                        Integrate(status);
-                    }else{
-                        Derivative(status);
-                    }
-                    combatUIRoot.UpdateDT();
-                    placementUIRoot.UpdateUnit();
-                }else{
-                    InsufficientDT();
-                }
-            }
-        };
-        Debug.Log($"StartDrag: {status.unitType}");
-        isDragging = true;
+    private Func<Slot, bool> GetDragSlotCondition(){
+        return currentDragMode == DragMode.FieldPlacement || currentDragMode == DragMode.InventoryPlacement ? EmptySlot : AllSlot;
     }
 
     public bool IsIntegrable(UnitStatus status){
@@ -795,6 +854,7 @@ public class CombatManager : MonoBehaviour
     public bool IsInPurchaseArea(Vector3 screenPosition){
         return RectTransformUtility.RectangleContainsScreenPoint(purchaseArea, screenPosition);
     }
+#endregion
 #endregion
     
     public void ForcePerformSkill(int line){
