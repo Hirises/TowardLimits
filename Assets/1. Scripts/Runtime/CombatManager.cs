@@ -493,7 +493,9 @@ public class CombatManager : MonoBehaviour
             case DragMode.FieldPlacement:
                 if(draggedUnit != null){
                     draggedUnit.EndDrag();
-                    if(slot != null && slot.unit == null){
+                    if(slot != null && slot == draggedUnit.slot){
+                        // 자기 자신 위치로 다시 놓기: 비용 없이 회수
+                    }else if(slot != null && slot.unit == null){
                         if(GameManager.instance.playerData.DT > 0){
                             draggedUnit.OnDisplacement();
                             draggedUnit.OnPlacement(slot);
@@ -502,6 +504,15 @@ public class CombatManager : MonoBehaviour
                         }else{
                             InsufficientDT();
                         }
+                    }else if(slot != null && slot.unit != null && GameManager.instance.playerData.DT >= 2){
+                        UnitBehavior targetUnit = slot.unit;
+                        Slot originalSlot = draggedUnit.slot;
+                        draggedUnit.OnDisplacement();
+                        targetUnit.OnDisplacement();
+                        draggedUnit.OnPlacement(slot);
+                        targetUnit.OnPlacement(originalSlot);
+                        GameManager.instance.playerData.DT -= 2;
+                        combatUIRoot.UpdateDT();
                     }else if(phase == Phase.Placement && placementUIRoot.IsInInventoryArea(Input.mousePosition)){
                         if(GameManager.instance.playerData.DT > 0){
                             draggedUnit.OnDisplacement();
@@ -606,6 +617,17 @@ public class CombatManager : MonoBehaviour
     private bool EmptySlot(Slot slot)
     {
         return slot.isEmpty;
+    }
+
+    private bool CanDropOnFieldSlot(Slot slot)
+    {
+        if(slot == null){
+            return false;
+        }
+        if(draggedUnit == null){
+            return false;
+        }
+        return slot == draggedUnit.slot || slot.isEmpty || slot.unit != null;
     }
 
     public void InsufficientDT(){
@@ -819,7 +841,13 @@ public class CombatManager : MonoBehaviour
     }
 
     private Func<Slot, bool> GetDragSlotCondition(){
-        return currentDragMode == DragMode.FieldPlacement || currentDragMode == DragMode.InventoryPlacement ? EmptySlot : AllSlot;
+        if(currentDragMode == DragMode.FieldPlacement){
+            return CanDropOnFieldSlot;
+        }
+        if(currentDragMode == DragMode.InventoryPlacement){
+            return EmptySlot;
+        }
+        return AllSlot;
     }
 
     public bool IsIntegrable(UnitStatus status){
