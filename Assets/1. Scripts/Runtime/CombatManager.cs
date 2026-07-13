@@ -43,6 +43,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public SkillGage skillGage;
     [SerializeField] public Image HoldIcon;
     [SerializeField] public float slotSnapDistance = 2;
+    [SerializeField] public UnitGhost ghostUnit;
 
     [Header("다음 웨이브 시작 전 경고 표시 시간")]
     [SerializeField] private float nextWaveWarningLeadTime = 5f;
@@ -409,6 +410,7 @@ public class CombatManager : MonoBehaviour
         
         HoldIcon.sprite = status.model.holdMotion;
         HoldIcon.gameObject.SetActive(true);
+        UpdateGhostUnitPosition();
     }
 
     public void StartDrag(UnitBehavior unit){
@@ -426,6 +428,7 @@ public class CombatManager : MonoBehaviour
         
         HoldIcon.sprite = unit.status.model.holdMotion;
         HoldIcon.gameObject.SetActive(true);
+        UpdateGhostUnitPosition();
     }
 
     public void StartDrag_Purchase(UnitIcon icon, UnitStatus status){
@@ -441,15 +444,18 @@ public class CombatManager : MonoBehaviour
         isDragging = true;
         HoldIcon.sprite = status.model.holdMotion;
         HoldIcon.gameObject.SetActive(true);
+        HideGhostUnit();
     }
 
     private void ProcessDrag(){
         if(!isDragging){
+            HideGhostUnit();
             return;
         }
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(mainCanvas, Input.mousePosition, null, out var pos);
         HoldIcon.rectTransform.anchoredPosition = pos;
+        UpdateGhostUnitPosition();
         if(Input.GetMouseButtonUp(0)){
             FinishDrag();
         }
@@ -552,12 +558,44 @@ public class CombatManager : MonoBehaviour
             draggedIcon.SetAlpha(1f);
         }
         HoldIcon.gameObject.SetActive(false);
+        HideGhostUnit();
         isDragging = false;
         currentDragMode = DragMode.None;
         draggedUnit = null;
         draggedStatus = null;
         draggedIcon = null;
         GameManager.instance.SetGameSpeed(combatUIRoot.GetGameSpeed());
+    }
+
+    private void UpdateGhostUnitPosition(){
+        if(ghostUnit == null || (currentDragMode != DragMode.InventoryPlacement && currentDragMode != DragMode.FieldPlacement) || !isDragging){
+            HideGhostUnit();
+            return;
+        }
+
+        Canvas canvas = mainCanvas.GetComponent<Canvas>();
+        Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+        Vector3 offset = HoldIcon.rectTransform.rect.center * 0.25f;
+        Vector2 pos = RectTransformUtility.WorldToScreenPoint(cam, HoldIcon.rectTransform.position + offset);
+        Slot slot = RaycastSlot(pos, GetDragSlotCondition());
+        if(slot != null && slot.unit == null){
+            if(currentDragMode == DragMode.InventoryPlacement){
+                ghostUnit.Setup(draggedStatus);
+            }else if(draggedUnit != null){
+                ghostUnit.Setup(draggedUnit.status);
+            }
+            ghostUnit.transform.position = slot.UnitPoint.transform.position;
+            ghostUnit.transform.rotation = Quaternion.identity;
+            ghostUnit.gameObject.SetActive(true);
+        }else{
+            HideGhostUnit();
+        }
+    }
+
+    private void HideGhostUnit(){
+        if(ghostUnit != null){
+            ghostUnit.Hide();
+        }
     }
 
     private bool AllSlot(Slot slot)

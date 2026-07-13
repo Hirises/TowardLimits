@@ -14,6 +14,7 @@ public class UnitModel : ICloneable
 
     [Header("Images")]
     public Sprite fullFront;
+    public Sprite fullBack;
     public Sprite holdMotion;
     public Sprite chibiIcon;
     public UnitBehavior unitBehavior;

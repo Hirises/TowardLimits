@@ -20,6 +20,7 @@ MonoBehaviour:
       \uD55C\uB2E4."
     unitColor: {r: 0.2508864, g: 0.79622644, b: 0.6695416, a: 1}
     fullFront: {fileID: 21300000, guid: 3810b06ff2590df4da569a02148382f4, type: 3}
+    fullBack: {fileID: 21300000, guid: e07539c8a91c68d4786623f3031072a9, type: 3}
     holdMotion: {fileID: 21300000, guid: 7074d9ec49e4b0645a1781e2a278ef31, type: 3}
     chibiIcon: {fileID: 21300000, guid: b5e4dc07e63f1d949a971cd11acb703b, type: 3}
     unitBehavior: {fileID: 897302256310821516, guid: 76ad088fa89bfba49a557637ee827514, type: 3}
