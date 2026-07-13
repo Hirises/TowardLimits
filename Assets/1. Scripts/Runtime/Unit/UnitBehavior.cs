@@ -77,6 +77,9 @@ public abstract class UnitBehavior : LivingEntity
     /// 유닛 사망시
     /// </summary>
     public void OnDeath(){
+        // 드래그 중이면 드래그 취소
+        CombatManager.instance.OnUnitDeath(this);
+        
         OnCombatEnd();
         OnDisplacement();
         Remove();

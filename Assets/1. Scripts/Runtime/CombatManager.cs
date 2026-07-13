@@ -578,6 +578,15 @@ public class CombatManager : MonoBehaviour
         GameManager.instance.SetGameSpeed(combatUIRoot.GetGameSpeed());
     }
 
+    /// <summary>
+    /// 유닛이 사망할 때 호출 - 해당 유닛이 드래그 중이면 드래그를 취소합니다
+    /// </summary>
+    public void OnUnitDeath(UnitBehavior unit){
+        if(isDragging && draggedUnit == unit){
+            EndDrag();
+        }
+    }
+
     private void UpdateGhostUnitPosition(){
         if(ghostUnit == null || (currentDragMode != DragMode.InventoryPlacement && currentDragMode != DragMode.FieldPlacement) || !isDragging){
             HideGhostUnit();
