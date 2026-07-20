@@ -52,7 +52,7 @@ public class WaveModel
         commonEnemyTypes = new EnemyType[CombatManager.instance.girdSize.y][];
         for(int i = 0; i < CombatManager.instance.girdSize.y; i++){
             //find first 3 frequent enemy types
-            commonEnemyTypes[i] = summonList.Where(x => x.lane == i).GroupBy(x => x.enemyType).OrderByDescending(x => x.Count()).Take(3).Select(x => x.Key).ToArray();
+            commonEnemyTypes[i] = summonList.Where(x => x.lane == i).OrderBy(x => x.startTime).GroupBy(x => x.enemyType).Take(3).Select(x => x.Key).ToArray();
         }
     }
 

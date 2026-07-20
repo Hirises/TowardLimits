@@ -1921,8 +1921,8 @@ MonoBehaviour:
   MarkerRoot: {fileID: 1902873679}
   MarkerPrefab: {fileID: 6164848289975459127, guid: e2f2933aaeca4c143bf9f4ecaad53726, type: 3}
   PlayerMarker: {fileID: 229760013}
-  normalMarkerSprite: {fileID: 21300000, guid: f452723b6677d5347a16fc468aa7cdc2, type: 3}
-  bossMarkerSprite: {fileID: 21300000, guid: 6e80b2eb097d41549ba82bb49c1662d0, type: 3}
+  normalMarkerSprite: {fileID: 42714382, guid: b25543d6153bffc46ab7199e261bc96f, type: 3}
+  bossMarkerSprite: {fileID: 2092354405, guid: b25543d6153bffc46ab7199e261bc96f, type: 3}
 --- !u!1 &434959723
 GameObject:
   m_ObjectHideFlags: 0
