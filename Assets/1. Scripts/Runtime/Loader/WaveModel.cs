@@ -11,6 +11,7 @@ public class WaveModel
     public Vector2Int stageRange;   //스테이지
     public Vector2Int difficulty;   //난이도 계수
     public bool forFinalBoss = false;   //마지막 보스 전용 차트인가?
+    public float duration;
     [NonSerialized] public bool isOverriden = false;
 
     [HideInInspector] public List<WaveChartData> enemyList;    //생성 정보
@@ -18,7 +19,6 @@ public class WaveModel
     //동적 로드하는 정보
     [System.NonSerialized] public List<(float startTime, int lane, EnemyType enemyType)> summonList;
     [System.NonSerialized] public EnemyType[][] commonEnemyTypes; //경고해야할 적 종류. column, priority
-    [System.NonSerialized] public float duration;
 
     public static WaveModel FromWaveChart(WaveChart waveChart)
     {
@@ -28,6 +28,7 @@ public class WaveModel
             difficulty = waveChart.difficulty,
             forFinalBoss = waveChart.forFinalBoss,
             enemyList = waveChart.enemyList,
+            duration = waveChart.duration,
         };
         return inst;
     }
@@ -48,7 +49,7 @@ public class WaveModel
             }
         }
         summonList.Sort((a, b) => a.startTime.CompareTo(b.startTime));
-        duration = maxStartTime + 15;
+        if(duration <= 0) duration = maxStartTime + 15;
         commonEnemyTypes = new EnemyType[CombatManager.instance.girdSize.y][];
         for(int i = 0; i < CombatManager.instance.girdSize.y; i++){
             //find first 3 frequent enemy types
@@ -60,7 +61,6 @@ public class WaveModel
     public void Unload(){
         summonList = null;
         commonEnemyTypes = null;
-        duration = 0;
     }
 }
 

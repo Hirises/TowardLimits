@@ -14,6 +14,7 @@ public class WaveChart : ScriptableObject
     public Vector2Int stageRange;   //스테이지
     public Vector2Int difficulty;   //난이도 계수
     public bool forFinalBoss = false;   //마지막 보스 전용 차트인가?
+    public float duration;   //총 지속시간
 
     public List<WaveChartData> enemyList;
 
