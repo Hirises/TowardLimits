@@ -69,3 +69,32 @@ MonoBehaviour:
     callFunction: 0
     clazz: 
     method: 
+  - name: 
+    text: "\uB0A8\uADF9\uC810\uC5D0 \uB3C4\uB2EC\uD558\uBA74 \uB0A8\uC740 dt\uB97C
+      \uC774\uC6A9\uD574 \uBBF8\uBD84\uC744 \uC218\uD589\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4. "
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: 
+    text: "\uBBF8\uC18C\uB140\uB97C \uBBF8\uBD84\uD558\uBA74 \uB354 \uC5B4\uB9B0
+      \uBAA8\uC2B5\uC73C\uB85C \uB3CC\uC544\uAC00\uC9C0\uB9CC, \n\uCC28\uC218\uC5D0
+      \uB530\uB77C \uBBF8\uC18C\uB140\uB97C \uCD94\uAC00\uB85C \uC5BB\uC744 \uC218
+      \uC788\uC2B5\uB2C8\uB2E4."
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: 
+    text: "\uC6D0\uD558\uB294 \uBC29\uD5A5\uC73C\uB85C \uC6D0\uC815\uC744 \uB5A0\uB098
+      \uBBF8\uC18C\uB140 \uBD84\uB300\uB97C \uAC15\uD654\uD558\uC138\uC694."
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 

@@ -58,9 +58,9 @@ MonoBehaviour:
     clazz: 
     method: 
   - name: ' '
-    text: "\uC138\uC0C1\uC758 \uC591 \uB05D, \uADF9\uC810\uC5D0\uB294 \uAD81\uADF9\uC801\uC774\uACE0
+    text: "\uC138\uC0C1\uC758 \uC591 \uB05D\uC5D0\uB294 \uAD81\uADF9\uC801\uC774\uACE0
       \uC2E0\uBE44\uB85C\uC6B4 \uD798\uC774 \uB118\uCCD0\uB098\uB294 \uBE5B\uC774
-      \uC19F\uC544\uB09C\uB370\uC694"
+      \uC19F\uC544\uB09C\uB300\uC694."
     clearSprite: 1
     isLeft: 0
     sprite: {fileID: 0}

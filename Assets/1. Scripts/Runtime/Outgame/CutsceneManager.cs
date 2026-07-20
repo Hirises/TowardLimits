@@ -20,7 +20,8 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator<CutSceneAction> currentAction;
     public bool isPlaying = false;
-    private float originGameSpeed;
+    public float originGameSpeed;
+    public bool isWaiting = false;
 
     private void Awake(){
         if(instance != null){
@@ -43,12 +44,13 @@ public class CutsceneManager : MonoBehaviour
         currentAction = cutSceneData.GetEnumerator();
         cutsceneRoot.SetActive(true);
         isPlaying = true;
+        isWaiting = false;
         originGameSpeed = Time.timeScale;
         GameManager.instance.SetGameSpeed(0f);
 
         if(GameManager.instance.SKIP_CUTSCENE){
             while(isPlaying){
-                NextAction();
+                NextAction(force: true);
             }
             return;
         }
@@ -64,7 +66,10 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
-    private void NextAction(){
+    private void NextAction(bool force = false){
+        if(isWaiting && !force){
+            return;
+        }
         if(currentAction.MoveNext()){
             Run(currentAction.Current);
         }else{
@@ -102,5 +107,26 @@ public class CutsceneManager : MonoBehaviour
             }
             NextAction();
         }
+    }
+
+    public void WaitUntil()
+    {
+        isWaiting = true;
+        GameManager.instance.SetGameSpeed(1f);
+    }
+
+    public void WaitUntilAndHide()
+    {
+        WaitUntil();
+        cutsceneRoot.SetActive(false);
+    }
+
+    public void Continue()
+    {
+        if(!isWaiting) return;
+        cutsceneRoot.SetActive(true);
+        isWaiting = false;
+        GameManager.instance.SetGameSpeed(0f);
+        NextAction();
     }
 }

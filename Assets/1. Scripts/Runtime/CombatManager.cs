@@ -323,12 +323,27 @@ public class CombatManager : MonoBehaviour
 
     public void SkipPlacementPhase(){
         if(phase == Phase.Placement){
-            StartCombatPhase(currentWave == 1);
+            if(currentStage.stageNumber.x == 0 && currentWave == 0)
+            {
+                CutsceneManager.instance.Continue(); // 첫 전투일 경우 컷씬 대기 해제
+            }
+            else
+            {
+                StartCombatPhase(currentWave == 1);
+            }
         }else if(phase == Phase.Purchase){
             ClearPhase();
             EndGame();
             StageClear();
         }
+    }
+
+    //튜토리얼용 함수
+    public void StartFirstCombat()
+    {
+        GameManager.instance.SetGameSpeed(1f);
+        CutsceneManager.instance.originGameSpeed = 1f;
+        StartCombatPhase(currentWave == 1);
     }
 
     public void UnlockUnits()
@@ -397,7 +412,7 @@ public class CombatManager : MonoBehaviour
 
 #region Drag
     public void StartDrag(UnitIcon icon, UnitStatus status){
-        if(IsCutscenePlaying || phase != Phase.Placement){
+        if(phase != Phase.Placement){
             return;
         }
         currentDragMode = DragMode.InventoryPlacement;
@@ -414,7 +429,7 @@ public class CombatManager : MonoBehaviour
     }
 
     public void StartDrag(UnitBehavior unit){
-        if(IsCutscenePlaying || (phase != Phase.Placement && phase != Phase.Combat)){
+        if(phase != Phase.Placement && phase != Phase.Combat){
             return;
         }
         currentDragMode = DragMode.FieldPlacement;
