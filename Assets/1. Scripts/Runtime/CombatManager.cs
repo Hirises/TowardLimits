@@ -377,6 +377,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
         GameManager.instance.playerData.unlockedUnits.Add(unitType);
+        CutsceneManager.instance.PlayCutScene($"Unlock_{unitType}");
     }
 
     public void StageClear(){
