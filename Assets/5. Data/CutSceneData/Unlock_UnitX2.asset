@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45da80eaf9e00da4d8788890906d294a, type: 3}
+  m_Name: Unlock_UnitX2
+  m_EditorClassIdentifier: 
+  cutSceneName: Unlock_UnitX2
+  cutSceneActions:
+  - name: 
+    text: "\uB354 \uB192\uC740 \uCC28\uC218\uC758 \uD798\uC774 \uC5F4\uB838\uC2B5\uB2C8\uB2E4."
+    clearSprite: 1
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 
+  - name: 
+    text: "\uC77C\uCC28\uD568\uC218\uB97C \uC801\uBD84\uD558\uC5EC \uC774\uCC28\uD568\uC218\uB97C
+      \uC5BB\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \n\uC774\uCC28\uD568\uC218\uB294
+      \uC77C\uCC28\uD568\uC218\uBCF4\uB2E4 \uB354 \uB113\uC740 \uBC94\uC704\uB97C
+      \uACF5\uACA9\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    clearSprite: 0
+    isLeft: 0
+    sprite: {fileID: 0}
+    callFunction: 0
+    clazz: 
+    method: 

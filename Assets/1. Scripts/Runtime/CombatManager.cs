@@ -10,6 +10,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Unity.Android.Gradle.Manifest;
 
 /// <summary>
 /// 인게임 메니저
@@ -365,6 +366,7 @@ public class CombatManager : MonoBehaviour
         // 1스테이지 클리어하면 절댓값 획득
         if(GameManager.instance.playerData.stage == 1 && !GameManager.instance.playerData.units.Any(status => status.unitType == UnitType.UnitABS)){
             GameManager.instance.playerData.units.Add(UnitStatus.FromType(UnitType.UnitABS));
+            CutsceneManager.instance.PlayCutScene($"Add_{UnitType.UnitABS}");
         }
     }
 

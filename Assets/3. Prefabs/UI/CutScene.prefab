@@ -291,7 +291,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa370f9a78cee284da969a6fe64d8b7e, type: 2}
   - {fileID: 11400000, guid: 976140bb34727b749bde367ce8247c88, type: 2}
   - {fileID: 11400000, guid: a0bdb2cb88afe6b4c93266c4c0774bb1, type: 2}
+  - {fileID: 11400000, guid: df37d77705aa0294ca11c908e0f8d338, type: 2}
+  - {fileID: 11400000, guid: 282864efa04614549bf7510279c2758a, type: 2}
+  - {fileID: 11400000, guid: 699338c939a70f8438b97942c6a845ca, type: 2}
+  - {fileID: 11400000, guid: 7dd0d1aea0e91124d9bd0ce79aea3a7e, type: 2}
   isPlaying: 0
+  originGameSpeed: 0
   isWaiting: 0
 --- !u!223 &7207745379335570862
 Canvas:
