@@ -10,7 +10,6 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using Unity.Android.Gradle.Manifest;
 
 /// <summary>
 /// 인게임 메니저
@@ -380,7 +379,7 @@ public class CombatManager : MonoBehaviour
         }
         GameManager.instance.playerData.unlockedUnits.Add(unitType);
         CutsceneManager.instance.PlayCutScene($"Unlock_{unitType}");
-    }
+    }  
 
     public void StageClear(){
         GameManager.instance.playerData.stage++;
