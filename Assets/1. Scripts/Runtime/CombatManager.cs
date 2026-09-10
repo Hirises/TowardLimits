@@ -311,10 +311,10 @@ public class CombatManager : MonoBehaviour
             .Append(RelavtiveLineHandler.instance.RowBase.transform.DOMoveZ(RelavtiveLineHandler.instance.TopRowZ, 3f).SetEase(Ease.InOutSine))
             .Insert(2, DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 1), 1f).SetEase(Ease.InOutSine))
             .ToUniTask();
-        UnlockUnits();
         StartPurchasePhase();
         RelavtiveLineHandler.instance.RowBase.transform.position = Vector3.zero;
         await DOTween.To(() => Whiteout.color, x => Whiteout.color = x, new Color(1, 1, 1, 0), 0.5f).SetEase(Ease.InOutSine).ToUniTask();
+        await PlayUnitUnlockCutScene();
         if(GameManager.instance.playerData.stage == 0){
             CutsceneManager.instance.PlayCutScene("Combat3");
             combatUIRoot.UpdateDT();
@@ -346,30 +346,30 @@ public class CombatManager : MonoBehaviour
         StartCombatPhase(currentWave == 1);
     }
 
-    public void UnlockUnits()
+    public async UniTask PlayUnitUnlockCutScene()
     {
         // 유닛 해금
         // TODO: StageData로 옮기기
         switch(GameManager.instance.playerData.stage){
             case 0:
-                UnlockUnit(UnitType.UnitX2);
+                await UnlockUnit(UnitType.UnitX2);
                 break;
             case 1:
-                UnlockUnit(UnitType.UnitABS);
-                UnlockUnit(UnitType.UnitC);
+                await UnlockUnit(UnitType.UnitABS);
+                await UnlockUnit(UnitType.UnitC);
                 break;
             case 2:
-                UnlockUnit(UnitType.UnitX3);
+                await UnlockUnit(UnitType.UnitX3);
                 break;
         }
         // 1스테이지 클리어하면 절댓값 획득
         if(GameManager.instance.playerData.stage == 1 && !GameManager.instance.playerData.units.Any(status => status.unitType == UnitType.UnitABS)){
             GameManager.instance.playerData.units.Add(UnitStatus.FromType(UnitType.UnitABS));
-            CutsceneManager.instance.PlayCutScene($"Add_{UnitType.UnitABS}");
+            await CutsceneManager.instance.PlayCutSceneAndWait($"Add_{UnitType.UnitABS}");
         }
     }
 
-    private void UnlockUnit(UnitType unitType)
+    private async UniTask UnlockUnit(UnitType unitType)
     {
         if(unitType == UnitType.None){
             return;
@@ -378,7 +378,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
         GameManager.instance.playerData.unlockedUnits.Add(unitType);
-        CutsceneManager.instance.PlayCutScene($"Unlock_{unitType}");
+        await CutsceneManager.instance.PlayCutSceneAndWait($"Unlock_{unitType}");
     }  
 
     public void StageClear(){

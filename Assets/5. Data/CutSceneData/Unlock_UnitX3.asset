@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutSceneName: Unlock_UnitX3
   cutSceneActions:
-  - name: 
+  - name: ' '
     text: "\uC131\uC219\uD568\uC774 \uBB34\uB974\uC775\uC740 \uD798\uC774 \uC19F\uC544\uB0A9\uB2C8\uB2E4."
     clearSprite: 1
     isLeft: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
     callFunction: 0
     clazz: 
     method: 
-  - name: 
+  - name: ' '
     text: "\uC774\uCC28\uD568\uC218\uB97C \uC801\uBD84\uD558\uC5EC \uC0BC\uCC28\uD568\uC218\uB97C
       \uC5BB\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \n\uC0BC\uCC28\uD568\uC218\uB294
       \uC790\uC2E0\uC758 \uB77C\uC778\uC5D0 \uC9D1\uC911\uD558\uC5EC \uAC15\uB825\uD55C

@@ -48,7 +48,7 @@ MonoBehaviour:
     callFunction: 0
     clazz: 
     method: 
-  - name: 
+  - name: ' '
     text: "\uC808\uB313\uAC12\uD568\uC218\uAC00 \uD569\uB958\uD558\uC600\uC2B5\uB2C8\uB2E4!"
     clearSprite: 1
     isLeft: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
     callFunction: 0
     clazz: 
     method: 
-  - name: 
+  - name: ' '
     text: "\uC808\uB313\uAC12\uD568\uC218\uB294 \uC591 \uC606 \uB77C\uC778\uC744
       \uACF5\uACA9\uD569\uB2C8\uB2E4. \uC2A4\uD0AC\uC744 \uC0AC\uC6A9\uD558\uBA74
       \uBCF8 \uB77C\uC778\uC758 \uC544\uAD70\uC758 \uCCB4\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4."
