@@ -42,6 +42,11 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
 
     protected async virtual UniTask AttackLoop(CancellationToken ct){
         while(true){
+            if(data.attackSpeed <= 0)
+            {
+                await UniTask.Yield(cancellationToken: ct);
+                continue;
+            }
             await UniTask.Delay(TimeSpan.FromSeconds(1f / data.attackSpeed), cancellationToken: ct);
             Shoot();
         }

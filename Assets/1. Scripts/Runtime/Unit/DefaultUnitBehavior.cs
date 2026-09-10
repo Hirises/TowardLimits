@@ -19,6 +19,11 @@ public abstract class DefaultUnitBehavior : UnitBehavior
 
     private async UniTask MainLoop(CancellationToken ct){
         while(true){
+            if((status.model.attackSpeed + slot.ATKSPD_buff) <= 0)
+            {
+                await UniTask.Yield(cancellationToken: ct);
+                continue;
+            }
             await UniTask.Delay(TimeSpan.FromSeconds(1f / (status.model.attackSpeed + slot.ATKSPD_buff)), cancellationToken: ct);
             OnShoot();
         }
