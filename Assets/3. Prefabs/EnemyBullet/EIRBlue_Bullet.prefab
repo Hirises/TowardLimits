@@ -50,19 +50,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1577789702580548638, guid: 063368b8cc8e9274ebe259b99e8f270b, type: 3}
       propertyPath: m_Color.b
-      value: 0.4285333
+      value: 0.9339623
       objectReference: {fileID: 0}
     - target: {fileID: 1577789702580548638, guid: 063368b8cc8e9274ebe259b99e8f270b, type: 3}
       propertyPath: m_Color.g
-      value: 0.70879024
+      value: 0.63735366
       objectReference: {fileID: 0}
     - target: {fileID: 1577789702580548638, guid: 063368b8cc8e9274ebe259b99e8f270b, type: 3}
       propertyPath: m_Color.r
-      value: 0.8490566
+      value: 0.4978195
       objectReference: {fileID: 0}
     - target: {fileID: 1891165635401454974, guid: 063368b8cc8e9274ebe259b99e8f270b, type: 3}
       propertyPath: m_Name
-      value: EIRYellow_Bullet
+      value: EIRBlue_Bullet
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
