@@ -19,13 +19,30 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
         }
     }
 
+    private bool isLineEmpty(int line)
+    {
+        for(int i = 0; i < CombatManager.instance.girdSize.x; i++){
+            if(CombatManager.instance.GetSlotAt(i, line)?.unit != null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void Update(){
+        if(isMoving == false && isLineEmpty(line))
+        {
+            //라인이 비어있으면 다시 전진함
+            isMoving = true;
+        }
+
         if(isMoving){
             transform.position -= Vector3.forward * data.GetSpeed() * Time.deltaTime;
         }
 
         //정지 후 공격 검사
-        if(data.rangeAttack && isMoving){
+        if(data.rangeAttack && isMoving && !isLineEmpty(line)){
             if(transform.position.z <= RelavtiveLineHandler.instance.MiddleRowZ){
                 isMoving = false;
                 attackLoop = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
