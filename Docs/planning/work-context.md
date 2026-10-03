@@ -9,6 +9,10 @@
 - [Slack #project_towardlimits](https://haje.slack.com/archives/C09UA5374KH): HAJE 워크스페이스의 프로젝트 채널.
 - 사용자 본인의 Slack 이름은 **hirises**, 이름은 **조의준**이다. 사용자 확인에 근거한다.
 
+## 문서 동기화 지침
+
+- JSON Override Data 관련 변경 시 로컬 [Override Data 가이드](../OverrideData_Format.md)와 프로젝트 Notion의 [외부 데이터 수정 방법](https://app.notion.com/p/1931a56a23cd83d682990158f06b170c) 페이지를 함께 업데이트한다. 필드명·타입·동작·예제 및 호환성 안내를 실제 구현과 일치시킨다. 사용자 요청에 따른 지속 지침이며, Notion 페이지를 수정할 수 없는 경우 미반영 사항을 사용자에게 알린다.
+
 ## 2026-09-30 회의 작업
 
 아래는 당시 요청 및 진행 의사이며 현재 완료 상태는 미확인이다. Notion TODO List에는 2026-10-03에 전부 미체크로 등록했다. 이후 상태는 TODO List와 실제 구현을 대조해 확인한다.
