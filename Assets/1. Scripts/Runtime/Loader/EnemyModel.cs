@@ -19,6 +19,7 @@ public class EnemyModel : ICloneable
     [SerializeField] public bool attackWhileMoving;
     [SerializeField] public float attackSpeed;
     [SerializeField] public int damage;
+    [SerializeField] public int rangeDamage;
     [SerializeField] public int persuade;
     [SerializeField] public float speed;
     [SerializeField] public Color color;
@@ -26,6 +27,7 @@ public class EnemyModel : ICloneable
     [Header("Level up")]
     [SerializeField] public int health_add;
     [SerializeField] public int damage_add;
+    [SerializeField] public int rangeDamage_add;
     [SerializeField] public float speed_add;
 
     public int GetHealth(){
@@ -34,6 +36,10 @@ public class EnemyModel : ICloneable
 
     public int GetDamage(){
         return damage + damage_add * GameManager.instance.playerData.stage;
+    }
+
+    public int GetRangeDamage(){
+        return rangeDamage + rangeDamage_add * GameManager.instance.playerData.stage;
     }
 
     public float GetSpeed(){

@@ -128,17 +128,21 @@
 {
   "enemyType": 0,
   "health": 50,
+  "zeroDEF": 0,
+  "infDEF": 0,
   "rangeAttack": false,
   "stopAtMiddle": false,
   "attackWhileMoving": false,
   "attackSpeed": 1.0,
   "damage": 10,
+  "rangeDamage": 10,
   "persuade": 5,
   "speed": 2.0,
   "color": { "r": 1.0, "g": 0.0, "b": 0.0, "a": 1.0 },
 
   "health_add": 5,
   "damage_add": 2,
+  "rangeDamage_add": 2,
   "speed_add": 0.1
 }
 ```
@@ -147,21 +151,27 @@
 |------|------|------|
 | `enemyType` | `int` | [EnemyType](#enemytype) |
 | `health` | `int` | 기본 체력 |
+| `zeroDEF` | `int` | Zero 타입 공격에 대한 방어력 |
+| `infDEF` | `int` | Infinite 타입 공격에 대한 방어력 |
 | `rangeAttack` | `bool` | 주기 공격 활성화 여부. 충돌 피해는 별도로 적용 |
 | `stopAtMiddle` | `bool` | 같은 라인에 유닛이 있으면 중앙선 도달 시 정지. 라인이 비면 전진 재개 |
 | `attackWhileMoving` | `bool` | `true`이면 소환 즉시 첫 발사 후 이동·정지 및 라인 유닛 유무와 관계없이 반복 공격. `false`이면 정지 중에만 공격. `rangeAttack=true`일 때 적용 |
 | `attackSpeed` | `float` | 초당 발사 횟수. 0 이하에서는 발사 대기. 정지 전용 공격은 정지 후 한 주기 뒤 첫 발사 |
-| `damage` | `int` | 기본 피해량 |
+| `damage` | `int` | 기본 충돌 피해량 |
+| `rangeDamage` | `int` | 기본 원거리 투사체 피해량 |
 | `persuade` | `int` | 설득 수치 |
 | `speed` | `float` | 기본 이동 속도 |
 | `color` | `Color` | RGBA 색상, 0.0~1.0 |
 | `health_add` | `int` | 스테이지당 체력 증가량 |
-| `damage_add` | `int` | 스테이지당 피해 증가량 |
+| `damage_add` | `int` | 스테이지당 충돌 피해 증가량 |
+| `rangeDamage_add` | `int` | 스테이지당 원거리 투사체 피해 증가량 |
 | `speed_add` | `float` | 스테이지당 속도 증가량 |
 
-> **실제 적용값**: `health + health_add × stage`, `damage + damage_add × stage`, `speed + speed_add × stage`
+> **실제 적용값**: `health + health_add × stage`, 충돌 피해 `damage + damage_add × stage`, 원거리 피해 `rangeDamage + rangeDamage_add × stage`, `speed + speed_add × stage`
 >
 > `enemyBehavior`는 Unity 에셋 참조이므로 JSON으로 오버라이드할 수 없습니다.
+
+`damage`와 `damage_add`는 충돌 공격에 적용하고, `rangeDamage`와 `rangeDamage_add`는 원거리 공격에 적용합니다. 기존 JSON에서 원거리 공격력을 설정하던 경우 새 원거리 필드에 값을 지정합니다. 생략한 필드는 해당 적의 기본 에셋 값을 유지하며, 충돌 필드에서 원거리 필드로 자동 복사되지 않습니다. 기본 에셋 6종의 원거리 값은 분리 전 공격력과 증가량으로 초기화되어 있습니다.
 
 ---
 
@@ -287,6 +297,7 @@ Stage 데이터는 두 가지 오버라이드 경로를 가집니다. **우선�
 | 2 | `EIRYellow` |
 | 3 | `EIRPurple` |
 | 4 | `PolarBear` |
+| 5 | `Snowball` |
 
 ### Polar
 

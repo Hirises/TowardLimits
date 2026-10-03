@@ -21,9 +21,11 @@ MonoBehaviour:
     attackWhileMoving: 0
     attackSpeed: 1
     damage: 50
+    rangeDamage: 50
     persuade: 30
     speed: 6
     color: {r: 1, g: 0, b: 0, a: 1}
     health_add: 2000
     damage_add: 10
+    rangeDamage_add: 10
     speed_add: 0.5
