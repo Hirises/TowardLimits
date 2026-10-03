@@ -17,6 +17,8 @@ MonoBehaviour:
     enemyBehavior: {fileID: 3712245646842169510, guid: 1b6a438b31680d94884b1e7c26d546dc, type: 3}
     health: 5000
     rangeAttack: 1
+    stopAtMiddle: 1
+    attackWhileMoving: 0
     attackSpeed: 1
     damage: 50
     persuade: 30

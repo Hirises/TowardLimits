@@ -19,6 +19,8 @@ MonoBehaviour:
     zeroDEF: 0
     infDEF: 100
     rangeAttack: 0
+    stopAtMiddle: 0
+    attackWhileMoving: 0
     attackSpeed: 0
     damage: 10
     persuade: 5

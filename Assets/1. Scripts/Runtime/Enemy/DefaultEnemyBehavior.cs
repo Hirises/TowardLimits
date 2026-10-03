@@ -9,9 +9,26 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
     protected CancellationTokenSource attackLoop;
 
     protected override void OnSummon_Internal(){
+        if(data.rangeAttack && data.attackWhileMoving){
+            StartAttackLoop();
+        }
     }
 
     protected override void OnDeath_Internal(){
+        StopAttackLoop();
+    }
+
+    private void StartAttackLoop(){
+        if(attackLoop != null) return;
+
+        attackLoop = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+        if(data.attackWhileMoving && data.attackSpeed > 0){
+            Shoot();
+        }
+        AttackLoop(attackLoop.Token).Forget();
+    }
+
+    private void StopAttackLoop(){
         if(attackLoop != null){
             attackLoop.Cancel();
             attackLoop.Dispose();
@@ -31,30 +48,32 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
     }
 
     private void Update(){
-        if(isMoving == false && isLineEmpty(line))
-        {
-            //라인이 비어있으면 다시 전진함
-            isMoving = true;
-        }
-
-        if(isMoving){
+        bool lineEmpty = isLineEmpty(line);
+        if(!data.stopAtMiddle || lineEmpty
+            || transform.position.z > RelavtiveLineHandler.instance.MiddleRowZ){
             transform.position -= Vector3.forward * data.GetSpeed() * Time.deltaTime;
         }
-
-        //정지 후 공격 검사
-        if(data.rangeAttack && isMoving && !isLineEmpty(line)){
-            if(transform.position.z <= RelavtiveLineHandler.instance.MiddleRowZ){
-                isMoving = false;
-                attackLoop = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
-                AttackLoop(attackLoop.Token).Forget();
-            }
-        }
+        isMoving = !(data.stopAtMiddle && !lineEmpty
+            && transform.position.z <= RelavtiveLineHandler.instance.MiddleRowZ);
 
         //사망 검사
         if(transform.position.z <= RelavtiveLineHandler.instance.BottomRowZ){
             CombatManager.instance.Persuade(data.persuade);
             OnDeath();
+            return;
         }
+
+        if(ShouldAttack(lineEmpty)){
+            StartAttackLoop();
+        }
+        else{
+            StopAttackLoop();
+        }
+    }
+
+    private bool ShouldAttack(bool lineEmpty){
+        return data.rangeAttack && (data.attackWhileMoving
+            || (!isMoving && !lineEmpty));
     }
 
     protected async virtual UniTask AttackLoop(CancellationToken ct){
@@ -65,7 +84,10 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
                 continue;
             }
             await UniTask.Delay(TimeSpan.FromSeconds(1f / data.attackSpeed), cancellationToken: ct);
-            Shoot();
+            ct.ThrowIfCancellationRequested();
+            if(ShouldAttack(isLineEmpty(line))){
+                Shoot();
+            }
         }
     }
 

@@ -15,6 +15,8 @@ public class EnemyModel : ICloneable
     [SerializeField] public int zeroDEF;
     [SerializeField] public int infDEF;
     [SerializeField] public bool rangeAttack;
+    [SerializeField] public bool stopAtMiddle;
+    [SerializeField] public bool attackWhileMoving;
     [SerializeField] public float attackSpeed;
     [SerializeField] public int damage;
     [SerializeField] public int persuade;
