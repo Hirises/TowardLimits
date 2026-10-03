@@ -5,6 +5,13 @@ using UnityEngine;
 public class UnitGhost : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Color placementColor = new Color(0.4f, 1f, 0.4f, 0.65f);
+    [SerializeField] private Color swapColor = new Color(0.4f, 1f, 1f, 0.65f);
+    [SerializeField] private Color blockedColor = new Color(1f, 0.4f, 0.4f, 0.65f);
+
+    public void SetPlacementState(bool canPlace, bool isSwap){
+        spriteRenderer.color = !canPlace ? blockedColor : isSwap ? swapColor : placementColor;
+    }
 
     public void Setup(UnitData unit)
     {

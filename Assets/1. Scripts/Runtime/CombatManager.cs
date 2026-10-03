@@ -44,6 +44,8 @@ public class CombatManager : MonoBehaviour
     [SerializeField] public Image HoldIcon;
     [SerializeField] public float slotSnapDistance = 2;
     [SerializeField] public UnitGhost ghostUnit;
+    [SerializeField, Min(0)] private float screenSlotSnapDistance = 120f;
+    [SerializeField, Min(0)] private float screenSlotSwitchMargin = 12f;
 
     [Header("다음 웨이브 시작 전 경고 표시 시간")]
     [SerializeField] private float nextWaveWarningLeadTime = 5f;
@@ -83,6 +85,7 @@ public class CombatManager : MonoBehaviour
     private UnitBehavior draggedUnit;
     private UnitStatus draggedStatus;
     private UnitIcon draggedIcon;
+    private Slot dragTargetSlot;
 
     private enum DragMode {
         None,
@@ -418,6 +421,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
         currentDragMode = DragMode.InventoryPlacement;
+        dragTargetSlot = null;
         draggedIcon = icon;
         draggedStatus = status;
         draggedUnit = null;
@@ -435,6 +439,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
         currentDragMode = DragMode.FieldPlacement;
+        dragTargetSlot = null;
         draggedUnit = unit;
         draggedStatus = unit.status;
         draggedIcon = null;
@@ -470,8 +475,6 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(mainCanvas, Input.mousePosition, null, out var pos);
-        HoldIcon.rectTransform.anchoredPosition = pos;
         UpdateGhostUnitPosition();
         if(Input.GetMouseButtonUp(0)){
             FinishDrag();
@@ -483,11 +486,7 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        Canvas canvas = mainCanvas.GetComponent<Canvas>();
-        Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
-        Vector3 offset = HoldIcon.rectTransform.rect.center * 0.25f;
-        Vector2 pos = RectTransformUtility.WorldToScreenPoint(cam, HoldIcon.rectTransform.position + offset);
-        Slot slot = RaycastSlot(pos, GetDragSlotCondition());
+        Slot slot = dragTargetSlot;
 
         switch(currentDragMode){
             case DragMode.InventoryPlacement:
@@ -510,7 +509,18 @@ public class CombatManager : MonoBehaviour
             case DragMode.FieldPlacement:
                 if(draggedUnit != null){
                     draggedUnit.EndDrag();
-                    if(slot != null && slot == draggedUnit.slot){
+                    if(IsDraggingToInventory()){
+                        if(GameManager.instance.playerData.DT > 0){
+                            draggedUnit.OnDisplacement();
+                            GameManager.instance.playerData.units.Add(draggedUnit.status);
+                            draggedUnit.Remove();
+                            placementUIRoot.UpdateUnit();
+                            GameManager.instance.playerData.DT--;
+                            combatUIRoot.UpdateDT();
+                        }else{
+                            InsufficientDT();
+                        }
+                    }else if(slot != null && slot == draggedUnit.slot){
                         // 자기 자신 위치로 다시 놓기: 비용 없이 회수
                     }else if(slot != null && slot.unit == null){
                         if(GameManager.instance.playerData.DT > 0){
@@ -530,17 +540,8 @@ public class CombatManager : MonoBehaviour
                         targetUnit.OnPlacement(originalSlot);
                         GameManager.instance.playerData.DT -= 2;
                         combatUIRoot.UpdateDT();
-                    }else if(phase == Phase.Placement && placementUIRoot.IsInInventoryArea(Input.mousePosition)){
-                        if(GameManager.instance.playerData.DT > 0){
-                            draggedUnit.OnDisplacement();
-                            GameManager.instance.playerData.units.Add(draggedUnit.status);
-                            draggedUnit.Remove();
-                            placementUIRoot.UpdateUnit();
-                            GameManager.instance.playerData.DT--;
-                            combatUIRoot.UpdateDT();
-                        }else{
-                            InsufficientDT();
-                        }
+                    }else if(slot != null && slot.unit != null){
+                        InsufficientDT();
                     }
                 }
                 break;
@@ -571,7 +572,7 @@ public class CombatManager : MonoBehaviour
         }
 
         EndDrag();
-        Debug.Log($"EndDrag {slot} / {Input.mousePosition} {pos}");
+        Debug.Log($"EndDrag {slot} / {Input.mousePosition}");
     }
 
     public void EndDrag(){
@@ -592,6 +593,7 @@ public class CombatManager : MonoBehaviour
         draggedUnit = null;
         draggedStatus = null;
         draggedIcon = null;
+        dragTargetSlot = null;
         GameManager.instance.SetGameSpeed(combatUIRoot.GetGameSpeed());
     }
 
@@ -605,17 +607,23 @@ public class CombatManager : MonoBehaviour
     }
 
     private void UpdateGhostUnitPosition(){
+        Canvas canvas = mainCanvas.GetComponent<Canvas>();
+        Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle((RectTransform)HoldIcon.rectTransform.parent, Input.mousePosition, cam, out var iconPosition);
+        HoldIcon.rectTransform.position = iconPosition;
+        if(currentDragMode == DragMode.InventoryPlacement || currentDragMode == DragMode.FieldPlacement){
+            Rect rect = HoldIcon.rectTransform.rect;
+            Vector3 bottomCenter = HoldIcon.rectTransform.TransformPoint(new Vector3(rect.center.x, rect.yMin, 0));
+            Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(cam, bottomCenter);
+            dragTargetSlot = IsDraggingToInventory() ? null : SelectDragSlot(screenPoint, canvas.scaleFactor);
+        }
         if(ghostUnit == null || (currentDragMode != DragMode.InventoryPlacement && currentDragMode != DragMode.FieldPlacement) || !isDragging){
             HideGhostUnit();
             return;
         }
 
-        Canvas canvas = mainCanvas.GetComponent<Canvas>();
-        Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
-        Vector3 offset = HoldIcon.rectTransform.rect.center * 0.25f;
-        Vector2 pos = RectTransformUtility.WorldToScreenPoint(cam, HoldIcon.rectTransform.position + offset);
-        Slot slot = RaycastSlot(pos, GetDragSlotCondition());
-        if(slot != null && slot.unit == null){
+        Slot slot = dragTargetSlot;
+        if(slot != null){
             if(currentDragMode == DragMode.InventoryPlacement){
                 ghostUnit.Setup(draggedStatus);
             }else if(draggedUnit != null){
@@ -623,6 +631,11 @@ public class CombatManager : MonoBehaviour
             }
             ghostUnit.transform.position = slot.UnitPoint.transform.position;
             ghostUnit.transform.rotation = Quaternion.identity;
+            bool isSwap = currentDragMode == DragMode.FieldPlacement && slot.unit != null && slot != draggedUnit.slot;
+            bool canPlace = currentDragMode == DragMode.InventoryPlacement
+                ? slot.isEmpty && GameManager.instance.playerData.DT >= 1
+                : slot == draggedUnit.slot || GameManager.instance.playerData.DT >= (isSwap ? 2 : 1);
+            ghostUnit.SetPlacementState(canPlace, isSwap);
             ghostUnit.gameObject.SetActive(true);
         }else{
             HideGhostUnit();
@@ -640,20 +653,36 @@ public class CombatManager : MonoBehaviour
         return true;
     }
 
-    private bool EmptySlot(Slot slot)
-    {
-        return slot.isEmpty;
+    private bool IsDraggingToInventory(){
+        return currentDragMode == DragMode.FieldPlacement && phase == Phase.Placement && placementUIRoot.IsInInventoryArea(Input.mousePosition);
     }
 
-    private bool CanDropOnFieldSlot(Slot slot)
-    {
-        if(slot == null){
-            return false;
+    private Slot SelectDragSlot(Vector2 screenPoint, float canvasScale){
+        Camera camera = Camera.main;
+        Slot directSlot = null;
+        Slot nearestSlot = null;
+        float directDistance = float.PositiveInfinity;
+        float nearestDistance = screenSlotSnapDistance * canvasScale;
+        float previousDistance = float.PositiveInfinity;
+        foreach(Slot slot in slots){
+            Vector3 center = camera.WorldToScreenPoint(slot.transform.position);
+            if(center.z <= 0 || !camera.pixelRect.Contains(center)) continue;
+            float distance = Vector2.Distance(screenPoint, center);
+            if(slot.ContainsScreenPoint(camera, screenPoint) && distance < directDistance){
+                directSlot = slot;
+                directDistance = distance;
+            }
+            if(distance <= nearestDistance){
+                nearestSlot = slot;
+                nearestDistance = distance;
+            }
+            if(slot == dragTargetSlot) previousDistance = distance;
         }
-        if(draggedUnit == null){
-            return false;
+        if(directSlot != null) return directSlot;
+        if(previousDistance <= screenSlotSnapDistance * canvasScale && previousDistance <= nearestDistance + screenSlotSwitchMargin * canvasScale){
+            return dragTargetSlot;
         }
-        return slot == draggedUnit.slot || slot.isEmpty || slot.unit != null;
+        return nearestSlot;
     }
 
     public void InsufficientDT(){
@@ -864,16 +893,6 @@ public class CombatManager : MonoBehaviour
         phase = Phase.None;
         placementUIRoot.Hide();
         purchaseRoot.gameObject.SetActive(false);
-    }
-
-    private Func<Slot, bool> GetDragSlotCondition(){
-        if(currentDragMode == DragMode.FieldPlacement){
-            return CanDropOnFieldSlot;
-        }
-        if(currentDragMode == DragMode.InventoryPlacement){
-            return EmptySlot;
-        }
-        return AllSlot;
     }
 
     public bool IsIntegrable(UnitStatus status){

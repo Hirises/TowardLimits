@@ -138,6 +138,7 @@ MonoBehaviour:
   slotEmpty: {fileID: 7734151662076014441}
   slotOccupied: {fileID: 5856570847948490763}
   UnitPoint: {fileID: 3540417165379700157}
+  placementCollider: {fileID: 8642623064518845270}
   unit: {fileID: 0}
   DMG_buff: 0
   ATKSPD_buff: 0
