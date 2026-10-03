@@ -22,6 +22,7 @@ public class EnemyModel : ICloneable
     [SerializeField] public int rangeDamage;
     [SerializeField] public int persuade;
     [SerializeField] public float speed;
+    [SerializeField] public float bulletSpeed;
     [SerializeField] public Color color;
 
     [Header("Level up")]

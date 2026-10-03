@@ -25,9 +25,13 @@ public abstract class EnemyBehavior : LivingEntity
 
     protected abstract void OnSummon_Internal();
 
+    protected virtual float GetMovementSpeed(){
+        return isMoving ? data.GetSpeed() : 0f;
+    }
+
     public virtual void Shoot(){
         EnemyBulletBehaviour bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity, CombatManager.instance.enemyBulletRoot);
-        bullet.Shoot(data.GetSpeed(), data.GetRangeDamage());
+        bullet.Shoot(data.bulletSpeed + GetMovementSpeed(), data.GetRangeDamage());
     }
 
     public void OnDeath(){

@@ -24,6 +24,7 @@ MonoBehaviour:
     rangeDamage: 50
     persuade: 0
     speed: 15
+    bulletSpeed: 15
     color: {r: 0, g: 0.77258635, b: 1, a: 1}
     health_add: 50
     damage_add: 10

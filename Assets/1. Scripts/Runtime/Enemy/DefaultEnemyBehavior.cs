@@ -49,12 +49,10 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
 
     private void Update(){
         bool lineEmpty = isLineEmpty(line);
-        if(!data.stopAtMiddle || lineEmpty
-            || transform.position.z > RelavtiveLineHandler.instance.MiddleRowZ){
+        if(ShouldMove(lineEmpty)){
             transform.position -= Vector3.forward * data.GetSpeed() * Time.deltaTime;
         }
-        isMoving = !(data.stopAtMiddle && !lineEmpty
-            && transform.position.z <= RelavtiveLineHandler.instance.MiddleRowZ);
+        isMoving = ShouldMove(lineEmpty);
 
         //사망 검사
         if(transform.position.z <= RelavtiveLineHandler.instance.BottomRowZ){
@@ -69,6 +67,15 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
         else{
             StopAttackLoop();
         }
+    }
+
+    private bool ShouldMove(bool lineEmpty){
+        return !data.stopAtMiddle || lineEmpty
+            || transform.position.z > RelavtiveLineHandler.instance.MiddleRowZ;
+    }
+
+    protected override float GetMovementSpeed(){
+        return ShouldMove(isLineEmpty(line)) ? data.GetSpeed() : 0f;
     }
 
     private bool ShouldAttack(bool lineEmpty){
