@@ -369,6 +369,7 @@ public class CombatManager : MonoBehaviour
         if(GameManager.instance.playerData.stage == 1 && !GameManager.instance.playerData.units.Any(status => status.unitType == UnitType.UnitABS)){
             GameManager.instance.playerData.units.Add(UnitStatus.FromType(UnitType.UnitABS));
             await CutsceneManager.instance.PlayCutSceneAndWait($"Add_{UnitType.UnitABS}");
+            placementUIRoot.UpdateUnit();
         }
     }
 
