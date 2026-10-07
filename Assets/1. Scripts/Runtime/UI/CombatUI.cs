@@ -62,7 +62,7 @@ public class CombatUI : MonoBehaviour
 
     public void UpdateDT(){
         var DT = GameManager.instance.playerData.DT;
-        DT_Text.color = DT == 0 ? Color.red : Color.black;
+        DT_Text.color = DT == 0 ? Color.red : DT == 1 ? Color.yellow : Color.white;
         if (DT > 9000)
         {
             DT_Infinity.SetActive(true);
