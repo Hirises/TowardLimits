@@ -155,7 +155,7 @@
 | `zeroDEF` | `int` | Zero 타입 공격에 대한 방어력 |
 | `infDEF` | `int` | Infinite 타입 공격에 대한 방어력 |
 | `rangeAttack` | `bool` | 주기 공격 활성화 여부. 충돌 피해는 별도로 적용 |
-| `stopAtMiddle` | `bool` | 같은 라인에 유닛이 있으면 중앙선 도달 시 정지. 라인이 비면 전진 재개 |
+| `stopAtMiddle` | `bool` | 적 콜라이더의 좌우 범위에 라인 중심이 포함된 모든 라인을 검사. 하나라도 유닛이 있으면 중앙선 도달 시 정지하고, 해당 라인이 전부 비면 전진 재개 |
 | `attackWhileMoving` | `bool` | `true`이면 소환 즉시 첫 발사 후 이동·정지 및 라인 유닛 유무와 관계없이 반복 공격. `false`이면 정지 중에만 공격. `rangeAttack=true`일 때 적용 |
 | `attackSpeed` | `float` | 초당 발사 횟수. 0 이하에서는 발사 대기. 정지 전용 공격은 정지 후 한 주기 뒤 첫 발사 |
 | `damage` | `int` | 기본 충돌 피해량 |

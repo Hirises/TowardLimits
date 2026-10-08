@@ -97,6 +97,11 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3043533634467240903, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
   m_PrefabInstance: {fileID: 4240247319230058603}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &4001881431824483012 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 959807186691936943, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
+  m_PrefabInstance: {fileID: 4240247319230058603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5531318348509838061 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8510486921540397702, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
@@ -124,3 +129,4 @@ MonoBehaviour:
   bulletPrefab: {fileID: 0}
   bulletSpawnPoint: {fileID: 0}
   health: 0
+  bodyCollider: {fileID: 4001881431824483012}

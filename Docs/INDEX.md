@@ -11,4 +11,4 @@ Toward Limits는 함수 캐릭터와 미적분을 소재로 하는 Unity 게임�
 | 극곰의 칸 지정 낙하 눈덩이 공격 | [극곰 공격 패턴](planning/polar-bear-attacks.md) |
 | 기획·Slack 참조, 담당자, 합의 및 문서 작성·동기화 지속 지침 | [협업 및 작업 맥락](planning/work-context.md) |
 
-문서 기준일: 2026-10-07.
+문서 기준일: 2026-10-08.

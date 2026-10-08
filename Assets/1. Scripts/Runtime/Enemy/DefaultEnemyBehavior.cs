@@ -6,6 +6,7 @@ using UnityEngine;
 
 public abstract class DefaultEnemyBehavior : EnemyBehavior
 {
+    [SerializeField] private Collider bodyCollider;
     protected CancellationTokenSource attackLoop;
 
     protected override void OnSummon_Internal(){
@@ -36,19 +37,23 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
         }
     }
 
-    private bool isLineEmpty(int line)
+    private bool AreOccupiedLinesEmpty()
     {
-        for(int i = 0; i < CombatManager.instance.girdSize.x; i++){
-            if(CombatManager.instance.GetSlotAt(i, line)?.unit != null)
-            {
-                return false;
+        Bounds bounds = bodyCollider.bounds;
+        for(int column = 0; column < CombatManager.instance.girdSize.y; column++){
+            float x = RelavtiveLineHandler.instance.ColumnX(column);
+            if(x < bounds.min.x || x > bounds.max.x) continue;
+            for(int row = 0; row < CombatManager.instance.girdSize.x; row++){
+                if(CombatManager.instance.GetSlotAt(row, column).unit != null){
+                    return false;
+                }
             }
         }
         return true;
     }
 
     private void Update(){
-        bool lineEmpty = isLineEmpty(line);
+        bool lineEmpty = AreOccupiedLinesEmpty();
         if(ShouldMove(lineEmpty)){
             transform.position -= Vector3.forward * data.GetSpeed() * Time.deltaTime;
         }
@@ -75,7 +80,7 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
     }
 
     protected override float GetMovementSpeed(){
-        return ShouldMove(isLineEmpty(line)) ? data.GetSpeed() : 0f;
+        return ShouldMove(AreOccupiedLinesEmpty()) ? data.GetSpeed() : 0f;
     }
 
     private bool ShouldAttack(bool lineEmpty){
@@ -92,7 +97,7 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
             }
             await UniTask.Delay(TimeSpan.FromSeconds(1f / data.attackSpeed), cancellationToken: ct);
             ct.ThrowIfCancellationRequested();
-            if(ShouldAttack(isLineEmpty(line))){
+            if(ShouldAttack(AreOccupiedLinesEmpty())){
                 Shoot();
             }
         }
