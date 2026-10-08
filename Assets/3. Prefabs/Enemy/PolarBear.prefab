@@ -175,3 +175,5 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3538239530160237198, guid: 2e95f61f4aa21144ebb58bd1f621bef6, type: 3}
   bulletSpawnPoint: {fileID: 6139068482379038875}
   health: 0
+  snowballStrikePrefab: {fileID: 2286581761959798938, guid: 917bb51713d3f6746ab16a14eeef0792, type: 3}
+  attacksPerStrike: 3
