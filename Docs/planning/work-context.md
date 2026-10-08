@@ -4,7 +4,7 @@
 
 ## 자료 위치와 용어
 
-- [Toward Limits 기획](https://app.notion.com/p/04a1a56a23cd8291bc6c81f6ee89e212): 캐릭터 기획, 시스템 기획, 대사/지문, 구현용 메모, 회의록과 브레인스토밍의 상위 페이지.
+- [Toward Limits 기획](https://app.notion.com/p/2b26fe07699b806d9218e07e3028a27d): 캐릭터 기획, 시스템 기획, 대사/지문, 구현용 메모, 회의록과 브레인스토밍의 상위 페이지.
 - [Notion TODO List](https://app.notion.com/p/3ee1a56a23cd808aa130fc1f72aae22a): 9/30 회의 기반 조의준 작업 8개를 체크박스로 등록한 페이지.
 - [Slack #project_towardlimits](https://haje.slack.com/archives/C09UA5374KH): HAJE 워크스페이스의 프로젝트 채널.
 - 사용자 본인의 Slack 이름은 **hirises**, 이름은 **조의준**이다. 사용자 확인에 근거한다.
@@ -17,7 +17,7 @@
 
 - Override Data의 필드명·타입·계산식·예제는 실제 직렬화 모델과 항상 정확히 일치시킨다. 필드 추가·이름 변경·삭제·동작 변경을 수행하는 같은 작업에서 기본 에셋, 관련 JSON 예제, 로컬 가이드와 Notion 가이드를 함께 갱신하고 구현과 대조해 검증한다. 부분 오버라이드 JSON은 필요한 필드만 포함할 수 있으며, 생략 필드의 병합 동작도 정확히 안내한다. 2026-10-03 사용자의 지속 요청이다.
 
-- JSON Override Data 관련 변경 시 로컬 [Override Data 가이드](../OverrideData_Format.md)와 프로젝트 Notion의 [외부 데이터 수정 방법](https://app.notion.com/p/1931a56a23cd83d682990158f06b170c) 페이지를 함께 업데이트한다. 필드명·타입·동작·예제 및 호환성 안내를 실제 구현과 일치시킨다. 사용자 요청에 따른 지속 지침이며, Notion 페이지를 수정할 수 없는 경우 미반영 사항을 사용자에게 알린다.
+- JSON Override Data 관련 변경 시 로컬 [Override Data 가이드](../OverrideData_Format.md)와 프로젝트 Notion의 [외부 데이터 수정 방법](https://app.notion.com/p/32e6fe07699b80ea9a3fd2f47ae44d41) 페이지를 함께 업데이트한다. 필드명·타입·동작·예제 및 호환성 안내를 실제 구현과 일치시킨다. 사용자 요청에 따른 지속 지침이며, Notion 페이지를 수정할 수 없는 경우 미반영 사항을 사용자에게 알린다.
 
 ## 2026-09-30 회의 작업
 
