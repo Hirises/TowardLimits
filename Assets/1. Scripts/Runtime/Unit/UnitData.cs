@@ -22,8 +22,8 @@ public class UnitData : ScriptableObject
     public CalculusResultElement[] derivativeTo => unitModel.derivativeTo;
     public CalculusResultElement[] integralTo => unitModel.integralTo;
 
-    public float ATKSPD_buff => unitModel.ATKSPD_buff;
-    public int DMG_buff => unitModel.DMG_buff;
-    public float damageRatio => unitModel.damageRatio;
-    public int attackCount => unitModel.attackCount;
+    public float unit_c_ATKSPD_buff => unitModel.unit_c_ATKSPD_buff;
+    public int unit_c_DMG_buff => unitModel.unit_c_DMG_buff;
+    public float unit_x2_damageRatio => unitModel.unit_x2_damageRatio;
+    public int unit_x3_attackCount => unitModel.unit_x3_attackCount;
 }

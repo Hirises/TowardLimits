@@ -72,12 +72,14 @@
     { "unitType": 2, "probability": 0.5, "amount": 1 }
   ],
 
-  "ATKSPD_buff": 0.0,
-  "DMG_buff": 0,
-  "damageRatio": 0.5,
-  "skillDamage": 40,
-  "skillBulletSpeed": 15.0,
-  "attackCount": 3
+  "unit_c_ATKSPD_buff": 0.0,
+  "unit_c_DMG_buff": 0,
+  "unit_c_buffDuration": 3.0,
+  "unit_x2_damageRatio": 0.5,
+  "unit_x2_skillDamage": 40,
+  "unit_x2_skillBulletSpeed": 15.0,
+  "unit_x3_attackCount": 3,
+  "unit_abs_healAmount": 10
 }
 ```
 
@@ -94,12 +96,16 @@
 | `bulletSpeed` | `float` | `15.0` | 투사체 속도 |
 | `derivativeTo` | `CalculusResultElement[]` | — | 미분 시 결과 유닛 목록 |
 | `integralTo` | `CalculusResultElement[]` | — | 적분 시 결과 유닛 목록 |
-| `ATKSPD_buff` | `float` | `0.0` | 공격속도 버프 (UnitC 전용; 합연산) |
-| `DMG_buff` | `int` | `0` | 데미지 버프 (UnitC 전용; 합연산) |
-| `damageRatio` | `float` | `0.5` | 보조 탄막 피해 비율 (UnitX2 전용) |
-| `skillDamage` | `int` | `40` | 스킬 탄환 피해량 (UnitX2 전용; 계수·일반 공격 버프와 독립) |
-| `skillBulletSpeed` | `float` | `15.0` | 스킬 탄환 속도 (UnitX2 전용; 일반 탄속·탄속 버프와 독립) |
-| `attackCount` | `int` | `3` | 관통 횟수 (UnitX3 전용) |
+| `unit_c_ATKSPD_buff` | `float` | `0.0` | 공격속도 버프 (UnitC 전용; 합연산) |
+| `unit_c_DMG_buff` | `int` | `0` | 데미지 버프 (UnitC 전용; 합연산) |
+| `unit_c_buffDuration` | `float` | `3.0` | 버프 지속시간 (UnitC 전용; 초) |
+| `unit_x2_damageRatio` | `float` | `0.5` | 보조 탄막 피해 비율 (UnitX2 전용) |
+| `unit_x2_skillDamage` | `int` | `40` | 스킬 탄환 피해량 (UnitX2 전용; 계수·일반 공격 버프와 독립) |
+| `unit_x2_skillBulletSpeed` | `float` | `15.0` | 스킬 탄환 속도 (UnitX2 전용; 일반 탄속·탄속 버프와 독립) |
+| `unit_x3_attackCount` | `int` | `3` | 관통 횟수 (UnitX3 전용) |
+| `unit_abs_healAmount` | `int` | `10` | 아군 회복량 (UnitABS 전용) |
+
+유닛 전용 필드는 `unit_c_`, `unit_x2_`, `unit_x3_`, `unit_abs_` 접두사를 사용합니다. 외부 JSON의 기존 전용 필드 키도 표의 새 이름으로 변경하여 사용합니다. 새 필드명은 이 정의가 포함된 빌드에서 지원됩니다.
 
 #### CalculusResultElement
 

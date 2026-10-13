@@ -18,7 +18,7 @@ public class UnitABS : DefaultUnitBehavior
         vfx.StartSkillLoopVFX();
         for(int i = 0; i < 3; i++)
         {
-            CombatManager.instance.GetSlotAt(slot.position.x + i, slot.position.y)?.unit?.Heal(status.model.healAmount);
+            CombatManager.instance.GetSlotAt(slot.position.x + i, slot.position.y)?.unit?.Heal(status.model.unit_abs_healAmount);
         }
         for(int i = 0; i < status.level; i++){
             vfx.ShowAttackSkillCount(i + 1);

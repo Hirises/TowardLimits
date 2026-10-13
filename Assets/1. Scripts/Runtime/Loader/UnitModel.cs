@@ -1,6 +1,7 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class UnitModel : ICloneable
@@ -34,20 +35,28 @@ public class UnitModel : ICloneable
     public CalculusResultElement[] integralTo;
 
     [Header("UnitC")]
-    public float ATKSPD_buff = 0;
-    public int DMG_buff = 0;
-    public float buffDuration = 3;
+    [FormerlySerializedAs("ATKSPD_buff")]
+    public float unit_c_ATKSPD_buff = 0;
+    [FormerlySerializedAs("DMG_buff")]
+    public int unit_c_DMG_buff = 0;
+    [FormerlySerializedAs("buffDuration")]
+    public float unit_c_buffDuration = 3;
 
     [Header("UnitX2")]
-    public float damageRatio = 0.5f;
-    [Min(0)] public int skillDamage = 40;
-    [Min(0.01f)] public float skillBulletSpeed = 15;
+    [FormerlySerializedAs("damageRatio")]
+    public float unit_x2_damageRatio = 0.5f;
+    [FormerlySerializedAs("skillDamage")]
+    [Min(0)] public int unit_x2_skillDamage = 40;
+    [FormerlySerializedAs("skillBulletSpeed")]
+    [Min(0.01f)] public float unit_x2_skillBulletSpeed = 15;
 
     [Header("UnitX3")]
-    public int attackCount = 3;
+    [FormerlySerializedAs("attackCount")]
+    public int unit_x3_attackCount = 3;
 
     [Header("UnitABS")]
-    public int healAmount = 10;
+    [FormerlySerializedAs("healAmount")]
+    public int unit_abs_healAmount = 10;
 
     public object Clone()
     {

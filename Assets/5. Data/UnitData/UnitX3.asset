@@ -36,9 +36,9 @@ MonoBehaviour:
       probability: 1
       amount: 1
     integralTo: []
-    ATKSPD_buff: 0
-    DMG_buff: 0
-    buffDuration: 3
-    damageRatio: 0.5
-    attackCount: 3
-    healAmount: 10
+    unit_c_ATKSPD_buff: 0
+    unit_c_DMG_buff: 0
+    unit_c_buffDuration: 3
+    unit_x2_damageRatio: 0.5
+    unit_x3_attackCount: 3
+    unit_abs_healAmount: 10

@@ -34,16 +34,16 @@ public class UnitC : UnitBehavior
         if(slot == null){
             return;
         }
-        slot.DMG_buff += status.model.DMG_buff;
-        slot.ATKSPD_buff += status.model.ATKSPD_buff;
+        slot.DMG_buff += status.model.unit_c_DMG_buff;
+        slot.ATKSPD_buff += status.model.unit_c_ATKSPD_buff;
     }
 
     private void RemoveBuffAt(Slot slot){
         if(slot == null){
             return;
         }
-        slot.DMG_buff -= status.model.DMG_buff;
-        slot.ATKSPD_buff -= status.model.ATKSPD_buff;
+        slot.DMG_buff -= status.model.unit_c_DMG_buff;
+        slot.ATKSPD_buff -= status.model.unit_c_ATKSPD_buff;
     }
 
     protected override void PerformSkill_Internal(){
@@ -54,7 +54,7 @@ public class UnitC : UnitBehavior
     private async UniTask SkillLoop(CancellationToken ct){
         vfx.StartSkillLoopVFX();
         ApplyBuff();
-        await UniTask.Delay(TimeSpan.FromSeconds(status.model.buffDuration), cancellationToken: ct);
+        await UniTask.Delay(TimeSpan.FromSeconds(status.model.unit_c_buffDuration), cancellationToken: ct);
         RemoveBuff();
         vfx.StopSkillLoopVFX();
     }

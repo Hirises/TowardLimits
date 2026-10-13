@@ -21,8 +21,8 @@ public class UnitX2 : DefaultUnitBehavior
     {
         ShootBullet(slot.position.y);
         await UniTask.Delay(TimeSpan.FromSeconds(0.05f), cancellationToken: this.GetCancellationTokenOnDestroy());
-        if(slot.position.y + 1 < CombatManager.instance.girdSize.y) ShootBullet(slot.position.y + 1, status.model.damageRatio, 0.7f);
-        if(slot.position.y - 1 >= 0) ShootBullet(slot.position.y - 1, status.model.damageRatio, 0.7f);
+        if(slot.position.y + 1 < CombatManager.instance.girdSize.y) ShootBullet(slot.position.y + 1, status.model.unit_x2_damageRatio, 0.7f);
+        if(slot.position.y - 1 >= 0) ShootBullet(slot.position.y - 1, status.model.unit_x2_damageRatio, 0.7f);
     }
 
     protected override UniTask SkillLoop(CancellationToken ct){
@@ -37,8 +37,8 @@ public class UnitX2 : DefaultUnitBehavior
         bullet.Shoot(new BulletData()
         {
             distance = status.model.attackRange,
-            speed = status.model.skillBulletSpeed,
-            damage = status.model.skillDamage,
+            speed = status.model.unit_x2_skillBulletSpeed,
+            damage = status.model.unit_x2_skillDamage,
             damageType = status.model.attackType
         });
         return UniTask.CompletedTask;
