@@ -43,5 +43,7 @@ MonoBehaviour:
     DMG_buff: 0
     buffDuration: 3
     damageRatio: 0.5
+    skillDamage: 40
+    skillBulletSpeed: 15
     attackCount: 3
     healAmount: 10

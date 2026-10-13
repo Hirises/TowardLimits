@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class DefaultUnitBehavior : UnitBehavior
 {
     [SerializeField] private BulletBehavior bulletPrefab;
-    [SerializeField] private Transform bulletSpawnPoint;
+    [SerializeField] protected Transform bulletSpawnPoint;
 
     private CancellationTokenSource mainLoop;
     private CancellationTokenSource skillLoop;

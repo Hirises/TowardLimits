@@ -96,6 +96,7 @@ MonoBehaviour:
   slot: {fileID: 0}
   bulletPrefab: {fileID: 9035475089160772872, guid: f016d348b967bcb489cfd7127b3c3df2, type: 3}
   bulletSpawnPoint: {fileID: 2698420123833964567}
+  skillBulletPrefab: {fileID: 3947548325249544373, guid: 127c236ce70bdc8409099c7575f128db, type: 3}
 --- !u!212 &8468542393031747098 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3043533634467240903, guid: c158ea06cbb8fde4f9fe1c137c4893c7, type: 3}

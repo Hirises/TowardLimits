@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class UnitX2 : DefaultUnitBehavior
 {
+    [SerializeField] private BulletX2Behavior skillBulletPrefab;
+
     public override UnitType unitType => UnitType.UnitX2;
 
     public override void OnShoot()
@@ -23,14 +25,22 @@ public class UnitX2 : DefaultUnitBehavior
         if(slot.position.y - 1 >= 0) ShootBullet(slot.position.y - 1, status.model.damageRatio, 0.7f);
     }
 
-    protected override async UniTask SkillLoop(CancellationToken ct){
-        //계수만큼 추가 발사
-        vfx.StartSkillLoopVFX();
-        for(int i = 0; i < status.level; i++){
-            vfx.ShowAttackSkillCount(i + 1);
-            OnShoot();
-            await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
-        }
-        vfx.StopSkillLoopVFX();
+    protected override UniTask SkillLoop(CancellationToken ct){
+        ct.ThrowIfCancellationRequested();
+        int column = slot.position.y;
+        float centerX = RelavtiveLineHandler.instance.ColumnX(column);
+        Vector3 position = new Vector3(centerX, bulletSpawnPoint.position.y, bulletSpawnPoint.position.z);
+        BulletX2Behavior bullet = Instantiate(skillBulletPrefab, position, Quaternion.identity, CombatManager.instance.bulletRoot);
+        float? leftOffset = column > 0 ? RelavtiveLineHandler.instance.ColumnX(column - 1) - centerX : (float?)null;
+        float? rightOffset = column + 1 < CombatManager.instance.girdSize.y ? RelavtiveLineHandler.instance.ColumnX(column + 1) - centerX : (float?)null;
+        bullet.ConfigureLines(leftOffset, rightOffset);
+        bullet.Shoot(new BulletData()
+        {
+            distance = status.model.attackRange,
+            speed = status.model.skillBulletSpeed,
+            damage = status.model.skillDamage,
+            damageType = status.model.attackType
+        });
+        return UniTask.CompletedTask;
     }
 }

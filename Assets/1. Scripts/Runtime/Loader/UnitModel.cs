@@ -40,6 +40,8 @@ public class UnitModel : ICloneable
 
     [Header("UnitX2")]
     public float damageRatio = 0.5f;
+    [Min(0)] public int skillDamage = 40;
+    [Min(0.01f)] public float skillBulletSpeed = 15;
 
     [Header("UnitX3")]
     public int attackCount = 3;

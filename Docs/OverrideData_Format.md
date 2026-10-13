@@ -75,6 +75,8 @@
   "ATKSPD_buff": 0.0,
   "DMG_buff": 0,
   "damageRatio": 0.5,
+  "skillDamage": 40,
+  "skillBulletSpeed": 15.0,
   "attackCount": 3
 }
 ```
@@ -95,6 +97,8 @@
 | `ATKSPD_buff` | `float` | `0.0` | 공격속도 버프 (UnitC 전용; 합연산) |
 | `DMG_buff` | `int` | `0` | 데미지 버프 (UnitC 전용; 합연산) |
 | `damageRatio` | `float` | `0.5` | 보조 탄막 피해 비율 (UnitX2 전용) |
+| `skillDamage` | `int` | `40` | 스킬 탄환 피해량 (UnitX2 전용; 계수·일반 공격 버프와 독립) |
+| `skillBulletSpeed` | `float` | `15.0` | 스킬 탄환 속도 (UnitX2 전용; 일반 탄속·탄속 버프와 독립) |
 | `attackCount` | `int` | `3` | 관통 횟수 (UnitX3 전용) |
 
 #### CalculusResultElement
