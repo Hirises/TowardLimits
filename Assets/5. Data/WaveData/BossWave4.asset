@@ -16,6 +16,7 @@ MonoBehaviour:
   stageRange: {x: 4, y: 4}
   difficulty: {x: 0, y: 99}
   forFinalBoss: 1
+  duration: 0
   enemyList:
   - lane: 0
     emitOnce: 0
@@ -71,6 +72,6 @@ MonoBehaviour:
     startTime: 10
     count: 1
     interval: 1
-    enemyType_enum: 4
-    enemyType: PolarBear
+    enemyType_enum: 6
+    enemyType: CaptainPolarBear
   filePath: BossWave4

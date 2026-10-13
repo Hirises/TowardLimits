@@ -181,5 +181,3 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 6139068482379038875}
   health: 0
   bodyCollider: {fileID: 4001881431824483012}
-  snowballStrikePrefab: {fileID: 2286581761959798938, guid: 917bb51713d3f6746ab16a14eeef0792, type: 3}
-  attacksPerStrike: 3

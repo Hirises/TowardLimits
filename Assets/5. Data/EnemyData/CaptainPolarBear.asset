@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828703e3c95224f4b927e2665c564fbf, type: 3}
+  m_Name: CaptainPolarBear
+  m_EditorClassIdentifier: 
+  enemyModel:
+    enemyType: 6
+    enemyBehavior: {fileID: 3525790845598792768, guid: ba34c9c82860a2a4dbd57f994478a129, type: 3}
+    health: 5000
+    zeroDEF: 0
+    infDEF: 0
+    rangeAttack: 1
+    stopAtMiddle: 1
+    attackWhileMoving: 0
+    attackSpeed: 1
+    damage: 50
+    rangeDamage: 50
+    persuade: 30
+    speed: 6
+    bulletSpeed: 6
+    color: {r: 1, g: 0, b: 0, a: 1}
+    health_add: 2000
+    damage_add: 10
+    rangeDamage_add: 10
+    speed_add: 0.5

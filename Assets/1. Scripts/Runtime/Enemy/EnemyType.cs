@@ -8,4 +8,5 @@ public enum EnemyType
     EIRPurple,
     PolarBear,
     Snowball,
+    CaptainPolarBear,
 }

@@ -298,6 +298,7 @@ Stage 데이터는 두 가지 오버라이드 경로를 가집니다. **우선�
 | 3 | `EIRPurple` |
 | 4 | `PolarBear` |
 | 5 | `Snowball` |
+| 6 | `CaptainPolarBear` |
 
 ### Polar
 

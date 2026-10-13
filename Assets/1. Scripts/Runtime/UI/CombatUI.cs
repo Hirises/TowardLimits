@@ -49,7 +49,7 @@ public class CombatUI : MonoBehaviour
     public void GenerateWarningMark(WaveModel waveChart){
         for(int column = 0; column < CombatManager.instance.girdSize.y; column++){
             foreach(EnemyType enemyType in waveChart.commonEnemyTypes[column]){
-                if(enemyType == EnemyType.PolarBear){
+                if(enemyType == EnemyType.PolarBear || enemyType == EnemyType.CaptainPolarBear){
                     Image warningMark = Instantiate(BossWarningMarkPrefab, WarningMarkRoot[column].transform);
                     warningMark.color = enemyType.GetEnemyModel().color;
                 }else{
