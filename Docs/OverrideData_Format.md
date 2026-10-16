@@ -140,16 +140,19 @@
   "health": 50,
   "zeroDEF": 0,
   "infDEF": 0,
+  "damage": 10,
+  "persuade": 5,
+  "speed": 2.0,
+  "color": { "r": 1.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+
   "rangeAttack": false,
   "stopAtMiddle": false,
   "attackWhileMoving": false,
   "attackSpeed": 1.0,
-  "damage": 10,
   "rangeDamage": 10,
-  "persuade": 5,
-  "speed": 2.0,
   "bulletSpeed": 2.0,
-  "color": { "r": 1.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+
+  "enemy_polarbear_snowballType": 7,
 
   "health_add": 5,
   "damage_add": 2,
@@ -164,16 +167,17 @@
 | `health` | `int` | 기본 체력 |
 | `zeroDEF` | `int` | Zero 타입 공격에 대한 방어력 |
 | `infDEF` | `int` | Infinite 타입 공격에 대한 방어력 |
+| `damage` | `int` | 기본 충돌 피해량 |
+| `persuade` | `int` | 설득 수치 |
+| `speed` | `float` | 기본 이동 속도 |
+| `color` | `Color` | RGBA 색상, 0.0~1.0 |
 | `rangeAttack` | `bool` | 주기 공격 활성화 여부. 충돌 피해는 별도로 적용 |
 | `stopAtMiddle` | `bool` | 적 콜라이더의 좌우 범위에 라인 중심이 포함된 모든 라인을 검사. 하나라도 유닛이 있으면 중앙선 도달 시 정지하고, 해당 라인이 전부 비면 전진 재개 |
 | `attackWhileMoving` | `bool` | `true`이면 소환 즉시 첫 발사 후 이동·정지 및 라인 유닛 유무와 관계없이 반복 공격. `false`이면 정지 중에만 공격. `rangeAttack=true`일 때 적용 |
 | `attackSpeed` | `float` | 초당 발사 횟수. 0 이하에서는 발사 대기. 정지 전용 공격은 정지 후 한 주기 뒤 첫 발사 |
-| `damage` | `int` | 기본 충돌 피해량 |
 | `rangeDamage` | `int` | 기본 원거리 투사체 피해량 |
-| `persuade` | `int` | 설득 수치 |
-| `speed` | `float` | 기본 이동 속도 |
 | `bulletSpeed` | `float` | 일반 탄환 자체 속도. 발사 시 적 이동 속도를 가산(정지 시 0). 스테이지 증가 없음. 극곰 눈덩이 제외 |
-| `color` | `Color` | RGBA 색상, 0.0~1.0 |
+| `enemy_polarbear_snowballType` | `int` | 일반 극곰 전용 소환 눈덩이: `5` = 기존 1라인 `Snowball`, `7` = 2라인 `Snowball2Line` |
 | `health_add` | `int` | 스테이지당 체력 증가량 |
 | `damage_add` | `int` | 스테이지당 충돌 피해 증가량 |
 | `rangeDamage_add` | `int` | 스테이지당 원거리 투사체 피해 증가량 |
@@ -182,6 +186,18 @@
 > **실제 적용값**: `health + health_add × stage`, 충돌 피해 `damage + damage_add × stage`, 원거리 피해 `rangeDamage + rangeDamage_add × stage`, `speed + speed_add × stage`
 >
 > `enemyBehavior`는 Unity 에셋 참조이므로 JSON으로 오버라이드할 수 없습니다.
+
+적 전용 필드는 `enemy_적이름_` 접두사를 사용하며 적 이름은 소문자로 작성합니다. 일반 극곰은 `enemy_polarbear_`를 사용합니다. `PolarBear.json`에서 `enemy_polarbear_snowballType`을 생략하면 기본 2라인 눈덩이를 소환합니다. 눈덩이 능력치는 `Snowball.json`과 `Snowball2Line.json`에서 각각 설정합니다. 이 필드와 새 적 타입은 해당 정의가 포함된 빌드에서 지원됩니다.
+
+### 일반 극곰 눈덩이 설정 예시
+
+`OverrideData/Enemy/PolarBear.json`
+
+```json
+{
+  "enemy_polarbear_snowballType": 7
+}
+```
 
 ---
 
@@ -309,6 +325,7 @@ Stage 데이터는 두 가지 오버라이드 경로를 가집니다. **우선�
 | 4 | `PolarBear` |
 | 5 | `Snowball` |
 | 6 | `CaptainPolarBear` |
+| 7 | `Snowball2Line` |
 
 ### Polar
 

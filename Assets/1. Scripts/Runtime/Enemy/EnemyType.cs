@@ -9,4 +9,5 @@ public enum EnemyType
     PolarBear,
     Snowball,
     CaptainPolarBear,
+    Snowball2Line,
 }

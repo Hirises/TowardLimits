@@ -25,6 +25,9 @@ public class EnemyModel : ICloneable
     [SerializeField] public float bulletSpeed;
     [SerializeField] public Color color;
 
+    [Header("PolarBear")]
+    public EnemyType enemy_polarbear_snowballType = EnemyType.Snowball2Line;
+
     [Header("Level up")]
     [SerializeField] public int health_add;
     [SerializeField] public int damage_add;
