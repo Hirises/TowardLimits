@@ -5,10 +5,12 @@ public class EnemyBulletBehaviour : MonoBehaviour
 {
     protected float speed;
     protected int damage;
+    private int remainingCancelCount;
 
-    public virtual void Shoot(float speed, int damage){
+    public virtual void Shoot(float speed, int damage, int cancelCount){
         this.speed = speed;
         this.damage = damage;
+        remainingCancelCount = Mathf.Max(1, cancelCount);
     }
 
     private void Update(){
@@ -19,13 +21,27 @@ public class EnemyBulletBehaviour : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        Debug.Log($"EnemyBullet hit {other.gameObject.name}");
+        if(!gameObject.activeInHierarchy || !other.gameObject.activeInHierarchy) return;
+        if(other.gameObject.layer == LayerMask.NameToLayer("Unit_Bullet")){
+            BulletBehavior bullet = other.GetComponentInParent<BulletBehavior>();
+            if(bullet.TryCancel()){
+                remainingCancelCount--;
+                if(remainingCancelCount <= 0){
+                    gameObject.SetActive(false);
+                    Destroy(gameObject);
+                }
+            }
+            return;
+        }
         if(other.gameObject.layer == LayerMask.NameToLayer("Unit")){
             OnHitUnit(other.gameObject.GetComponentInParent<UnitBehavior>());
         }
     }
 
     public virtual void OnHitUnit(UnitBehavior unit){
+        if(!gameObject.activeInHierarchy) return;
+        gameObject.SetActive(false);
         unit.TakeDamage(damage, DamageType.None);
+        Destroy(gameObject);
     }
 }

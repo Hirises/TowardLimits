@@ -7,6 +7,7 @@ Toward Limits는 함수 캐릭터와 미적분을 소재로 하는 Unity 게임�
 | 필요한 정보 | 문서 |
 |---|---|
 | 외부 JSON 데이터 형식 | [Override Data 가이드](OverrideData_Format.md) |
+| 일반 적 탄환과 아군 탄환의 상쇄 횟수 `cancel_count` | [Override Data 가이드](OverrideData_Format.md#3-enemy-data) |
 | 컷씬 SO 유형별 카드 편집, 접이식 미리보기와 외부 신호 대기 설정 | [컷씬 편집기](editor/cutscene-editor.md) |
 | 유닛 전용 필드의 유닛명 접두사 규칙 | [Override Data 가이드](OverrideData_Format.md#2-unit-data) |
 | Override Data 문서·관련 Notion의 JSON 필드 역할별 정렬 규칙 | [협업 및 작업 맥락](planning/work-context.md#문서-동기화-지침) |

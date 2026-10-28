@@ -23,6 +23,7 @@ public class EnemyModel : ICloneable
     [SerializeField] public int persuade;
     [SerializeField] public float speed;
     [SerializeField] public float bulletSpeed;
+    [Min(1)] public int cancel_count = 1;
     [SerializeField] public Color color;
 
     [Header("PolarBear")]

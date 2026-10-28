@@ -24,6 +24,7 @@ MonoBehaviour:
     persuade: 5
     speed: 15
     bulletSpeed: 15
+    cancel_count: 1
     color: {r: 0.85660374, g: 0.85660374, b: 0.85660374, a: 1}
     health_add: 10
     damage_add: 2

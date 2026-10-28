@@ -10,10 +10,11 @@ public class BulletX3Behavior : BulletBehavior
     }
 
     public override void OnHitEnemy(EnemyBehavior enemy){
+        if(!gameObject.activeInHierarchy) return;
         enemy.TakeDamage(damage, DamageType.None);
         count--;
         if(count <= 0){
-            Destroy(gameObject);
+            TryCancel();
         }
     }
 }

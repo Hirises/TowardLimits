@@ -31,7 +31,7 @@ public abstract class EnemyBehavior : LivingEntity
 
     public virtual void Shoot(){
         EnemyBulletBehaviour bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity, CombatManager.instance.enemyBulletRoot);
-        bullet.Shoot(data.bulletSpeed + GetMovementSpeed(), data.GetRangeDamage());
+        bullet.Shoot(data.bulletSpeed + GetMovementSpeed(), data.GetRangeDamage(), data.cancel_count);
     }
 
     public void OnDeath(){

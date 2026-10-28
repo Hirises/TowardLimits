@@ -27,14 +27,24 @@ public class BulletBehavior : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
+        if(!gameObject.activeInHierarchy) return;
         if(other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
             OnHitEnemy(other.gameObject.GetComponentInParent<EnemyBehavior>());
         }
     }
 
     public virtual void OnHitEnemy(EnemyBehavior enemy){
+        if(!gameObject.activeInHierarchy) return;
+        TryCancel();
         enemy.TakeDamage(damage, damageType);
+    }
+
+    public bool TryCancel(){
+        if(!gameObject.activeInHierarchy) return false;
+        // Destroy는 프레임 끝에 적용되므로 다중 콜라이더의 남은 충돌을 즉시 차단한다.
+        gameObject.SetActive(false);
         Destroy(gameObject);
+        return true;
     }
 }
 

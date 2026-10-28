@@ -27,6 +27,7 @@ MonoBehaviour:
     persuade: 30
     speed: 6
     bulletSpeed: 6
+    cancel_count: 1
     color: {r: 1, g: 0, b: 0, a: 1}
     enemy_polarbear_snowballType: 5
     enemy_captainpolarbear_throwInterval: 1

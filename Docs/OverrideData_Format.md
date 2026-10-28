@@ -151,6 +151,7 @@
   "attackSpeed": 1.0,
   "rangeDamage": 10,
   "bulletSpeed": 2.0,
+  "cancel_count": 1,
 
   "enemy_polarbear_snowballType": 5,
 
@@ -181,6 +182,7 @@
 | `attackSpeed` | `float` | 초당 발사 횟수. 0 이하에서는 발사 대기. 정지 전용 공격은 정지 후 한 주기 뒤 첫 발사 |
 | `rangeDamage` | `int` | 기본 원거리 투사체 피해량 |
 | `bulletSpeed` | `float` | 일반 탄환 자체 속도. 발사 시 적 이동 속도를 가산(정지 시 0). 스테이지 증가 없음. 극곰 눈덩이 제외 |
+| `cancel_count` | `int` | 일반 적 탄환이 상쇄되기까지 필요한 아군 탄환 명중 수(최소 1, 0 이하는 1로 적용). 명중한 아군 탄환은 매번 소멸하며, 아군 직접 명중 시 남은 횟수와 관계없이 원래 피해를 주고 소멸. 극곰 눈덩이는 기존 적 체력 판정 사용. 생략하면 해당 적 기본값 유지 |
 | `enemy_polarbear_snowballType` | `int` | 일반 극곰 전용 소환 눈덩이: `5` = 기존 1라인 `Snowball`, `7` = 2라인 `Snowball2Line` |
 | `enemy_captainpolarbear_throwInterval` | `float` | 대장 극곰 전용 던지기 주기(게임 시간 기준 초). 0 이하이면 던지기 대기. 공격 시작 후 한 주기 뒤 첫 던지기 |
 | `enemy_captainpolarbear_throwDamage` | `int` | 던진 눈덩이 1개당 착지 피해. `rangeDamage`·`rangeDamage_add`와 독립된 고정값 |
