@@ -152,7 +152,11 @@
   "rangeDamage": 10,
   "bulletSpeed": 2.0,
 
-  "enemy_polarbear_snowballType": 7,
+  "enemy_polarbear_snowballType": 5,
+
+  "enemy_captainpolarbear_throwInterval": 1.0,
+  "enemy_captainpolarbear_throwDamage": 50,
+  "enemy_captainpolarbear_throwCount": 1,
 
   "health_add": 5,
   "damage_add": 2,
@@ -178,6 +182,9 @@
 | `rangeDamage` | `int` | 기본 원거리 투사체 피해량 |
 | `bulletSpeed` | `float` | 일반 탄환 자체 속도. 발사 시 적 이동 속도를 가산(정지 시 0). 스테이지 증가 없음. 극곰 눈덩이 제외 |
 | `enemy_polarbear_snowballType` | `int` | 일반 극곰 전용 소환 눈덩이: `5` = 기존 1라인 `Snowball`, `7` = 2라인 `Snowball2Line` |
+| `enemy_captainpolarbear_throwInterval` | `float` | 대장 극곰 전용 던지기 주기(게임 시간 기준 초). 0 이하이면 던지기 대기. 공격 시작 후 한 주기 뒤 첫 던지기 |
+| `enemy_captainpolarbear_throwDamage` | `int` | 던진 눈덩이 1개당 착지 피해. `rangeDamage`·`rangeDamage_add`와 독립된 고정값 |
+| `enemy_captainpolarbear_throwCount` | `int` | 한 주기에 동시에 던지는 눈덩이 수. 전체 배치 칸에서 서로 다른 칸을 추첨하며, 전체 칸 수를 초과하면 전체 칸 수만큼 생성. 0 이하이면 생성 수 0 |
 | `health_add` | `int` | 스테이지당 체력 증가량 |
 | `damage_add` | `int` | 스테이지당 충돌 피해 증가량 |
 | `rangeDamage_add` | `int` | 스테이지당 원거리 투사체 피해 증가량 |
@@ -187,7 +194,7 @@
 >
 > `enemyBehavior`는 Unity 에셋 참조이므로 JSON으로 오버라이드할 수 없습니다.
 
-적 전용 필드는 `enemy_적이름_` 접두사를 사용하며 적 이름은 소문자로 작성합니다. 일반 극곰은 `enemy_polarbear_`를 사용합니다. `PolarBear.json`에서 `enemy_polarbear_snowballType`을 생략하면 기본 2라인 눈덩이를 소환합니다. 눈덩이 능력치는 `Snowball.json`과 `Snowball2Line.json`에서 각각 설정합니다. 이 필드와 새 적 타입은 해당 정의가 포함된 빌드에서 지원됩니다.
+적 전용 필드는 `enemy_적이름_` 접두사를 사용하며 적 이름은 소문자로 작성합니다. 일반 극곰은 `enemy_polarbear_`, 대장 극곰은 `enemy_captainpolarbear_`를 사용합니다. `PolarBear.json`에서 `enemy_polarbear_snowballType`을 생략하면 기본 1라인 눈덩이를 소환합니다. 눈덩이 능력치는 `Snowball.json`과 `Snowball2Line.json`에서 각각 설정합니다. 새 필드는 해당 정의가 포함된 빌드에서 지원됩니다.
 
 ### 일반 극곰 눈덩이 설정 예시
 
@@ -195,9 +202,25 @@
 
 ```json
 {
-  "enemy_polarbear_snowballType": 7
+  "enemy_polarbear_snowballType": 5
 }
 ```
+
+### 대장 극곰 공격 설정 예시
+
+`OverrideData/Enemy/CaptainPolarBear.json`
+
+```json
+{
+  "attackSpeed": 1.0,
+
+  "enemy_captainpolarbear_throwInterval": 1.0,
+  "enemy_captainpolarbear_throwDamage": 50,
+  "enemy_captainpolarbear_throwCount": 1
+}
+```
+
+대장 극곰은 `attackSpeed`에 따라 2라인 눈덩이를 굴리며 던지기는 독립 주기로 함께 실행합니다. 두 공격의 시작·중단 조건은 `rangeAttack`·`stopAtMiddle`·`attackWhileMoving`을 공유합니다. `attackSpeed`가 0 이하이어도 던지기는 설정된 주기를 따릅니다. 던지기 주기는 배속·감속·일시정지를 따르며, 이전 눈덩이가 낙하·착지 중이어도 다음 주기에 새 눈덩이를 생성합니다. 대장 극곰 사망·파괴 시 진행 중인 낙하 공격을 모두 취소합니다. 생략한 필드는 대장 극곰의 기본값을 유지합니다.
 
 ---
 

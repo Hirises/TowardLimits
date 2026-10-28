@@ -28,7 +28,10 @@ MonoBehaviour:
     speed: 6
     bulletSpeed: 6
     color: {r: 1, g: 0, b: 0, a: 1}
-    enemy_polarbear_snowballType: 7
+    enemy_polarbear_snowballType: 5
+    enemy_captainpolarbear_throwInterval: 1
+    enemy_captainpolarbear_throwDamage: 50
+    enemy_captainpolarbear_throwCount: 1
     health_add: 2000
     damage_add: 10
     rangeDamage_add: 10
