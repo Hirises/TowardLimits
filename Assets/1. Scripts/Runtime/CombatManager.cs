@@ -134,9 +134,13 @@ public class CombatManager : MonoBehaviour
 
         ProcessDrag();
 
-        if(GameManager.instance.DEBUG_MODE){
+        #if OVERRIDE_DATA
             TestKey();
-        }
+        #else
+            if(GameManager.instance.DEBUG_MODE){
+                TestKey();
+            }
+        #endif
     }
 
     private void TestKey(){
