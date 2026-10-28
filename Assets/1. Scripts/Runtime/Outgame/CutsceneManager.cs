@@ -104,24 +104,14 @@ public class CutsceneManager : MonoBehaviour
     }
 
     private void Run(CutSceneAction action){
-        if(!string.IsNullOrEmpty(action.name)) nameText.text = action.name;
-        text.text = action.text;
-        if(action.sprite != null){
-            if(action.isLeft){
-                leftImage.sprite = action.sprite;
-                rightImage.sprite = null;
-            }else{
-                leftImage.sprite = null;
-                rightImage.sprite = action.sprite;
-            }
-            leftImage.gameObject.SetActive(action.isLeft);
-            rightImage.gameObject.SetActive(!action.isLeft);
-        }
-        if(action.clearSprite){
-            leftImage.sprite = null;
-            rightImage.sprite = null;
-            leftImage.gameObject.SetActive(false);
-            rightImage.gameObject.SetActive(false);
+        if(action.Type == CutSceneActionType.Dialogue){
+            nameText.text = action.name ?? "";
+            text.text = action.text ?? "";
+            Sprite sprite = action.DisplaySprite;
+            leftImage.sprite = action.isLeft ? sprite : null;
+            rightImage.sprite = action.isLeft ? null : sprite;
+            leftImage.gameObject.SetActive(sprite != null && action.isLeft);
+            rightImage.gameObject.SetActive(sprite != null && !action.isLeft);
         }
         if(action.callFunction){
             GameObject gameObject = GameObject.Find(action.clazz);

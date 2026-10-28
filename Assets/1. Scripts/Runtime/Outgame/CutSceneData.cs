@@ -25,10 +25,24 @@ public class CutSceneData : ScriptableObject, IEnumerable<CutSceneAction>
 public class CutSceneAction{
     public string name;
     [TextArea] public string text;
-    public bool clearSprite;
+    // Existing SOs can store a sprite together with the legacy clear flag.
+    [HideInInspector] public bool clearSprite;
     [LabelText("MySide")] public bool isLeft;
     public Sprite sprite;
     public bool callFunction;
     public string clazz;
     public string method;
+
+    public CutSceneActionType Type => !callFunction ? CutSceneActionType.Dialogue :
+        method == "WaitUntil" || method == "WaitUntilAndHide"
+            ? CutSceneActionType.Wait : CutSceneActionType.Function;
+
+    public Sprite DisplaySprite => clearSprite ? null : sprite;
+}
+
+public enum CutSceneActionType
+{
+    Dialogue,
+    Function,
+    Wait
 }

@@ -1,0 +1,127 @@
+.cutscene-editor {
+    --panel-color: rgb(48, 50, 55);
+    --card-color: rgb(57, 59, 64);
+    --muted-color: rgb(175, 181, 191);
+    --accent-color: rgb(94, 173, 225);
+    padding: 8px;
+}
+.cutscene-editor.light {
+    --panel-color: rgb(220, 225, 231);
+    --card-color: rgb(237, 240, 244);
+    --muted-color: rgb(73, 80, 91);
+    --accent-color: rgb(30, 112, 169);
+}
+.title {
+    font-size: 15px;
+    -unity-font-style: bold;
+    margin-bottom: 10px;
+}
+.toolbar {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.search {
+    flex-grow: 1;
+    min-width: 100px;
+}
+.preview {
+    background-color: var(--panel-color);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+}
+.preview-status {
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+}
+.portraits {
+    flex-direction: row;
+    height: 120px;
+    margin: 6px 0;
+}
+.portrait {
+    width: 50%;
+    height: 100%;
+}
+.preview-name {
+    -unity-font-style: bold;
+    color: var(--accent-color);
+    white-space: normal;
+    margin-bottom: 4px;
+}
+.preview-dialogue {
+    min-height: 38px;
+    max-height: 120px;
+    margin-bottom: 8px;
+}
+.preview-text {
+    white-space: normal;
+}
+.muted {
+    color: var(--muted-color);
+    font-size: 11px;
+}
+.action-list {
+    height: 550px;
+    min-height: 250px;
+    margin-top: 4px;
+}
+.action-card {
+    background-color: var(--card-color);
+    border-width: 1px;
+    border-color: var(--panel-color);
+    border-radius: 5px;
+    padding: 8px;
+    flex-shrink: 0;
+}
+.action-card.selected {
+    border-color: var(--accent-color);
+}
+.drag-handle {
+    font-size: 22px;
+    width: 24px;
+    -unity-text-align: middle-center;
+}
+.summary {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 6px;
+}
+.options {
+    font-size: 11px;
+    color: var(--accent-color);
+    white-space: normal;
+    margin: 4px 0 8px 0;
+}
+.dialogue-input {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 6px;
+    margin-bottom: 8px;
+}
+.dialogue-input > .unity-base-field__label {
+    margin-bottom: 4px;
+}
+.dialogue-input > .unity-base-field__input {
+    min-height: 65px;
+    max-height: 240px;
+    white-space: normal;
+    -unity-text-align: upper-left;
+    padding: 6px;
+}
+.insertion {
+    height: 24px;
+    margin: 4px 16px;
+    color: var(--accent-color);
+    font-size: 17px;
+    flex-shrink: 0;
+}
+.insertion.drop-target {
+    background-color: var(--accent-color);
+    color: rgb(15, 24, 32);
+}
