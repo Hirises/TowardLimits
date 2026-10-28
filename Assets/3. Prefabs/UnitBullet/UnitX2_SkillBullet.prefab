@@ -70,15 +70,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: a37fd7623bc941248bfc7b302eb7f996, type: 3}
     - target: {fileID: 1577789702580548638, guid: 19e7054c461aa014bb1d39d7765c90cb, type: 3}
       propertyPath: m_Color.b
-      value: 0.43613777
+      value: 0.23137254
       objectReference: {fileID: 0}
     - target: {fileID: 1577789702580548638, guid: 19e7054c461aa014bb1d39d7765c90cb, type: 3}
       propertyPath: m_Color.g
-      value: 0.84689325
+      value: 0.75810134
       objectReference: {fileID: 0}
     - target: {fileID: 1577789702580548638, guid: 19e7054c461aa014bb1d39d7765c90cb, type: 3}
       propertyPath: m_Color.r
-      value: 0.9308176
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1891165635401454974, guid: 19e7054c461aa014bb1d39d7765c90cb, type: 3}
       propertyPath: m_Name
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aaff7f3e9e885e4088529ff69048cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 8769293655978040097}
   centerHitbox: {fileID: 9050012531212069485}
   leftHitbox: {fileID: 5013258560036623942}
   rightHitbox: {fileID: 7772541685822041007}
@@ -188,3 +189,8 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.4, y: 1, z: 0.4}
   m_Center: {x: 1.5, y: 0, z: 0}
+--- !u!212 &8769293655978040097 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1577789702580548638, guid: 19e7054c461aa014bb1d39d7765c90cb, type: 3}
+  m_PrefabInstance: {fileID: 7806890440983932735}
+  m_PrefabAsset: {fileID: 0}

@@ -46,6 +46,7 @@ public abstract class DefaultUnitBehavior : UnitBehavior
         {
             distance = status.model.attackRange,
             speed = status.model.bulletSpeed + slot.BULLETSPD_buff,
+            color = status.model.unitColor,
             damage = damage
         };
         bullet.Shoot(bulletData);

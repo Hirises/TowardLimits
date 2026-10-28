@@ -38,6 +38,7 @@ public class UnitX2 : DefaultUnitBehavior
         {
             distance = status.model.attackRange,
             speed = status.model.unit_x2_skillBulletSpeed,
+            color = status.model.unitColor,
             damage = status.model.unit_x2_skillDamage,
             damageType = status.model.attackType
         });

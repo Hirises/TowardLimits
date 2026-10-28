@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     protected float distance_target;
     protected float speed;
     protected int damage;
@@ -14,6 +16,7 @@ public class BulletBehavior : MonoBehaviour
         this.speed = data.speed;
         this.damage = data.damage;
         this.damageType = data.damageType;
+        spriteRenderer.color = data.color;
     }
 
     private void Update(){
@@ -37,6 +40,7 @@ public class BulletBehavior : MonoBehaviour
 
 public struct BulletData
 {
+    public Color color;
     public float distance;
     public float speed;
     public DamageType damageType;
