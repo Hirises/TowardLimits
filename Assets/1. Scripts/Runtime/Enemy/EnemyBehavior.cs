@@ -35,6 +35,7 @@ public abstract class EnemyBehavior : LivingEntity
     }
 
     public void OnDeath(){
+        if(!TryMarkDead()) return;
         OnDeath_Internal();
         data = null;
         CombatManager.instance.RemoveEnemy(this);

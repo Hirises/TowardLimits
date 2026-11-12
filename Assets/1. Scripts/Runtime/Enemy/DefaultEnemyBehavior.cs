@@ -53,6 +53,7 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
     }
 
     private void Update(){
+        if(IsDead) return;
         bool lineEmpty = AreOccupiedLinesEmpty();
         if(ShouldMove(lineEmpty)){
             transform.position -= Vector3.forward * data.GetSpeed() * Time.deltaTime;
@@ -104,6 +105,7 @@ public abstract class DefaultEnemyBehavior : EnemyBehavior
     }
 
     private void OnTriggerEnter(Collider other){
+        if(IsDead) return;
         if(other.gameObject.layer == LayerMask.NameToLayer("Unit")){
             UnitBehavior unit = other.gameObject.GetComponentInParent<UnitBehavior>();
             unit.TakeDamage(data.GetDamage(), DamageType.None);
