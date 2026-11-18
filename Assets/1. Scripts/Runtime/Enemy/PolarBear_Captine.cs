@@ -5,9 +5,9 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CaptainPolarBear : DefaultEnemyBehavior
+public class PolarBear_Captine : DefaultEnemyBehavior
 {
-    public override EnemyType enemyType => EnemyType.CaptainPolarBear;
+    public override EnemyType enemyType => EnemyType.PolarBear_Captine;
 
     [SerializeField] private SnowballStrike snowballStrikePrefab;
 
@@ -24,11 +24,11 @@ public class CaptainPolarBear : DefaultEnemyBehavior
 
     private async UniTask ThrowLoop(CancellationToken ct){
         while(true){
-            if(data.enemy_captainpolarbear_throwInterval <= 0){
+            if(data.enemy_polarbear_captine_throwInterval <= 0){
                 await UniTask.Yield(cancellationToken: ct);
                 continue;
             }
-            await UniTask.Delay(TimeSpan.FromSeconds(data.enemy_captainpolarbear_throwInterval), cancellationToken: ct);
+            await UniTask.Delay(TimeSpan.FromSeconds(data.enemy_polarbear_captine_throwInterval), cancellationToken: ct);
             ct.ThrowIfCancellationRequested();
             ThrowSnowballs();
         }
@@ -37,13 +37,13 @@ public class CaptainPolarBear : DefaultEnemyBehavior
     private void ThrowSnowballs(){
         activeStrikes.RemoveAll(strike => strike == null);
         List<Slot> targetSlots = new List<Slot>(CombatManager.instance.slots);
-        int throwCount = Mathf.Min(data.enemy_captainpolarbear_throwCount, targetSlots.Count);
+        int throwCount = Mathf.Min(data.enemy_polarbear_captine_throwCount, targetSlots.Count);
         for(int i = 0; i < throwCount; i++){
             int targetIndex = Random.Range(0, targetSlots.Count);
             Slot targetSlot = targetSlots[targetIndex];
             targetSlots.RemoveAt(targetIndex);
             SnowballStrike strike = Instantiate(snowballStrikePrefab, CombatManager.instance.enemyBulletRoot);
-            strike.StartStrike(targetSlot, data.enemy_captainpolarbear_throwDamage);
+            strike.StartStrike(targetSlot, data.enemy_polarbear_captine_throwDamage);
             activeStrikes.Add(strike);
         }
     }

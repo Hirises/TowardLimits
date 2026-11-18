@@ -4,7 +4,7 @@
 
 ## 적 역할과 배치
 
-일반 극곰(`PolarBear`)은 기본 1라인 눈덩이 굴리기를 사용하고, 대장극곰(`CaptainPolarBear`)은 2라인 눈덩이 굴리기와 칸 지정 낙하 눈덩이 던지기를 함께 사용한다. 대장극곰의 이미지는 `Captine_PolarBear`를 사용한다. 이동·공격 시작 조건은 각각의 EnemyData에서 조정한다.
+일반 극곰(`PolarBear`)은 기본 1라인 눈덩이 굴리기를 사용하고, 대장극곰(`PolarBear_Captine`)은 2라인 눈덩이 굴리기와 칸 지정 낙하 눈덩이 던지기를 함께 사용한다. 대장극곰의 이미지는 `PolarBear_Captine`을 사용한다. 이동·공격 시작 조건은 각각의 EnemyData에서 조정한다.
 
 기존 보스 웨이브 중 마지막 스테이지의 `BossWave4`(스테이지 인덱스 4)에 대장극곰을 배치한다. `BossWave0`~`BossWave3`은 일반 극곰을 유지한다. 두 적 모두 보스 경고 표시를 사용한다.
 
@@ -20,9 +20,9 @@
 
 대장 극곰은 일반 원거리 공격 속도 `attackSpeed`에 따라 2라인 `Snowball2Line`을 굴린다. 소환 위치와 눈덩이별 능력치 설정은 일반 극곰과 같은 규칙을 따른다.
 
-던지기는 `enemy_captainpolarbear_throwInterval`초마다 독립 실행하며 초기 주기는 1초다. 공격 시작 후 한 주기 뒤 첫 던지기를 실행한다. 피해는 `enemy_captainpolarbear_throwDamage`(초기값 50), 동시 생성 수는 `enemy_captainpolarbear_throwCount`(초기값 1)로 설정한다. 피해는 일반 원거리 피해와 스테이지 증가량에 독립된 고정값이다. 주기가 0 이하이면 던지기를 대기하며 생성 수가 0 이하이면 눈덩이를 생성하지 않는다.
+던지기는 `enemy_polarbear_captine_throwInterval`초마다 독립 실행하며 초기 주기는 1초다. 공격 시작 후 한 주기 뒤 첫 던지기를 실행한다. 피해는 `enemy_polarbear_captine_throwDamage`(초기값 50), 동시 생성 수는 `enemy_polarbear_captine_throwCount`(초기값 1)로 설정한다. 피해는 일반 원거리 피해와 스테이지 증가량에 독립된 고정값이다. 주기가 0 이하이면 던지기를 대기하며 생성 수가 0 이하이면 눈덩이를 생성하지 않는다.
 
-두 공격의 시작·중단 조건은 `rangeAttack`·`stopAtMiddle`·`attackWhileMoving`을 공유한다. `attackSpeed`가 0 이하일 때도 던지기는 설정된 주기를 따른다. 전용 필드는 대장 극곰 EnemyData와 `OverrideData/Enemy/CaptainPolarBear.json`에서 설정한다.
+두 공격의 시작·중단 조건은 `rangeAttack`·`stopAtMiddle`·`attackWhileMoving`을 공유한다. `attackSpeed`가 0 이하일 때도 던지기는 설정된 주기를 따른다. 전용 필드는 대장 극곰 EnemyData와 `OverrideData/Enemy/PolarBear_Captine.json`에서 설정한다.
 
 ## 낙하 눈덩이
 

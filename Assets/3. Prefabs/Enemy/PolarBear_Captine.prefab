@@ -125,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7609420446578335094, guid: 3711f4a9289cc114ba060c7ac49b407d, type: 3}
       propertyPath: m_Name
-      value: CaptainPolarBear
+      value: PolarBear_Captine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

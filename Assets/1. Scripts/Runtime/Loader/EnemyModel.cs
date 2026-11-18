@@ -29,10 +29,10 @@ public class EnemyModel : ICloneable
     [Header("PolarBear")]
     public EnemyType enemy_polarbear_snowballType = EnemyType.Snowball;
 
-    [Header("CaptainPolarBear")]
-    [Min(0)] public float enemy_captainpolarbear_throwInterval = 1f;
-    [Min(0)] public int enemy_captainpolarbear_throwDamage = 50;
-    [Min(0)] public int enemy_captainpolarbear_throwCount = 1;
+    [Header("PolarBear_Captine")]
+    [Min(0)] public float enemy_polarbear_captine_throwInterval = 1f;
+    [Min(0)] public int enemy_polarbear_captine_throwDamage = 50;
+    [Min(0)] public int enemy_polarbear_captine_throwCount = 1;
 
     [Header("Level up")]
     [SerializeField] public int health_add;

@@ -73,5 +73,5 @@ MonoBehaviour:
     count: 1
     interval: 1
     enemyType_enum: 6
-    enemyType: CaptainPolarBear
+    enemyType: PolarBear_Captine
   filePath: BossWave4
